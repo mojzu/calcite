@@ -1,6 +1,5 @@
 # Todo
 
-- Rewrite README.md to have a developer info section instead of commands
 - Fix and add tests for currency handling
 - Add clear all app state button
 - Improve app sizing based on screen size

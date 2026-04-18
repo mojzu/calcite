@@ -4,13 +4,24 @@ A web-based calculator interface for [Numbat](https://numbat.dev/), a statically
 
 > The source code for this repository has mostly been generated using [Claude Code](https://claude.com/product/claude-code).
 
-## Commands
+## Development
 
-| Command                | Description                             |
-| ---------------------- | --------------------------------------- |
-| `npm run dev`          | Start development preview server        |
-| `npm run build`        | Type-check and build for production     |
-| `npm run clean`        | Remove build output                     |
-| `npm test`             | Run Playwright tests                    |
-| `npm run test:install` | Install Playwright browser dependencies |
-| `npm run deploy`       | Deploy `dist/` to GitHub Pages          |
+```bash
+# Fetch required dependencies and build icon files
+npm run prebuild
+
+# Install test dependencies
+npm run test:install
+
+# Run clean build
+npm run clean && npm run build
+
+# Run development preview server (does not live reload)
+npm run dev
+
+# Run tests (requires preview server to be running)
+npm run test
+
+# Deploy build to GitHub Pages
+npm run clean && npm run build && npm run deploy
+```
