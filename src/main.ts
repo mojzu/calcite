@@ -584,78 +584,78 @@ function buildUnitsSection(): void {
 
 // ── Exchange rates ────────────────────────────────────────────────────────────
 
-function applyExchangeRates(): void {
-  // set_exchange_rates can only be called once per WASM module lifetime — a second
-  // call causes an unreachable trap that corrupts the Numbat instance's RefCell,
-  // making all subsequent WASM calls fail. The flag is never reset so only the first
-  // instance (loaded via fetchExchangeRates) ever calls set_exchange_rates.
-  // Subsequent instances fall back to defining currencies via interpret.
-  if (!exchangeRatesXml) return
-  if (!exchangeRatesApplied) {
-    try {
-      numbat.set_exchange_rates(exchangeRatesXml)
-      exchangeRatesApplied = true
-      return
-    } catch {
-      // Should not normally be reached — fallthrough to interpret-based fallback.
-    }
-  }
-  // Fallback: parse ECB XML and define currency units via interpret so that new
-  // Numbat instances created after the first set_exchange_rates call also get rates.
-  const matches = [...exchangeRatesXml.matchAll(/currency='([A-Z]{3})'\s+rate='([0-9.]+)'/g)]
-  for (const [, code, rate] of matches) {
-    numbat.interpret(`unit ${code} : Money = (1 / ${rate}) EUR`)
-  }
-}
+// function applyExchangeRates(): void {
+//   // set_exchange_rates can only be called once per WASM module lifetime — a second
+//   // call causes an unreachable trap that corrupts the Numbat instance's RefCell,
+//   // making all subsequent WASM calls fail. The flag is never reset so only the first
+//   // instance (loaded via fetchExchangeRates) ever calls set_exchange_rates.
+//   // Subsequent instances fall back to defining currencies via interpret.
+//   if (!exchangeRatesXml) return
+//   if (!exchangeRatesApplied) {
+//     try {
+//       numbat.set_exchange_rates(exchangeRatesXml)
+//       exchangeRatesApplied = true
+//       return
+//     } catch {
+//       // Should not normally be reached — fallthrough to interpret-based fallback.
+//     }
+//   }
+//   // Fallback: parse ECB XML and define currency units via interpret so that new
+//   // Numbat instances created after the first set_exchange_rates call also get rates.
+//   const matches = [...exchangeRatesXml.matchAll(/currency='([A-Z]{3})'\s+rate='([0-9.]+)'/g)]
+//   for (const [, code, rate] of matches) {
+//     numbat.interpret(`unit ${code} : Money = (1 / ${rate}) EUR`)
+//   }
+// }
 
 function initNumbat(): void {
   numbat = Numbat.new(true, true, FormatType.Html)
-  applyExchangeRates()
+  // applyExchangeRates()
 }
 
-function buildCurrencyChips(xml: string): void {
-  const list = document.getElementById('currencies-list')!
-  list.innerHTML = ''
-  // ECB XML has currency="USD" on each Cube element
-  const codes = [...new Set([...xml.matchAll(/currency='([A-Z]{3})'/g)].map(m => m[1]))]
-  codes.sort()
-  const chips = document.createElement('div')
-  chips.className = 'unit-chips'
-  for (const code of codes) {
-    const chip = document.createElement('button')
-    chip.type = 'button'
-    chip.className = 'unit-chip'
-    chip.textContent = code
-    chip.addEventListener('click', () => { insertIntoInput(code) })
-    chips.appendChild(chip)
-  }
-  list.appendChild(chips)
-}
+// function buildCurrencyChips(xml: string): void {
+//   const list = document.getElementById('currencies-list')!
+//   list.innerHTML = ''
+//   // ECB XML has currency="USD" on each Cube element
+//   const codes = [...new Set([...xml.matchAll(/currency='([A-Z]{3})'/g)].map(m => m[1]))]
+//   codes.sort()
+//   const chips = document.createElement('div')
+//   chips.className = 'unit-chips'
+//   for (const code of codes) {
+//     const chip = document.createElement('button')
+//     chip.type = 'button'
+//     chip.className = 'unit-chip'
+//     chip.textContent = code
+//     chip.addEventListener('click', () => { insertIntoInput(code) })
+//     chips.appendChild(chip)
+//   }
+//   list.appendChild(chips)
+// }
 
-async function fetchExchangeRates(): Promise<void> {
-  const statusEl = document.getElementById('currencies-status')!
-  statusEl.textContent = 'Loading…'
-  statusEl.className = 'loading'
+// async function fetchExchangeRates(): Promise<void> {
+//   const statusEl = document.getElementById('currencies-status')!
+//   statusEl.textContent = 'Loading…'
+//   statusEl.className = 'loading'
 
-  try {
-    const response = await fetch('/ecb-rates.xml')
-    if (!response.ok) throw new Error(`HTTP ${response.status}`)
+//   try {
+//     const response = await fetch('/ecb-rates.xml')
+//     if (!response.ok) throw new Error(`HTTP ${response.status}`)
 
-    exchangeRatesXml = await response.text()
-    applyExchangeRates()
+//     exchangeRatesXml = await response.text()
+//     applyExchangeRates()
 
-    const dateMatch = exchangeRatesXml.match(/time='(\d{4}-\d{2}-\d{2})'/)
-    const date = dateMatch
-      ? new Date(dateMatch[1]).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
-      : 'unknown date'
-    statusEl.textContent = `Rates · ${date}`
-    statusEl.className = ''
-    buildCurrencyChips(exchangeRatesXml)
-  } catch {
-    statusEl.textContent = 'Unavailable'
-    statusEl.className = 'error'
-  }
-}
+//     const dateMatch = exchangeRatesXml.match(/time='(\d{4}-\d{2}-\d{2})'/)
+//     const date = dateMatch
+//       ? new Date(dateMatch[1]).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+//       : 'unknown date'
+//     statusEl.textContent = `Rates · ${date}`
+//     statusEl.className = ''
+//     buildCurrencyChips(exchangeRatesXml)
+//   } catch {
+//     statusEl.textContent = 'Unavailable'
+//     statusEl.className = 'error'
+//   }
+// }
 
 // ── Session actions ───────────────────────────────────────────────────────────
 
@@ -772,14 +772,14 @@ async function main(): Promise<void> {
   document.getElementById('functions-help-btn')!.addEventListener('click', () => {
     showInfoPopup('Functions', 'Define functions with "fn name(params) = expression". Defined functions appear in this list. Click any function to insert its name into the input with an opening parenthesis.')
   })
-  document.getElementById('currencies-help-btn')!.addEventListener('click', () => {
-    showInfoPopup('Currencies', 'Exchange rates are loaded from the European Central Bank (updated daily). Use currency codes in expressions — for example "100 USD to EUR" or "50 GBP + 30 CHF to EUR".')
-  })
+  // document.getElementById('currencies-help-btn')!.addEventListener('click', () => {
+  //   showInfoPopup('Currencies', 'Exchange rates are loaded from the European Central Bank (updated daily). Use currency codes in expressions — for example "100 USD to EUR" or "50 GBP + 30 CHF to EUR".')
+  // })
   document.getElementById('units-help-btn')!.addEventListener('click', () => {
     showInfoPopup('Units', 'Click any unit symbol to insert it at the cursor position. Units can be used in expressions and conversions — for example "1 km to mi" or "9.81 m/s^2 * 80 kg to N".')
   })
 
-  fetchExchangeRates()
+  // fetchExchangeRates()
 
   // Confirm popup
   document.getElementById('confirm-popup-close')!.addEventListener('click', hideConfirmPopup)

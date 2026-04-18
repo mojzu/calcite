@@ -1,4 +1,4 @@
-# ![Calcite](public/favicon.svg) Calcite
+# Calcite
 
 A web-based calculator interface for [Numbat](https://numbat.dev/), a statically-typed calculator language supporting units, currencies, and mathematical functions.
 

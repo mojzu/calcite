@@ -775,7 +775,7 @@ aside#variables.collapsed #sidebar-title {
 
 /* Currencies section */
 
-#currencies-section {
+/* #currencies-section {
   padding-bottom: 0.75rem;
 }
 
@@ -792,7 +792,7 @@ aside#variables.collapsed #sidebar-title {
 
 #currencies-status.error {
   color: var(--error-color);
-}
+} */
 
 
 /* Units section */

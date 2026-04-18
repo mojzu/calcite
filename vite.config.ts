@@ -15,7 +15,7 @@ export default defineConfig({
       manifest: {
         name: 'Calcite',
         short_name: 'Calcite',
-        description: 'Scientific calculator with unit conversions and currency exchange rates',
+        description: 'Scientific calculator with unit conversions',
         theme_color: '#4a9eff',
         background_color: '#1a1a1a',
         display: 'standalone',
