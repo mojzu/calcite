@@ -13,3 +13,6 @@ public/icon-512.png
 # Playwright
 test-results/
 playwright-report/
+
+# Claude
+.claude/
