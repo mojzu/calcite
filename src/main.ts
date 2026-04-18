@@ -53,6 +53,7 @@ const functions = new Map<string, string>()  // name → params string
 let numbat!: Numbat
 let currentSession!: Session
 let exchangeRatesXml: string | null = null
+let exchangeRatesApplied = false
 let historyIndex = -1  // -1 = not navigating; 0 = most recent input
 let historyDraft = ''  // saved input text before navigating
 
@@ -584,7 +585,27 @@ function buildUnitsSection(): void {
 // ── Exchange rates ────────────────────────────────────────────────────────────
 
 function applyExchangeRates(): void {
-  if (exchangeRatesXml) numbat.set_exchange_rates(exchangeRatesXml)
+  // set_exchange_rates can only be called once per WASM module lifetime — a second
+  // call causes an unreachable trap that corrupts the Numbat instance's RefCell,
+  // making all subsequent WASM calls fail. The flag is never reset so only the first
+  // instance (loaded via fetchExchangeRates) ever calls set_exchange_rates.
+  // Subsequent instances fall back to defining currencies via interpret.
+  if (!exchangeRatesXml) return
+  if (!exchangeRatesApplied) {
+    try {
+      numbat.set_exchange_rates(exchangeRatesXml)
+      exchangeRatesApplied = true
+      return
+    } catch {
+      // Should not normally be reached — fallthrough to interpret-based fallback.
+    }
+  }
+  // Fallback: parse ECB XML and define currency units via interpret so that new
+  // Numbat instances created after the first set_exchange_rates call also get rates.
+  const matches = [...exchangeRatesXml.matchAll(/currency='([A-Z]{3})'\s+rate='([0-9.]+)'/g)]
+  for (const [, code, rate] of matches) {
+    numbat.interpret(`unit ${code} : Money = (1 / ${rate}) EUR`)
+  }
 }
 
 function initNumbat(): void {
@@ -765,8 +786,9 @@ async function main(): Promise<void> {
   document.getElementById('confirm-popup-backdrop')!.addEventListener('click', hideConfirmPopup)
   document.getElementById('confirm-popup-cancel')!.addEventListener('click', hideConfirmPopup)
   document.getElementById('confirm-popup-ok')!.addEventListener('click', () => {
+    const callback = confirmCallback
     hideConfirmPopup()
-    if (confirmCallback) confirmCallback()
+    if (callback) callback()
   })
 
   // Session action buttons
