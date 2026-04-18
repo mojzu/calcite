@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calcite</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <div id="app">
+    <main id="main">
+      <div id="tab-bar">
+        <div id="tabs-scroll"></div>
+        <select id="session-select"></select>
+        <button id="new-session-btn" type="button" class="tab-new" title="New session">+</button>
+      </div>
+      <div id="output" aria-live="polite" aria-label="Calculation history"></div>
+      <div id="numpad">
+        <button type="button" class="shortcut shortcut-num" data-insert="7">7</button>
+        <button type="button" class="shortcut shortcut-num" data-insert="8">8</button>
+        <button type="button" class="shortcut shortcut-num" data-insert="9">9</button>
+        <button type="button" class="shortcut shortcut-num" data-insert="4">4</button>
+        <button type="button" class="shortcut shortcut-num" data-insert="5">5</button>
+        <button type="button" class="shortcut shortcut-num" data-insert="6">6</button>
+        <button type="button" class="shortcut shortcut-num" data-insert="1">1</button>
+        <button type="button" class="shortcut shortcut-num" data-insert="2">2</button>
+        <button type="button" class="shortcut shortcut-num" data-insert="3">3</button>
+        <button type="button" class="shortcut shortcut-num numpad-zero" data-insert="0">0</button>
+        <button type="button" class="shortcut shortcut-hex" data-insert="A">A</button>
+        <button type="button" class="shortcut shortcut-hex" data-insert="B">B</button>
+        <button type="button" class="shortcut shortcut-hex" data-insert="C">C</button>
+        <button type="button" class="shortcut shortcut-hex" data-insert="D">D</button>
+        <button type="button" class="shortcut shortcut-hex" data-insert="E">E</button>
+        <button type="button" class="shortcut shortcut-hex" data-insert="F">F</button>
+      </div>
+      <div id="shortcuts">
+        <button type="button" class="shortcut shortcut-keyword" data-insert="let ">let</button>
+        <button type="button" class="shortcut shortcut-keyword" data-insert=" to ">to</button>
+        <button type="button" class="shortcut shortcut-sym" data-insert="(">(</button>
+        <button type="button" class="shortcut shortcut-sym" data-insert=")">)</button>
+        <button type="button" class="shortcut shortcut-sym" data-insert=" + "> + </button>
+        <button type="button" class="shortcut shortcut-sym" data-insert=" - "> - </button>
+        <button type="button" class="shortcut shortcut-sym" data-insert=" * "> × </button>
+        <button type="button" class="shortcut shortcut-sym" data-insert=" / "> ÷ </button>
+        <button type="button" class="shortcut" data-insert="^">^</button>
+        <button type="button" class="shortcut shortcut-sym" data-insert=" = "> = </button>
+        <button type="button" class="shortcut" data-insert="pi">π</button>
+        <button type="button" class="shortcut" data-insert="sqrt(">√</button>
+        <button type="button" class="shortcut" data-insert="e">e</button>
+        <button type="button" class="shortcut" data-insert="sin(">sin</button>
+        <button type="button" class="shortcut" data-insert="cos(">cos</button>
+        <button type="button" class="shortcut" data-insert="tan(">tan</button>
+        <button type="button" class="shortcut" data-insert="log(">log</button>
+        <button type="button" class="shortcut" data-insert="log2(">log₂</button>
+        <button type="button" class="shortcut" data-insert="abs(">abs</button>
+      </div>
+      <div id="input-row">
+        <div id="history-nav">
+          <button type="button" id="history-prev" title="Previous input (↑)">↑</button>
+          <button type="button" id="history-next" title="Next input (↓)">↓</button>
+        </div>
+        <form id="form">
+          <input
+            id="input"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="e.g. 1 km/h to m/s"
+            autofocus
+          />
+          <button type="submit" title="Calculate" aria-label="Calculate">↵</button>
+        </form>
+      </div>
+      <div id="mobile-sidebar-buttons">
+        <button type="button" id="mobile-vars-btn">Variables</button>
+        <button type="button" id="mobile-units-btn">Units</button>
+      </div>
+    </main>
+    <aside id="variables">
+      <div id="sidebar-top">
+        <svg id="sidebar-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+          <!-- Calcite rhombohedron crystal using currentColor with opacity shading -->
+          <polygon points="16,4 26,10 16,16 6,10" fill="currentColor" opacity="0.95"/>
+          <polygon points="26,10 26,22 16,28 16,16" fill="currentColor" opacity="0.6"/>
+          <polygon points="6,10 16,16 16,28 6,22" fill="currentColor" opacity="0.3"/>
+        </svg>
+        <span id="sidebar-title">Calcite</span>
+        <button id="sidebar-collapse-btn" type="button" title="Collapse sidebar">›</button>
+        <button id="mobile-sidebar-close" type="button" title="Close">×</button>
+      </div>
+      <div id="sidebar-middle">
+        <div id="variables-section" class="open">
+          <div class="section-header">
+            <button id="variables-section-toggle" type="button" class="section-header-btn">
+              <span>Variables</span>
+              <span class="section-toggle-icon">›</span>
+            </button>
+            <button type="button" class="section-help-btn" id="vars-help-btn" title="About variables">?</button>
+          </div>
+          <div class="section-body">
+            <div id="variables-list">
+              <p class="no-vars">No variables defined</p>
+            </div>
+          </div>
+        </div>
+        <div id="functions-section">
+          <div class="section-header">
+            <button id="functions-section-toggle" type="button" class="section-header-btn">
+              <span>Functions</span>
+              <span class="section-toggle-icon">›</span>
+            </button>
+            <button type="button" class="section-help-btn" id="functions-help-btn" title="About functions">?</button>
+          </div>
+          <div id="functions-list" class="section-body">
+            <p class="no-vars">No functions defined</p>
+          </div>
+        </div>
+        <div id="units-section">
+          <div class="section-header">
+            <button id="units-section-toggle" type="button" class="section-header-btn">
+              <span>Units</span>
+              <span class="section-toggle-icon">›</span>
+            </button>
+            <button type="button" class="section-help-btn" id="units-help-btn" title="About units">?</button>
+          </div>
+          <div id="units-section-body" class="section-body"></div>
+        </div>
+        <div id="currencies-section">
+          <div class="section-header">
+            <span class="section-header-title">Currencies</span>
+            <button type="button" class="section-help-btn" id="currencies-help-btn" title="About currencies">?</button>
+          </div>
+          <div class="section-body">
+            <p id="currencies-status"></p>
+            <div id="currencies-list"></div>
+          </div>
+        </div>
+      </div>
+      <div id="sidebar-bottom">
+        <div id="sidebar-session-btns">
+          <button id="clear-btn" type="button">Clear</button>
+          <button id="reset-btn" type="button">Reset</button>
+        </div>
+        <button id="commands-btn" type="button">Help</button>
+        <a id="docs-link" href="https://numbat.dev/book/" target="_blank" rel="noopener">
+          Documentation
+        </a>
+      </div>
+    </aside>
+  </div>
+
+  <div id="commands-popup-backdrop" class="popup-backdrop"></div>
+  <div id="commands-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="commands-popup-title">
+    <div class="popup-header">
+      <h3 id="commands-popup-title">Built-in Commands</h3>
+      <button id="commands-popup-close" type="button">×</button>
+    </div>
+    <div class="popup-body">
+      <dl class="commands-list">
+        <dt>clear</dt>
+        <dd>Clear the output and reset the current session's input history</dd>
+        <dt>reset</dt>
+        <dd>Reset the interpreter state, clear output, and start a new session</dd>
+        <dt>list</dt>
+        <dd>List all defined variables, functions, and units</dd>
+        <dt>list units</dt>
+        <dd>List all available units</dd>
+        <dt>list functions</dt>
+        <dd>List all available functions</dd>
+        <dt>list dimensions</dt>
+        <dd>List all dimensions</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div id="info-popup-backdrop" class="popup-backdrop"></div>
+  <div id="info-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="info-popup-title">
+    <div class="popup-header">
+      <h3 id="info-popup-title"></h3>
+      <button id="info-popup-close" type="button">×</button>
+    </div>
+    <div class="popup-body">
+      <p id="info-popup-message"></p>
+    </div>
+  </div>
+
+  <div id="confirm-popup-backdrop" class="popup-backdrop"></div>
+  <div id="confirm-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="confirm-popup-title">
+    <div class="popup-header">
+      <h3 id="confirm-popup-title"></h3>
+      <button id="confirm-popup-close" type="button">×</button>
+    </div>
+    <div class="popup-body confirm-popup-body">
+      <p id="confirm-popup-message"></p>
+      <div class="confirm-actions">
+        <button id="confirm-popup-cancel" type="button">Cancel</button>
+        <button id="confirm-popup-ok" type="button">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

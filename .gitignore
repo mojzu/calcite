@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+numbat-wasm-pkg/
+
+# Build output
+dist/
+
+# Generated at build time
+public/ecb-rates.xml
+public/icon-192.png
+public/icon-512.png
+
+# Playwright
+test-results/
+playwright-report/
