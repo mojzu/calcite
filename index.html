@@ -17,16 +17,17 @@
         </div>
         <div id="output" aria-live="polite" aria-label="Calculation history"></div>
         <div id="numpad">
-          <button type="button" class="shortcut shortcut-num" data-insert="7">7</button>
-          <button type="button" class="shortcut shortcut-num" data-insert="8">8</button>
-          <button type="button" class="shortcut shortcut-num" data-insert="9">9</button>
-          <button type="button" class="shortcut shortcut-num" data-insert="4">4</button>
-          <button type="button" class="shortcut shortcut-num" data-insert="5">5</button>
-          <button type="button" class="shortcut shortcut-num" data-insert="6">6</button>
-          <button type="button" class="shortcut shortcut-num" data-insert="1">1</button>
-          <button type="button" class="shortcut shortcut-num" data-insert="2">2</button>
-          <button type="button" class="shortcut shortcut-num" data-insert="3">3</button>
-          <button type="button" class="shortcut shortcut-num numpad-zero" data-insert="0">0</button>
+          <button type="button" class="shortcut" data-insert="0">0</button>
+          <button type="button" class="shortcut" data-insert="1">1</button>
+          <button type="button" class="shortcut" data-insert="2">2</button>
+          <button type="button" class="shortcut" data-insert="3">3</button>
+          <button type="button" class="shortcut" data-insert="4">4</button>
+          <button type="button" class="shortcut" data-insert="5">5</button>
+          <button type="button" class="shortcut" data-insert="6">6</button>
+          <button type="button" class="shortcut" data-insert="7">7</button>
+          <button type="button" class="shortcut" data-insert="8">8</button>
+          <button type="button" class="shortcut" data-insert="9">9</button>
+          <span class="shortcut-divider"></span>
           <button type="button" class="shortcut shortcut-hex" data-insert="A">A</button>
           <button type="button" class="shortcut shortcut-hex" data-insert="B">B</button>
           <button type="button" class="shortcut shortcut-hex" data-insert="C">C</button>
@@ -37,6 +38,7 @@
         <div id="shortcuts">
           <button type="button" class="shortcut shortcut-keyword" data-insert="let ">let</button>
           <button type="button" class="shortcut shortcut-keyword" data-insert=" to ">to</button>
+          <span class="shortcut-divider"></span>
           <button type="button" class="shortcut shortcut-sym" data-insert="(">(</button>
           <button type="button" class="shortcut shortcut-sym" data-insert=")">)</button>
           <button type="button" class="shortcut shortcut-sym" data-insert=" + ">+</button>
@@ -54,6 +56,9 @@
           <button type="button" class="shortcut" data-insert="log(">log</button>
           <button type="button" class="shortcut" data-insert="log2(">log₂</button>
           <button type="button" class="shortcut" data-insert="abs(">abs</button>
+          <span class="shortcut-divider"></span>
+          <button id="clear-btn" type="button">Clear</button>
+          <button id="reset-btn" type="button">Reset</button>
         </div>
         <div id="input-row">
           <div id="history-nav">
@@ -79,18 +84,15 @@
       </main>
       <aside id="variables">
         <div id="sidebar-top">
-          <img src="public/favicon.svg" />
+          <img id="sidebar-logo" src="/icon-title.svg" />
           <span id="sidebar-title">Calcite</span>
           <button id="sidebar-collapse-btn" type="button" title="Collapse sidebar">›</button>
           <button id="mobile-sidebar-close" type="button" title="Close">×</button>
         </div>
         <div id="sidebar-middle">
-          <div id="variables-section" class="open">
+          <div id="variables-section">
             <div class="section-header">
-              <button id="variables-section-toggle" type="button" class="section-header-btn">
-                <span>Variables</span>
-                <span class="section-toggle-icon">›</span>
-              </button>
+              <span class="section-header-title">Variables</span>
               <button type="button" class="section-help-btn" id="vars-help-btn" title="About variables">?</button>
             </div>
             <div class="section-body">
@@ -99,46 +101,14 @@
               </div>
             </div>
           </div>
-          <div id="functions-section">
-            <div class="section-header">
-              <button id="functions-section-toggle" type="button" class="section-header-btn">
-                <span>Functions</span>
-                <span class="section-toggle-icon">›</span>
-              </button>
-              <button type="button" class="section-help-btn" id="functions-help-btn" title="About functions">?</button>
-            </div>
-            <div id="functions-list" class="section-body">
-              <p class="no-vars">No functions defined</p>
-            </div>
-          </div>
-          <div id="units-section">
-            <div class="section-header">
-              <button id="units-section-toggle" type="button" class="section-header-btn">
-                <span>Units</span>
-                <span class="section-toggle-icon">›</span>
-              </button>
-              <button type="button" class="section-help-btn" id="units-help-btn" title="About units">?</button>
-            </div>
-            <div id="units-section-body" class="section-body"></div>
-          </div>
-          <!-- <div id="currencies-section">
-          <div class="section-header">
-            <span class="section-header-title">Currencies</span>
-            <button type="button" class="section-help-btn" id="currencies-help-btn" title="About currencies">?</button>
-          </div>
-          <div class="section-body">
-            <p id="currencies-status"></p>
-            <div id="currencies-list"></div>
-          </div>
-        </div> -->
+        </div>
+        <div id="sidebar-panels">
+          <button id="units-panel-btn" type="button">Units</button>
+          <button id="functions-panel-btn" type="button">Functions</button>
         </div>
         <div id="sidebar-bottom">
-          <div id="sidebar-session-btns">
-            <button id="clear-btn" type="button">Clear</button>
-            <button id="reset-btn" type="button">Reset</button>
-          </div>
           <button id="commands-btn" type="button">Help</button>
-          <a id="docs-link" href="https://numbat.dev/book/" target="_blank" rel="noopener"> Documentation </a>
+          <a id="docs-link" href="https://numbat.dev/book/" target="_blank" rel="noopener">Documentation</a>
         </div>
       </aside>
     </div>
@@ -190,6 +160,28 @@
           <button id="confirm-popup-cancel" type="button">Cancel</button>
           <button id="confirm-popup-ok" type="button">Confirm</button>
         </div>
+      </div>
+    </div>
+
+    <div id="units-popup-backdrop" class="popup-backdrop"></div>
+    <div id="units-popup" class="popup popup-tall" role="dialog" aria-modal="true" aria-labelledby="units-popup-title">
+      <div class="popup-header">
+        <h3 id="units-popup-title">Units</h3>
+        <button type="button" class="section-help-btn" id="units-help-btn" title="About units">?</button>
+        <button id="units-popup-close" type="button">×</button>
+      </div>
+      <div id="units-section-body" class="popup-body"></div>
+    </div>
+
+    <div id="functions-popup-backdrop" class="popup-backdrop"></div>
+    <div id="functions-popup" class="popup popup-tall" role="dialog" aria-modal="true" aria-labelledby="functions-popup-title">
+      <div class="popup-header">
+        <h3 id="functions-popup-title">Functions</h3>
+        <button type="button" class="section-help-btn" id="functions-help-btn" title="About functions">?</button>
+        <button id="functions-popup-close" type="button">×</button>
+      </div>
+      <div id="functions-list" class="popup-body">
+        <p class="no-vars">No functions defined</p>
       </div>
     </div>
 

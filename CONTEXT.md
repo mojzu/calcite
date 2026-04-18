@@ -16,3 +16,5 @@ A public git repository for a web-based calculator.
 ```
 
 ## Rules
+
+Read README.md for build information.

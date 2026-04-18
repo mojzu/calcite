@@ -22,9 +22,6 @@ const variablesList    = document.getElementById('variables-list')!
 const tabsScroll       = document.getElementById('tabs-scroll')!
 const sessionSelect    = document.getElementById('session-select') as HTMLSelectElement
 const sidebarMiddle    = document.getElementById('sidebar-middle')!
-const variablesSection = document.getElementById('variables-section') as HTMLElement
-const unitsSection     = document.getElementById('units-section') as HTMLElement
-const functionsSection = document.getElementById('functions-section') as HTMLElement
 
 const LET_PATTERN          = /^let\s+([a-zA-Z_][a-zA-Z0-9_]*)/
 const FN_PATTERN           = /^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/
@@ -52,8 +49,6 @@ const variables = new Set<string>()
 const functions = new Map<string, string>()  // name → params string
 let numbat!: Numbat
 let currentSession!: Session
-let exchangeRatesXml: string | null = null
-let exchangeRatesApplied = false
 let historyIndex = -1  // -1 = not navigating; 0 = most recent input
 let historyDraft = ''  // saved input text before navigating
 
@@ -240,10 +235,17 @@ function renderTabBar(): void {
     close.title = 'Close session'
     close.addEventListener('click', (e: MouseEvent) => {
       e.stopPropagation()
-      const remaining = loadSessions().filter(s => s.id !== session.id)
+      const all = loadSessions()
+      const remaining = all.filter(s => s.id !== session.id)
       saveSessions(remaining)
       if (isCurrent) {
-        startNewSession(true)
+        // Mark as discarded so replaySession / startNewSession won't re-save it
+        currentSession.inputs = []
+        if (remaining.length > 0) {
+          replaySession(remaining[0].id)
+        } else {
+          startNewSession()
+        }
       } else {
         renderTabBar()
       }
@@ -315,10 +317,14 @@ function startRename(session: Session, labelEl: HTMLSpanElement): void {
   })
 }
 
-function startNewSession(force = false): void {
-  if (!force && currentSession && currentSession.inputs.length === 0) return
-
-  if (currentSession) saveCurrentSession()
+function startNewSession(): void {
+  if (currentSession) {
+    if (currentSession.inputs.length === 0) {
+      saveSessions(loadSessions().filter(s => s.id !== currentSession.id))
+    } else {
+      saveCurrentSession()
+    }
+  }
 
   initNumbat()
   variables.clear()
@@ -747,21 +753,14 @@ async function main(): Promise<void> {
     renderTabBar()
   }
 
-  // Variables sidebar section
-  document.getElementById('variables-section-toggle')!.addEventListener('click', () => {
-    variablesSection.classList.toggle('open')
-  })
-
-  // Functions sidebar section
-  document.getElementById('functions-section-toggle')!.addEventListener('click', () => {
-    functionsSection.classList.toggle('open')
-  })
-
-  // Units sidebar section
+  // Units and Functions panel buttons → popups
   buildUnitsSection()
-  document.getElementById('units-section-toggle')!.addEventListener('click', () => {
-    unitsSection.classList.toggle('open')
-  })
+  document.getElementById('units-panel-btn')!.addEventListener('click', () => showPopup('units-popup'))
+  document.getElementById('units-popup-close')!.addEventListener('click', () => hidePopup('units-popup'))
+  document.getElementById('units-popup-backdrop')!.addEventListener('click', () => hidePopup('units-popup'))
+  document.getElementById('functions-panel-btn')!.addEventListener('click', () => showPopup('functions-popup'))
+  document.getElementById('functions-popup-close')!.addEventListener('click', () => hidePopup('functions-popup'))
+  document.getElementById('functions-popup-backdrop')!.addEventListener('click', () => hidePopup('functions-popup'))
 
   // Info popup
   document.getElementById('info-popup-close')!.addEventListener('click', hideInfoPopup)
@@ -804,7 +803,7 @@ async function main(): Promise<void> {
   document.getElementById('commands-popup-close')!.addEventListener('click', hideCommandsPopup)
   document.getElementById('commands-popup-backdrop')!.addEventListener('click', hideCommandsPopup)
   document.addEventListener('keydown', (e: KeyboardEvent) => {
-    if (e.key === 'Escape') { hideCommandsPopup(); hideConfirmPopup(); hideInfoPopup() }
+    if (e.key === 'Escape') { hideCommandsPopup(); hideConfirmPopup(); hideInfoPopup(); hidePopup('units-popup'); hidePopup('functions-popup') }
   })
 
   // Mobile sidebar buttons
@@ -814,9 +813,7 @@ async function main(): Promise<void> {
     sidebarMiddle.scrollTop = 0
   })
   document.getElementById('mobile-units-btn')!.addEventListener('click', () => {
-    unitsSection.classList.add('open')
-    sidebar.classList.add('mobile-open')
-    sidebarMiddle.scrollTop = (unitsSection as HTMLElement).offsetTop
+    showPopup('units-popup')
   })
   document.getElementById('mobile-sidebar-close')!.addEventListener('click', () => {
     sidebar.classList.remove('mobile-open')
