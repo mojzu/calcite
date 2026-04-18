@@ -1,2 +1,3 @@
-# calcite
-Web calculator interface for Numbat
+# Calcite
+
+Web calculator interface for [Numbat](https://numbat.dev/docs/).
