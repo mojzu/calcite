@@ -7,7 +7,7 @@
     "dev": "vite preview",
     "check": "tsc -p tsconfig.json && tsc -p tsconfig.node.json",
     "prebuild": "tsx scripts/fetch-wasm.ts && tsx scripts/fetch-rates.ts && tsx scripts/generate-icons.ts",
-    "build": "npm run check && vite build",
+    "build": "npm run check && vite build && echo 'calcite.mojzu.net' > dist/CNAME",
     "clean": "rm -rf dist",
     "test": "playwright test",
     "test:install": "playwright install chromium",
