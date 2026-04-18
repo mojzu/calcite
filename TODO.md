@@ -9,3 +9,4 @@
 - Improve style of input bar, layout of shortcut actions/number inputs, remove hexadecimals?
 - Improve style of mobile sidebar, each section should have a button, button to close popup should be at bottom of page
 - Add playwright tests to confirm behaviours/test builds before deployment
+- Fix icon rendering in sidebar/README.md
