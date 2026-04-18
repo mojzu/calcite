@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calcite</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script type="module" crossorigin src="/assets/index-7xCOmlj8.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DDJe9V-r.css">
+    <script type="module" crossorigin src="/assets/index-DADVnZRl.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-15Zetqjw.css">
   <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
   <body>
     <div id="app">
@@ -81,12 +81,11 @@
         <div id="mobile-sidebar-buttons">
           <button type="button" id="mobile-vars-btn">Variables</button>
           <button type="button" id="mobile-units-btn">Units</button>
+          <button type="button" id="mobile-functions-btn">Functions</button>
         </div>
       </main>
       <aside id="variables">
         <div id="sidebar-top">
-          <img id="sidebar-logo" src="/icon-title.svg" />
-          <span id="sidebar-title">Calcite</span>
           <button id="sidebar-collapse-btn" type="button" title="Collapse sidebar">›</button>
           <button id="mobile-sidebar-close" type="button" title="Close">×</button>
         </div>
@@ -108,34 +107,14 @@
           <button id="functions-panel-btn" type="button">Functions</button>
         </div>
         <div id="sidebar-bottom">
-          <button id="commands-btn" type="button">Help</button>
-          <a id="docs-link" href="https://numbat.dev/book/" target="_blank" rel="noopener">Documentation</a>
+          <div id="sidebar-brand">
+            <img id="sidebar-logo" src="/icon-title.svg" />
+            <span id="sidebar-title">Calcite</span>
+          </div>
+          <a class="sidebar-link" href="https://github.com/mojzu/calcite" target="_blank" rel="noopener">GitHub</a>
+          <a class="sidebar-link" href="https://numbat.dev/doc/" target="_blank" rel="noopener">Numbat Documentation</a>
         </div>
       </aside>
-    </div>
-
-    <div id="commands-popup-backdrop" class="popup-backdrop"></div>
-    <div id="commands-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="commands-popup-title">
-      <div class="popup-header">
-        <h3 id="commands-popup-title">Built-in Commands</h3>
-        <button id="commands-popup-close" type="button">×</button>
-      </div>
-      <div class="popup-body">
-        <dl class="commands-list">
-          <dt>clear</dt>
-          <dd>Clear the output and reset the current session's input history</dd>
-          <dt>reset</dt>
-          <dd>Reset the interpreter state, clear output, and start a new session</dd>
-          <dt>list</dt>
-          <dd>List all defined variables, functions, and units</dd>
-          <dt>list units</dt>
-          <dd>List all available units</dd>
-          <dt>list functions</dt>
-          <dd>List all available functions</dd>
-          <dt>list dimensions</dt>
-          <dd>List all dimensions</dd>
-        </dl>
-      </div>
     </div>
 
     <div id="info-popup-backdrop" class="popup-backdrop"></div>
