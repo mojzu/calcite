@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Calcite</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script type="module" crossorigin src="/assets/index-C4J1ln3V.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-D1j2kPfU.css">
+    <script type="module" crossorigin src="/assets/index-D68ZQlZz.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Dgo0MQPI.css">
   <link rel="manifest" href="/manifest.webmanifest"></head>
   <body>
     <div id="app">
@@ -116,12 +116,28 @@
             <button id="sidebar-collapse-btn" type="button" title="Collapse sidebar" aria-label="Collapse sidebar">›</button>
             <button id="mobile-sidebar-close" type="button" title="Close sidebar" aria-label="Close sidebar">×</button>
           </div>
-          <button id="pwa-check-btn" type="button" class="sidebar-link sidebar-check-btn">Check for update</button>
-          <button id="pwa-update-btn" type="button" class="sidebar-link sidebar-update-btn" hidden>Update now</button>
+          <button id="about-btn" type="button" class="sidebar-link sidebar-about-btn">About Calcite</button>
           <a class="sidebar-link" href="https://github.com/mojzu/calcite" target="_blank" rel="noopener noreferrer">GitHub repository</a>
-          <a class="sidebar-link" href="https://numbat.dev/doc/" target="_blank" rel="noopener noreferrer">Numbat documentation</a>
+          <a class="sidebar-link" href="https://numbat.dev/docs/" target="_blank" rel="noopener noreferrer">Numbat documentation</a>
         </div>
       </aside>
+    </div>
+
+    <div id="about-popup-backdrop" class="popup-backdrop"></div>
+    <div id="about-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="about-popup-title">
+      <div class="popup-header">
+        <h3 id="about-popup-title">About Calcite</h3>
+        <button id="about-popup-close" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="popup-body about-popup-body">
+        <p class="about-blurb">Calcite is a calculator built on Numbat — a statically typed language for arithmetic with units, currencies, and dimensions. Crafted for daily use.</p>
+        <p class="about-version">Version <span id="about-version"></span></p>
+        <div class="about-actions">
+          <button id="about-check-btn" type="button" class="about-action-btn">Check for update</button>
+          <button id="about-update-btn" type="button" class="about-action-btn about-action-update" hidden>Update now</button>
+          <button id="about-reset-btn" type="button" class="about-action-btn about-action-danger">Reset app data</button>
+        </div>
+      </div>
     </div>
 
     <div id="info-popup-backdrop" class="popup-backdrop"></div>
