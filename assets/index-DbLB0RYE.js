@@ -66,7 +66,7 @@
             written: n.length
         };
     };
-    function E(t, e, n) {
+    function v(t, e, n) {
         if (n === void 0) {
             const l = U.encode(t), m = e(l.length, 1) >>> 0;
             return W().subarray(m, m + l.length).set(l), h = l.length, m;
@@ -203,24 +203,24 @@
             a.__wbg_numbat_free(e, 0);
         }
         print_info(e) {
-            const n = E(e, a.__wbindgen_malloc, a.__wbindgen_realloc), o = h;
+            const n = v(e, a.__wbindgen_malloc, a.__wbindgen_realloc), o = h;
             return a.numbat_print_info(this.__wbg_ptr, n, o);
         }
         try_run_command(e) {
-            const n = E(e, a.__wbindgen_malloc, a.__wbindgen_realloc), o = h, r = a.numbat_try_run_command(this.__wbg_ptr, n, o);
+            const n = v(e, a.__wbindgen_malloc, a.__wbindgen_realloc), o = h, r = a.numbat_try_run_command(this.__wbg_ptr, n, o);
             return ee.__wrap(r);
         }
         set_exchange_rates(e) {
-            const n = E(e, a.__wbindgen_malloc, a.__wbindgen_realloc), o = h;
+            const n = v(e, a.__wbindgen_malloc, a.__wbindgen_realloc), o = h;
             a.numbat_set_exchange_rates(this.__wbg_ptr, n, o);
         }
         get_completions_for(e) {
-            const n = E(e, a.__wbindgen_malloc, a.__wbindgen_realloc), o = h, r = a.numbat_get_completions_for(this.__wbg_ptr, n, o);
+            const n = v(e, a.__wbindgen_malloc, a.__wbindgen_realloc), o = h, r = a.numbat_get_completions_for(this.__wbg_ptr, n, o);
             var i = se(r[0], r[1]).slice();
             return a.__wbindgen_free(r[0], r[1] * 4, 4), i;
         }
         get_unicode_completion(e) {
-            const n = E(e, a.__wbindgen_malloc, a.__wbindgen_realloc), o = h, r = a.numbat_get_unicode_completion(this.__wbg_ptr, n, o);
+            const n = v(e, a.__wbindgen_malloc, a.__wbindgen_realloc), o = h, r = a.numbat_get_unicode_completion(this.__wbg_ptr, n, o);
             var i = se(r[0], r[1]).slice();
             return a.__wbindgen_free(r[0], r[1] * 4, 4), i;
         }
@@ -232,7 +232,7 @@
             return a.numbat_help(this.__wbg_ptr);
         }
         interpret(e) {
-            const n = E(e, a.__wbindgen_malloc, a.__wbindgen_realloc), o = h, r = a.numbat_interpret(this.__wbg_ptr, n, o);
+            const n = v(e, a.__wbindgen_malloc, a.__wbindgen_realloc), o = h, r = a.numbat_interpret(this.__wbg_ptr, n, o);
             return te.__wrap(r);
         }
     }
@@ -286,7 +286,7 @@
         }, t.wbg.__wbg_resolvedOptions_d495c21c27a8f865 = function(e) {
             return e.resolvedOptions();
         }, t.wbg.__wbg_stack_0ed75d68575b0f3c = function(e, n) {
-            const o = n.stack, r = E(o, a.__wbindgen_malloc, a.__wbindgen_realloc), i = h;
+            const o = n.stack, r = v(o, a.__wbindgen_malloc, a.__wbindgen_realloc), i = h;
             z().setInt32(e + 4, i, !0), z().setInt32(e + 0, r, !0);
         }, t.wbg.__wbindgen_init_externref_table = function() {
             const e = a.__wbindgen_export_3, n = e.grow(4);
@@ -295,7 +295,7 @@
             return e;
         }, t.wbg.__wbindgen_string_get = function(e, n) {
             const o = n, r = typeof o == "string" ? o : void 0;
-            var i = Ce(r) ? 0 : E(r, a.__wbindgen_malloc, a.__wbindgen_realloc), s = h;
+            var i = Ce(r) ? 0 : v(r, a.__wbindgen_malloc, a.__wbindgen_realloc), s = h;
             z().setInt32(e + 4, s, !0), z().setInt32(e + 0, i, !0);
         }, t.wbg.__wbindgen_string_new = function(e, n) {
             return O(e, n);
@@ -336,8 +336,8 @@
                 const f = u.endsWith(".css"), _ = f ? '[rel="stylesheet"]' : "";
                 if (document.querySelector(`link[href="${u}"]${_}`)) return;
                 const d = document.createElement("link");
-                if (d.rel = f ? "stylesheet" : Ne, f || (d.as = "script"), d.crossOrigin = "", d.href = u, m && d.setAttribute("nonce", m), document.head.appendChild(d), f) return new Promise((w, y)=>{
-                    d.addEventListener("load", w), d.addEventListener("error", ()=>y(new Error(`Unable to preload CSS for ${u}`)));
+                if (d.rel = f ? "stylesheet" : Ne, f || (d.as = "script"), d.crossOrigin = "", d.href = u, m && d.setAttribute("nonce", m), document.head.appendChild(d), f) return new Promise((E, y)=>{
+                    d.addEventListener("load", E), d.addEventListener("error", ()=>y(new Error(`Unable to preload CSS for ${u}`)));
                 });
             }));
         }
@@ -376,14 +376,14 @@
                 };
                 {
                     let d = !1;
-                    const w = ()=>{
+                    const E = ()=>{
                         d = !0, l?.addEventListener("controlling", (y)=>{
                             y.isUpdate && window.location.reload();
                         }), n?.();
                     };
                     l.addEventListener("installed", (y)=>{
-                        typeof y.isUpdate > "u" ? typeof y.isExternal < "u" && y.isExternal ? w() : !d && o?.() : y.isUpdate || o?.();
-                    }), l.addEventListener("waiting", w);
+                        typeof y.isUpdate > "u" ? typeof y.isExternal < "u" && y.isExternal ? E() : !d && o?.() : y.isUpdate || o?.();
+                    }), l.addEventListener("waiting", E);
                 }
                 l.register({
                     immediate: e
@@ -457,7 +457,7 @@
         for (const [e, n] of L){
             const o = document.createElement("div");
             o.className = "fn-item", o.title = `Insert "${e}("`, o.addEventListener("click", ()=>{
-                F(e + "(");
+                F(e + "("), w("functions-popup");
             });
             const r = document.createElement("span");
             r.className = "fn-name", r.textContent = e;
@@ -510,8 +510,8 @@
             const f = document.createElement("button");
             f.className = "tab-close", f.textContent = "×", f.title = "Close session", f.addEventListener("click", (_)=>{
                 _.stopPropagation();
-                const w = C().filter((y)=>y.id !== s.id);
-                D(w), l ? (p.inputs = [], w.length > 0 ? V(w[0].id) : we()) : M();
+                const E = C().filter((y)=>y.id !== s.id);
+                D(E), l ? (p.inputs = [], E.length > 0 ? V(E[0].id) : we()) : M();
             }), m.appendChild(f), $.appendChild(m);
         }
         const n = $.querySelector(".tab.active");
@@ -1146,7 +1146,7 @@
             for (const i of e.units){
                 const s = document.createElement("button");
                 s.type = "button", s.className = "unit-chip", s.textContent = i.symbol, s.title = i.name, s.addEventListener("click", ()=>{
-                    F(i.symbol);
+                    F(i.symbol), w("units-popup");
                 }), r.appendChild(s);
             }
             n.appendChild(r), t.appendChild(n);
@@ -1167,7 +1167,7 @@
         const e = document.getElementById(t);
         e.classList.add("visible"), document.getElementById(t + "-backdrop").classList.add("visible"), e.querySelector("button, [href], input, select, [tabindex]")?.focus();
     }
-    function v(t) {
+    function w(t) {
         document.getElementById(t).classList.remove("visible"), document.getElementById(t + "-backdrop").classList.remove("visible"), Q?.focus(), Q = null;
     }
     let oe = null;
@@ -1175,13 +1175,13 @@
         document.getElementById("confirm-popup-title").textContent = t, document.getElementById("confirm-popup-message").textContent = e, document.getElementById("confirm-popup-ok").textContent = o, oe = n, S("confirm-popup");
     }
     function R() {
-        v("confirm-popup"), oe = null;
+        w("confirm-popup"), oe = null;
     }
     function Z(t, e) {
         document.getElementById("info-popup-title").textContent = t, document.getElementById("info-popup-message").textContent = e, S("info-popup");
     }
     function X() {
-        v("info-popup");
+        w("info-popup");
     }
     async function Ue() {
         const t = document.createElement("div");
@@ -1194,7 +1194,7 @@
         }
         J(), g.removeChild(t);
         const e = C();
-        e.length > 0 ? await V(e[0].id) : (p = ne(), I(), M()), De(), document.getElementById("units-panel-btn").addEventListener("click", ()=>S("units-popup")), document.getElementById("units-popup-close").addEventListener("click", ()=>v("units-popup")), document.getElementById("units-popup-backdrop").addEventListener("click", ()=>v("units-popup")), document.getElementById("functions-panel-btn").addEventListener("click", ()=>S("functions-popup")), document.getElementById("functions-popup-close").addEventListener("click", ()=>v("functions-popup")), document.getElementById("functions-popup-backdrop").addEventListener("click", ()=>v("functions-popup")), document.getElementById("info-popup-close").addEventListener("click", X), document.getElementById("info-popup-backdrop").addEventListener("click", X), document.getElementById("vars-help-btn").addEventListener("click", ()=>{
+        e.length > 0 ? await V(e[0].id) : (p = ne(), I(), M()), De(), document.getElementById("units-panel-btn").addEventListener("click", ()=>S("units-popup")), document.getElementById("units-popup-close").addEventListener("click", ()=>w("units-popup")), document.getElementById("units-popup-backdrop").addEventListener("click", ()=>w("units-popup")), document.getElementById("functions-panel-btn").addEventListener("click", ()=>S("functions-popup")), document.getElementById("functions-popup-close").addEventListener("click", ()=>w("functions-popup")), document.getElementById("functions-popup-backdrop").addEventListener("click", ()=>w("functions-popup")), document.getElementById("info-popup-close").addEventListener("click", X), document.getElementById("info-popup-backdrop").addEventListener("click", X), document.getElementById("vars-help-btn").addEventListener("click", ()=>{
             Z("Variables", "Define variables with let name = expression to store a value for reuse. Tap a variable to insert it into your expression.");
         }), document.getElementById("functions-help-btn").addEventListener("click", ()=>{
             Z("Functions", "Define functions with fn name(params) = expression. Tap a function to insert it at the cursor.");
@@ -1208,7 +1208,7 @@
         }), document.getElementById("reset-btn").addEventListener("click", ()=>{
             de("Reset", "Clear all output, variables, and functions, and start fresh?", me, "Reset");
         }), document.addEventListener("keydown", (i)=>{
-            i.key === "Escape" && (R(), X(), v("units-popup"), v("functions-popup"));
+            i.key === "Escape" && (R(), X(), w("units-popup"), w("functions-popup"));
         });
         const n = document.getElementById("variables");
         document.getElementById("mobile-vars-btn").addEventListener("click", ()=>{
