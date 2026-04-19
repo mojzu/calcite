@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Calcite</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script type="module" crossorigin src="/assets/index-DbLB0RYE.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-D7mCaKmo.css">
+    <script type="module" crossorigin src="/assets/index-DV-nK9bx.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DXO3V8EV.css">
   <link rel="manifest" href="/manifest.webmanifest"></head>
   <body>
     <div id="app">
@@ -86,6 +86,7 @@
           <button type="button" id="mobile-vars-btn">Variables</button>
           <button type="button" id="mobile-units-btn">Units</button>
           <button type="button" id="mobile-functions-btn">Functions</button>
+          <button type="button" id="mobile-currencies-btn">Currencies</button>
         </div>
       </main>
       <aside id="variables" aria-label="Tools">
@@ -105,6 +106,7 @@
         <div id="sidebar-panels">
           <button id="units-panel-btn" type="button">Units</button>
           <button id="functions-panel-btn" type="button">Functions</button>
+          <button id="currencies-panel-btn" type="button">Currencies</button>
         </div>
         <div id="sidebar-bottom">
           <div id="sidebar-brand">
@@ -166,6 +168,19 @@
       </div>
       <div id="functions-list" class="popup-body">
         <p class="no-vars">No functions yet</p>
+      </div>
+    </div>
+
+    <div id="currencies-popup-backdrop" class="popup-backdrop"></div>
+    <div id="currencies-popup" class="popup popup-tall" role="dialog" aria-modal="true" aria-labelledby="currencies-popup-title">
+      <div class="popup-header">
+        <button type="button" class="section-help-btn" id="currencies-help-btn" title="About currencies" aria-label="About currencies">?</button>
+        <h3 id="currencies-popup-title">Currencies</h3>
+        <button id="currencies-popup-close" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="popup-body">
+        <p id="currencies-status" class="currencies-loading">Loading…</p>
+        <div id="currencies-list"></div>
       </div>
     </div>
 
