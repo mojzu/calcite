@@ -1236,7 +1236,7 @@
             t.textContent = "Failed to load: " + (i instanceof Error ? i.message : String(i)), t.classList.add("error");
             return;
         }
-        K(), y.removeChild(t);
+        K(), y.removeChild(t), await je();
         const e = B();
         e.length > 0 ? await G(e[0].id) : (p = oe(), C(), M()), qe(), document.getElementById("units-panel-btn").addEventListener("click", ()=>k("units-popup")), document.getElementById("units-popup-close").addEventListener("click", ()=>g("units-popup")), document.getElementById("units-popup-backdrop").addEventListener("click", ()=>g("units-popup")), document.getElementById("functions-panel-btn").addEventListener("click", ()=>k("functions-popup")), document.getElementById("functions-popup-close").addEventListener("click", ()=>g("functions-popup")), document.getElementById("functions-popup-backdrop").addEventListener("click", ()=>g("functions-popup")), document.getElementById("currencies-panel-btn").addEventListener("click", ()=>k("currencies-popup")), document.getElementById("currencies-popup-close").addEventListener("click", ()=>g("currencies-popup")), document.getElementById("currencies-popup-backdrop").addEventListener("click", ()=>g("currencies-popup")), document.getElementById("info-popup-close").addEventListener("click", Y), document.getElementById("info-popup-backdrop").addEventListener("click", Y), document.getElementById("vars-help-btn").addEventListener("click", ()=>{
             q("Variables", "Define variables with let name = expression to store a value for reuse. Tap a variable to insert it into your expression.");
@@ -1246,7 +1246,7 @@
             q("Currencies", 'Exchange rates are loaded from the European Central Bank (updated daily). Use currency codes in expressions — for example "100 USD to EUR" or "50 GBP + 30 CHF to EUR".');
         }), document.getElementById("units-help-btn").addEventListener("click", ()=>{
             q("Units", 'Units can be used in expressions and conversions — for example "1 km to mi" or "9.81 m/s^2 * 80 kg to N". Tap any unit to insert it at the cursor.');
-        }), je(), document.getElementById("confirm-popup-close").addEventListener("click", A), document.getElementById("confirm-popup-backdrop").addEventListener("click", A), document.getElementById("confirm-popup-cancel").addEventListener("click", A), document.getElementById("confirm-popup-ok").addEventListener("click", ()=>{
+        }), document.getElementById("confirm-popup-close").addEventListener("click", A), document.getElementById("confirm-popup-backdrop").addEventListener("click", A), document.getElementById("confirm-popup-cancel").addEventListener("click", A), document.getElementById("confirm-popup-ok").addEventListener("click", ()=>{
             const i = re;
             A(), i && i();
         }), document.getElementById("clear-btn").addEventListener("click", ()=>{
