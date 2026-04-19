@@ -23,3 +23,4 @@ Read README.md for build information.
 
 - Load functions from a file or show built-in Numbat functions in the functions panel
 - Add playwright tests to confirm behaviours/test builds before deployment
+- Add ability to upload custom currency conversion rates
