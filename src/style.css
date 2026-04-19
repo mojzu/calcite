@@ -132,7 +132,7 @@ body {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  padding-right: 1.5rem;
+  padding-right: var(--sp-6);
 }
 
 
@@ -298,6 +298,11 @@ body {
 
 .tab-close:hover {
   color: var(--error-color);
+}
+
+.tab-close:active {
+  color: var(--error-color);
+  opacity: 1;
 }
 
 .tab-rename-input {
@@ -514,7 +519,7 @@ button[type="submit"]:active {
 
 aside#variables {
   border-left: 1px solid var(--border);
-  padding: 1.25rem 0 1rem 1.5rem;
+  padding: var(--sp-5) 0 var(--sp-4) var(--sp-6);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -523,7 +528,7 @@ aside#variables {
 }
 
 aside#variables.collapsed {
-  padding: 0.75rem 0;
+  padding: var(--sp-3) 0;
 }
 
 @media (min-width: 681px) {
@@ -741,6 +746,10 @@ aside#variables.collapsed {
   color: var(--text);
 }
 
+.about-action-btn:active {
+  background: var(--border-subtle);
+}
+
 .about-action-btn:disabled {
   cursor: default;
   color: var(--text-faint);
@@ -827,6 +836,10 @@ aside#variables.collapsed {
   color: var(--text);
 }
 
+#confirm-popup-cancel:active {
+  background: var(--border-subtle);
+}
+
 #confirm-popup-ok {
   background: var(--error-color);
   border: 1px solid var(--error-color);
@@ -834,7 +847,8 @@ aside#variables.collapsed {
 }
 
 #confirm-popup-ok:hover {
-  filter: brightness(1.15);
+  background: color-mix(in oklch, var(--error-color), oklch(1 0 0) 12%);
+  border-color: color-mix(in oklch, var(--error-color), oklch(1 0 0) 12%);
 }
 
 
@@ -927,6 +941,10 @@ aside#variables.collapsed {
   color: var(--accent-hover);
 }
 
+.fn-item:active .fn-name {
+  color: var(--accent-active);
+}
+
 .fn-name {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
@@ -939,28 +957,6 @@ aside#variables.collapsed {
   color: var(--text-dim);
   word-break: break-word;
 }
-
-
-/* Currencies section */
-
-/* #currencies-section {
-  padding-bottom: 0.75rem;
-}
-
-#currencies-status {
-  font-size: var(--text-sm);
-  color: var(--text-dim);
-  margin-bottom: 0.4rem;
-}
-
-#currencies-status.loading {
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-#currencies-status.error {
-  color: var(--error-color);
-} */
 
 
 /* Units section */
@@ -1033,6 +1029,10 @@ aside#variables.collapsed {
 
 .var-item:hover .var-value {
   color: var(--result-bold);
+}
+
+.var-item:active .var-name {
+  color: var(--accent-active);
 }
 
 .var-name {
@@ -1123,34 +1123,49 @@ aside#variables.collapsed {
 /* ── Commands popup ────────────────────────────────────────────────────────── */
 
 .popup-backdrop {
-  display: none;
+  display: block;
   position: fixed;
   inset: 0;
   background: var(--overlay-bg);
   z-index: 100;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0s linear 0.2s;
 }
 
 .popup-backdrop.visible {
-  display: block;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.2s ease;
 }
 
 .popup {
-  display: none;
+  display: flex;
+  flex-direction: column;
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0.97);
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 8px;
   width: min(420px, calc(100vw - 2rem));
   z-index: 101;
   box-shadow: 0 8px 32px var(--shadow-color);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s linear 0.15s;
 }
 
 .popup.visible {
-  display: flex;
-  flex-direction: column;
+  transform: translate(-50%, -50%) scale(1);
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
 .popup-tall {
@@ -1348,7 +1363,7 @@ aside#variables.collapsed {
     width: 100%;
     border-left: none;
     border-top: 1px solid var(--border);
-    padding: 1rem;
+    padding: var(--sp-4);
     background: var(--bg);
     z-index: 50;
     transform: translateY(100%);
@@ -1361,7 +1376,7 @@ aside#variables.collapsed {
 
   aside#variables.collapsed {
     width: 100%;
-    padding: 1rem;
+    padding: var(--sp-4);
   }
 
   #mobile-sidebar-close {

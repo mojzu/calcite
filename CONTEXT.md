@@ -18,3 +18,8 @@ A public git repository for a web-based calculator.
 ## Rules
 
 Read README.md for build information.
+
+## Todo
+
+- Load functions from a file or show built-in Numbat functions in the functions panel
+- Add playwright tests to confirm behaviours/test builds before deployment
