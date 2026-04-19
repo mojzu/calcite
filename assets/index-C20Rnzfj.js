@@ -1325,7 +1325,7 @@
                 month: "short",
                 year: "numeric"
             }) : "unknown date";
-            t.textContent = `Rates · ${s}`, t.className = "", Ze(q);
+            t.textContent = `European Central Bank rates · ${s}`, t.className = "", Ze(q);
         } catch  {
             t.textContent = "Unavailable", t.className = "currencies-error";
         }
