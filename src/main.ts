@@ -46,9 +46,15 @@ interface UnitCategory {
   units: UnitEntry[]
 }
 
+interface DimensionCategory {
+  name: string
+  dimensions: string[]
+}
+
 const variables = new Set<string>()
 const functions = new Map<string, string>()  // name → params string
 let numbat!: Numbat
+let exchangeRatesXml: string | null = null
 let currentSession!: Session
 let historyIndex = -1  // -1 = not navigating; 0 = most recent input
 let historyDraft = ''  // saved input text before navigating
@@ -62,6 +68,35 @@ function escapeHtml(str: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
+}
+
+function closeMobileSidebar(): void {
+  document.getElementById('variables')!.classList.remove('mobile-open')
+}
+
+// ── Focus trap ────────────────────────────────────────────────────────────────
+
+const FOCUSABLE_SELECTOR = 'button:not([disabled]),[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])'
+
+function trapFocus(e: KeyboardEvent, container: HTMLElement): void {
+  const focusable = Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR))
+  if (focusable.length === 0) return
+  const first = focusable[0]
+  const last  = focusable[focusable.length - 1]
+  if (e.shiftKey) {
+    if (document.activeElement === first) { e.preventDefault(); last.focus() }
+  } else {
+    if (document.activeElement === last)  { e.preventDefault(); first.focus() }
+  }
+}
+
+function makeInteractive(el: HTMLElement, handler: () => void): void {
+  el.setAttribute('role', 'button')
+  el.tabIndex = 0
+  el.addEventListener('click', handler)
+  el.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler() }
+  })
 }
 
 function insertIntoInput(text: string): void {
@@ -88,7 +123,7 @@ function appendEntry(query: string, result: string, isError: boolean): void {
   queryEl.className = 'query'
   queryEl.textContent = query
   queryEl.title = 'Re-use this expression'
-  queryEl.addEventListener('click', () => { insertIntoInput(query) })
+  makeInteractive(queryEl, () => insertIntoInput(query))
 
   const resultEl = document.createElement('div')
   resultEl.className = 'result'
@@ -115,7 +150,7 @@ function updateVariables(): void {
         const item = document.createElement('div')
         item.className = 'var-item'
         item.title = `Insert "${name}"`
-        item.addEventListener('click', () => { insertIntoInput(name) })
+        makeInteractive(item, () => { insertIntoInput(name); closeMobileSidebar() })
         const nameEl = document.createElement('span')
         nameEl.className = 'var-name'
         nameEl.textContent = name
@@ -145,7 +180,7 @@ function updateFunctions(): void {
     const item = document.createElement('div')
     item.className = 'fn-item'
     item.title = `Insert "${name}("`
-    item.addEventListener('click', () => { insertIntoInput(name + '(') })
+    makeInteractive(item, () => { insertIntoInput(name + '('); hidePopup('functions-popup') })
 
     const nameEl = document.createElement('span')
     nameEl.className = 'fn-name'
@@ -213,17 +248,26 @@ function renderTabBar(): void {
 
   // Desktop: tab pills
   tabsScroll.innerHTML = ''
+  tabsScroll.setAttribute('role', 'tablist')
+  tabsScroll.setAttribute('aria-label', 'Sessions')
   for (const session of ordered) {
     const isCurrent = session.id === currentSession.id
 
     const tab = document.createElement('div')
     tab.className = 'tab' + (isCurrent ? ' active' : '') + (session.named ? ' named' : '')
+    tab.setAttribute('role', 'tab')
+    tab.setAttribute('aria-selected', isCurrent ? 'true' : 'false')
+    tab.setAttribute('aria-controls', 'output')
 
     const label = document.createElement('span')
     label.className = 'tab-label'
     label.textContent = session.label
     if (!isCurrent) {
+      label.tabIndex = 0
       label.addEventListener('click', () => replaySession(session.id))
+      label.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); replaySession(session.id) }
+      })
     }
     label.addEventListener('dblclick', (e: MouseEvent) => {
       e.stopPropagation()
@@ -582,7 +626,109 @@ function buildUnitsSection(): void {
       chip.className = 'unit-chip'
       chip.textContent = unit.symbol
       chip.title = unit.name
-      chip.addEventListener('click', () => { insertIntoInput(unit.symbol) })
+      chip.addEventListener('click', () => { insertIntoInput(unit.symbol); hidePopup('units-popup') })
+      chips.appendChild(chip)
+    }
+    section.appendChild(chips)
+    body.appendChild(section)
+  }
+}
+
+// ── Dimensions section ────────────────────────────────────────────────────────
+
+const DIMENSION_CATEGORIES: DimensionCategory[] = [
+  { name: 'Base', dimensions: [
+    'Length',
+    'Mass',
+    'Time',
+    'ElectricCurrent',
+    'Temperature',
+    'AmountOfSubstance',
+    'LuminousIntensity',
+  ]},
+  { name: 'Geometry', dimensions: [
+    'Area',
+    'Volume',
+    'Angle',
+    'SolidAngle',
+    'Wavenumber',
+  ]},
+  { name: 'Mechanics', dimensions: [
+    'Velocity',
+    'Acceleration',
+    'Jerk',
+    'Frequency',
+    'Force',
+    'Pressure',
+    'Energy',
+    'Power',
+    'Momentum',
+    'Torque',
+    'Action',
+    'SurfaceTension',
+    'DynamicViscosity',
+    'KinematicViscosity',
+  ]},
+  { name: 'Electricity & Magnetism', dimensions: [
+    'ElectricCharge',
+    'ElectricPotential',
+    'ElectricResistance',
+    'ElectricConductance',
+    'ElectricCapacitance',
+    'ElectricInductance',
+    'MagneticFlux',
+    'MagneticFluxDensity',
+  ]},
+  { name: 'Thermodynamics', dimensions: [
+    'Entropy',
+    'HeatCapacity',
+    'SpecificHeatCapacity',
+    'ThermalConductivity',
+    'Irradiance',
+  ]},
+  { name: 'Light', dimensions: [
+    'LuminousFlux',
+    'Illuminance',
+    'Luminance',
+  ]},
+  { name: 'Chemistry', dimensions: [
+    'MolarMass',
+    'MolarEnergy',
+    'MolarHeatCapacity',
+    'MolarConcentration',
+    'MolarVolume',
+    'CatalyticActivity',
+  ]},
+  { name: 'Radiation', dimensions: [
+    'AbsorbedDose',
+    'EquivalentDose',
+    'Radioactivity',
+  ]},
+  { name: 'Other', dimensions: [
+    'Density',
+    'Information',
+    'Money',
+  ]},
+]
+
+function buildDimensionsSection(): void {
+  const body = document.getElementById('dimensions-section-body')!
+  for (const category of DIMENSION_CATEGORIES) {
+    const section = document.createElement('div')
+    section.className = 'unit-category'
+
+    const heading = document.createElement('h4')
+    heading.textContent = category.name
+    section.appendChild(heading)
+
+    const chips = document.createElement('div')
+    chips.className = 'unit-chips'
+    for (const dim of category.dimensions) {
+      const chip = document.createElement('button')
+      chip.type = 'button'
+      chip.className = 'unit-chip'
+      chip.textContent = dim
+      chip.addEventListener('click', () => { insertIntoInput(dim); hidePopup('dimensions-popup') })
       chips.appendChild(chip)
     }
     section.appendChild(chips)
@@ -592,78 +738,63 @@ function buildUnitsSection(): void {
 
 // ── Exchange rates ────────────────────────────────────────────────────────────
 
-// function applyExchangeRates(): void {
-//   // set_exchange_rates can only be called once per WASM module lifetime — a second
-//   // call causes an unreachable trap that corrupts the Numbat instance's RefCell,
-//   // making all subsequent WASM calls fail. The flag is never reset so only the first
-//   // instance (loaded via fetchExchangeRates) ever calls set_exchange_rates.
-//   // Subsequent instances fall back to defining currencies via interpret.
-//   if (!exchangeRatesXml) return
-//   if (!exchangeRatesApplied) {
-//     try {
-//       numbat.set_exchange_rates(exchangeRatesXml)
-//       exchangeRatesApplied = true
-//       return
-//     } catch {
-//       // Should not normally be reached — fallthrough to interpret-based fallback.
-//     }
-//   }
-//   // Fallback: parse ECB XML and define currency units via interpret so that new
-//   // Numbat instances created after the first set_exchange_rates call also get rates.
-//   const matches = [...exchangeRatesXml.matchAll(/currency='([A-Z]{3})'\s+rate='([0-9.]+)'/g)]
-//   for (const [, code, rate] of matches) {
-//     numbat.interpret(`unit ${code} : Money = (1 / ${rate}) EUR`)
-//   }
-// }
+// Uses interpret-based definitions exclusively — set_exchange_rates can only be
+// called once per WASM module lifetime and crashes on any subsequent call.
+function applyExchangeRates(): void {
+  if (!exchangeRatesXml) return
+  const matches = [...exchangeRatesXml.matchAll(/currency='([A-Z]{3})'\s+rate='([0-9.]+)'/g)]
+  for (const [, code, rate] of matches) {
+    numbat.interpret(`unit ${code} : Money = (1 / ${rate}) EUR`)
+  }
+}
 
 function initNumbat(): void {
   numbat = Numbat.new(true, true, FormatType.Html)
-  // applyExchangeRates()
+  applyExchangeRates()
 }
 
-// function buildCurrencyChips(xml: string): void {
-//   const list = document.getElementById('currencies-list')!
-//   list.innerHTML = ''
-//   // ECB XML has currency="USD" on each Cube element
-//   const codes = [...new Set([...xml.matchAll(/currency='([A-Z]{3})'/g)].map(m => m[1]))]
-//   codes.sort()
-//   const chips = document.createElement('div')
-//   chips.className = 'unit-chips'
-//   for (const code of codes) {
-//     const chip = document.createElement('button')
-//     chip.type = 'button'
-//     chip.className = 'unit-chip'
-//     chip.textContent = code
-//     chip.addEventListener('click', () => { insertIntoInput(code) })
-//     chips.appendChild(chip)
-//   }
-//   list.appendChild(chips)
-// }
+function buildCurrencyChips(xml: string): void {
+  const list = document.getElementById('currencies-list')!
+  list.innerHTML = ''
+  const codes = ['EUR', ...new Set([...xml.matchAll(/currency='([A-Z]{3})'/g)].map(m => m[1]))]
+  codes.sort()
+  const chips = document.createElement('div')
+  chips.className = 'unit-chips'
+  for (const code of codes) {
+    const chip = document.createElement('button')
+    chip.type = 'button'
+    chip.className = 'unit-chip'
+    chip.textContent = code
+    chip.addEventListener('click', () => { insertIntoInput(code); hidePopup('currencies-popup') })
+    chips.appendChild(chip)
+  }
+  list.appendChild(chips)
+}
 
-// async function fetchExchangeRates(): Promise<void> {
-//   const statusEl = document.getElementById('currencies-status')!
-//   statusEl.textContent = 'Loading…'
-//   statusEl.className = 'loading'
+async function fetchExchangeRates(): Promise<void> {
+  const statusEl = document.getElementById('currencies-status')!
+  statusEl.textContent = 'Loading…'
+  statusEl.className = 'currencies-loading'
 
-//   try {
-//     const response = await fetch('/ecb-rates.xml')
-//     if (!response.ok) throw new Error(`HTTP ${response.status}`)
+  try {
+    const response = await fetch('/ecb-rates.xml')
+    if (!response.ok) throw new Error(`HTTP ${response.status}`)
 
-//     exchangeRatesXml = await response.text()
-//     applyExchangeRates()
+    exchangeRatesXml = await response.text()
+    applyExchangeRates()
 
-//     const dateMatch = exchangeRatesXml.match(/time='(\d{4}-\d{2}-\d{2})'/)
-//     const date = dateMatch
-//       ? new Date(dateMatch[1]).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
-//       : 'unknown date'
-//     statusEl.textContent = `Rates · ${date}`
-//     statusEl.className = ''
-//     buildCurrencyChips(exchangeRatesXml)
-//   } catch {
-//     statusEl.textContent = 'Unavailable'
-//     statusEl.className = 'error'
-//   }
-// }
+    const dateMatch = exchangeRatesXml.match(/time='(\d{4}-\d{2}-\d{2})'/)
+    const date = dateMatch
+      ? new Date(dateMatch[1]).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+      : 'unknown date'
+    statusEl.textContent = `Rates · ${date}`
+    statusEl.className = ''
+    buildCurrencyChips(exchangeRatesXml)
+  } catch {
+    statusEl.textContent = 'Unavailable'
+    statusEl.className = 'currencies-error'
+  }
+}
 
 // ── Session actions ───────────────────────────────────────────────────────────
 
@@ -692,21 +823,27 @@ function doClear(): void {
 // ── Popups ────────────────────────────────────────────────────────────────────
 
 let popupTrigger: HTMLElement | null = null
+const openPopups: string[] = []
 
 function showPopup(id: string): void {
-  popupTrigger = document.activeElement as HTMLElement
+  if (openPopups.length === 0) popupTrigger = document.activeElement as HTMLElement
+  openPopups.push(id)
   const popup = document.getElementById(id)!
   popup.classList.add('visible')
   document.getElementById(id + '-backdrop')!.classList.add('visible')
-  const first = popup.querySelector<HTMLElement>('button, [href], input, select, [tabindex]')
+  const first = popup.querySelector<HTMLElement>(FOCUSABLE_SELECTOR)
   first?.focus()
 }
 
 function hidePopup(id: string): void {
   document.getElementById(id)!.classList.remove('visible')
   document.getElementById(id + '-backdrop')!.classList.remove('visible')
-  popupTrigger?.focus()
-  popupTrigger = null
+  const idx = openPopups.lastIndexOf(id)
+  if (idx >= 0) openPopups.splice(idx, 1)
+  if (openPopups.length === 0) {
+    popupTrigger?.focus()
+    popupTrigger = null
+  }
 }
 
 let confirmCallback: (() => void) | null = null
@@ -751,6 +888,9 @@ async function main(): Promise<void> {
   initNumbat()
   output.removeChild(initMsg)
 
+  // Fetch rates before replaying sessions so currency expressions don't error on reload
+  await fetchExchangeRates()
+
   // Load the most recent session, or start fresh
   const existing = loadSessions()
   if (existing.length > 0) {
@@ -766,9 +906,16 @@ async function main(): Promise<void> {
   document.getElementById('units-panel-btn')!.addEventListener('click', () => showPopup('units-popup'))
   document.getElementById('units-popup-close')!.addEventListener('click', () => hidePopup('units-popup'))
   document.getElementById('units-popup-backdrop')!.addEventListener('click', () => hidePopup('units-popup'))
+  buildDimensionsSection()
+  document.getElementById('dimensions-panel-btn')!.addEventListener('click', () => showPopup('dimensions-popup'))
+  document.getElementById('dimensions-popup-close')!.addEventListener('click', () => hidePopup('dimensions-popup'))
+  document.getElementById('dimensions-popup-backdrop')!.addEventListener('click', () => hidePopup('dimensions-popup'))
   document.getElementById('functions-panel-btn')!.addEventListener('click', () => showPopup('functions-popup'))
   document.getElementById('functions-popup-close')!.addEventListener('click', () => hidePopup('functions-popup'))
   document.getElementById('functions-popup-backdrop')!.addEventListener('click', () => hidePopup('functions-popup'))
+  document.getElementById('currencies-panel-btn')!.addEventListener('click', () => showPopup('currencies-popup'))
+  document.getElementById('currencies-popup-close')!.addEventListener('click', () => hidePopup('currencies-popup'))
+  document.getElementById('currencies-popup-backdrop')!.addEventListener('click', () => hidePopup('currencies-popup'))
 
   // Info popup
   document.getElementById('info-popup-close')!.addEventListener('click', hideInfoPopup)
@@ -779,14 +926,15 @@ async function main(): Promise<void> {
   document.getElementById('functions-help-btn')!.addEventListener('click', () => {
     showInfoPopup('Functions', 'Define functions with fn name(params) = expression. Tap a function to insert it at the cursor.')
   })
-  // document.getElementById('currencies-help-btn')!.addEventListener('click', () => {
-  //   showInfoPopup('Currencies', 'Exchange rates are loaded from the European Central Bank (updated daily). Use currency codes in expressions — for example "100 USD to EUR" or "50 GBP + 30 CHF to EUR".')
-  // })
+  document.getElementById('currencies-help-btn')!.addEventListener('click', () => {
+    showInfoPopup('Currencies', 'Exchange rates are loaded from the European Central Bank (updated daily). Use currency codes in expressions — for example "100 USD to EUR" or "50 GBP + 30 CHF to EUR".')
+  })
   document.getElementById('units-help-btn')!.addEventListener('click', () => {
     showInfoPopup('Units', 'Units can be used in expressions and conversions — for example "1 km to mi" or "9.81 m/s^2 * 80 kg to N". Tap any unit to insert it at the cursor.')
   })
-
-  // fetchExchangeRates()
+  document.getElementById('dimensions-help-btn')!.addEventListener('click', () => {
+    showInfoPopup('Dimensions', 'Dimensions are physical quantity types used in type annotations — for example "let x: Length = 5 m" or "fn speed(d: Length, t: Time) -> Velocity = d / t". Tap a dimension to insert it at the cursor.')
+  })
 
   // Confirm popup
   document.getElementById('confirm-popup-close')!.addEventListener('click', hideConfirmPopup)
@@ -798,6 +946,19 @@ async function main(): Promise<void> {
     if (callback) callback()
   })
 
+  // About popup
+  document.getElementById('about-btn')!.addEventListener('click', () => showPopup('about-popup'))
+  document.getElementById('about-popup-close')!.addEventListener('click', () => hidePopup('about-popup'))
+  document.getElementById('about-popup-backdrop')!.addEventListener('click', () => hidePopup('about-popup'))
+  document.getElementById('about-reset-btn')!.addEventListener('click', () => {
+    showConfirmPopup(
+      'Reset app data',
+      'This will erase all sessions, variables, and cached data. The app will reload.',
+      doResetAppData,
+      'Reset'
+    )
+  })
+
   // Session action buttons
   document.getElementById('clear-btn')!.addEventListener('click', () => {
     showConfirmPopup('Clear session', 'Clear all output and history for this session?', doClear, 'Clear')
@@ -807,7 +968,11 @@ async function main(): Promise<void> {
   })
 
   document.addEventListener('keydown', (e: KeyboardEvent) => {
-    if (e.key === 'Escape') { hideConfirmPopup(); hideInfoPopup(); hidePopup('units-popup'); hidePopup('functions-popup') }
+    if (e.key === 'Escape') { hideConfirmPopup(); hideInfoPopup(); hidePopup('about-popup'); hidePopup('units-popup'); hidePopup('dimensions-popup'); hidePopup('functions-popup'); hidePopup('currencies-popup') }
+    if (e.key === 'Tab' && openPopups.length > 0) {
+      const topId = openPopups[openPopups.length - 1]
+      trapFocus(e, document.getElementById(topId)!)
+    }
   })
 
   // Mobile sidebar buttons
@@ -819,19 +984,29 @@ async function main(): Promise<void> {
   document.getElementById('mobile-units-btn')!.addEventListener('click', () => {
     showPopup('units-popup')
   })
+  document.getElementById('mobile-dimensions-btn')!.addEventListener('click', () => {
+    showPopup('dimensions-popup')
+  })
   document.getElementById('mobile-functions-btn')!.addEventListener('click', () => {
     showPopup('functions-popup')
+  })
+  document.getElementById('mobile-currencies-btn')!.addEventListener('click', () => {
+    showPopup('currencies-popup')
   })
   document.getElementById('mobile-sidebar-close')!.addEventListener('click', () => {
     sidebar.classList.remove('mobile-open')
   })
 
   // Sidebar collapse (desktop)
+  const appEl = document.getElementById('app')!
   const collapseBtn = document.getElementById('sidebar-collapse-btn')!
   collapseBtn.addEventListener('click', () => {
     sidebar.classList.toggle('collapsed')
-    collapseBtn.textContent = sidebar.classList.contains('collapsed') ? '‹' : '›'
-    collapseBtn.title = sidebar.classList.contains('collapsed') ? 'Expand sidebar' : 'Collapse sidebar'
+    appEl.classList.toggle('sidebar-collapsed')
+    const isCollapsed = sidebar.classList.contains('collapsed')
+    collapseBtn.textContent = isCollapsed ? '‹' : '›'
+    collapseBtn.title = isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'
+    collapseBtn.setAttribute('aria-label', isCollapsed ? 'Expand sidebar' : 'Collapse sidebar')
   })
 
   // Number row and shortcut buttons
@@ -950,16 +1125,47 @@ async function main(): Promise<void> {
 
 // ── PWA update ────────────────────────────────────────────────────────────────
 
-const pwaUpdateBtn = document.getElementById('pwa-update-btn') as HTMLButtonElement
+const aboutCheckBtn = document.getElementById('about-check-btn') as HTMLButtonElement
+const aboutUpdateBtn = document.getElementById('about-update-btn') as HTMLButtonElement
+
+;(document.getElementById('about-version') as HTMLSpanElement).textContent = __APP_VERSION__
+
+let updateAvailable = false
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    pwaUpdateBtn.hidden = false
+    updateAvailable = true
+    aboutCheckBtn.hidden = true
+    aboutUpdateBtn.hidden = false
   },
 })
 
-pwaUpdateBtn.addEventListener('click', () => {
+aboutCheckBtn.addEventListener('click', async () => {
+  aboutCheckBtn.textContent = 'Checking…'
+  aboutCheckBtn.disabled = true
+  const reg = await navigator.serviceWorker.getRegistration()
+  await reg?.update()
+  if (!updateAvailable) {
+    aboutCheckBtn.textContent = 'Check for update'
+    aboutCheckBtn.disabled = false
+  }
+})
+
+aboutUpdateBtn.addEventListener('click', () => {
   void updateSW(true)
 })
+
+// ── Reset app data ────────────────────────────────────────────────────────────
+
+function doResetAppData(): void {
+  void (async () => {
+    localStorage.clear()
+    const regs = await navigator.serviceWorker.getRegistrations()
+    await Promise.all(regs.map(r => r.unregister()))
+    const cacheNames = await caches.keys()
+    await Promise.all(cacheNames.map(n => caches.delete(n)))
+    location.reload()
+  })()
+}
 
 main()

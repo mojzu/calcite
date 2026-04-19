@@ -14,7 +14,7 @@ test('GitHub Repository link points to the correct repository and opens in a new
   await expect(link).toHaveAttribute('href', 'https://github.com/mojzu/calcite')
   await expect(link).toHaveAttribute('target', '_blank')
   await expect(link).toHaveAttribute('rel', 'noopener noreferrer')
-  await expect(link).toHaveText('GitHub Repository')
+  await expect(link).toHaveText('GitHub repository')
 })
 
 test('Numbat documentation link points to the correct URL and opens in a new tab', async ({ page }) => {
@@ -22,9 +22,24 @@ test('Numbat documentation link points to the correct URL and opens in a new tab
   await waitForInit(page)
 
   const link = page.locator('a.sidebar-link[href*="numbat.dev"]')
-  await expect(link).toHaveAttribute('href', 'https://numbat.dev/doc/')
+  await expect(link).toHaveAttribute('href', 'https://numbat.dev/docs/')
   await expect(link).toHaveAttribute('target', '_blank')
   await expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+})
+
+test('About Calcite button opens the about popup', async ({ page }) => {
+  await page.goto('/')
+  await waitForInit(page)
+
+  await expect(page.locator('#about-popup')).not.toBeVisible()
+  await page.locator('#about-btn').click()
+  await expect(page.locator('#about-popup')).toBeVisible()
+
+  const version = page.locator('#about-version')
+  await expect(version).not.toBeEmpty()
+
+  await page.locator('#about-popup-close').click()
+  await expect(page.locator('#about-popup')).not.toBeVisible()
 })
 
 // ── Popup stacking ────────────────────────────────────────────────────────────

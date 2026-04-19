@@ -4,6 +4,9 @@ import topLevelAwait from 'vite-plugin-top-level-await'
 import { VitePWA } from 'vite-plugin-pwa'
 import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'path'
+import { readFileSync } from 'fs'
+
+const { version } = JSON.parse(readFileSync('./package.json', 'utf-8')) as { version: string }
 
 export default defineConfig({
   plugins: [
@@ -16,8 +19,8 @@ export default defineConfig({
         name: 'Calcite',
         short_name: 'Calcite',
         description: 'Scientific calculator with unit conversions',
-        theme_color: '#4a9eff',
-        background_color: '#1a1a1a',
+        theme_color: '#a07530',
+        background_color: '#1e1b17',
         display: 'standalone',
         start_url: '/',
         id: '/',
@@ -57,6 +60,9 @@ export default defineConfig({
       },
     }),
   ],
+  define: {
+    __APP_VERSION__: JSON.stringify(version),
+  },
   base: process.env['VITE_BASE_URL'] ?? '/',
   resolve: {
     alias: {

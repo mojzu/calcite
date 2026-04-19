@@ -15,7 +15,7 @@
           <select id="session-select"></select>
           <button id="new-session-btn" type="button" class="tab-new" title="New session" aria-label="New session">+</button>
         </div>
-        <div id="output" aria-live="polite" aria-label="Calculation history"></div>
+        <div id="output" role="tabpanel" aria-live="polite" aria-label="Calculation history"></div>
         <div id="numpad">
           <button type="button" class="shortcut" data-insert="0">0</button>
           <button type="button" class="shortcut" data-insert="1">1</button>
@@ -38,6 +38,7 @@
         <div id="shortcuts">
           <button type="button" class="shortcut shortcut-keyword" data-insert="let ">let</button>
           <button type="button" class="shortcut shortcut-keyword" data-insert=" to ">to</button>
+          <button type="button" class="shortcut shortcut-keyword" data-insert=", ">,</button>
           <span class="shortcut-divider"></span>
           <button type="button" class="shortcut shortcut-sym" data-insert="(">(</button>
           <button type="button" class="shortcut shortcut-sym" data-insert=")">)</button>
@@ -45,8 +46,11 @@
           <button type="button" class="shortcut shortcut-sym" data-insert=" - ">-</button>
           <button type="button" class="shortcut shortcut-sym" data-insert=" * ">×</button>
           <button type="button" class="shortcut shortcut-sym" data-insert=" / ">÷</button>
+          <button type="button" class="shortcut shortcut-sym" data-insert="%">%</button>
           <button type="button" class="shortcut" data-insert="^">^</button>
           <button type="button" class="shortcut shortcut-sym" data-insert=" = ">=</button>
+          <button type="button" class="shortcut shortcut-sym" data-insert="[">[</button>
+          <button type="button" class="shortcut shortcut-sym" data-insert="]">]</button>
           <button type="button" class="shortcut" data-insert="pi">π</button>
           <button type="button" class="shortcut" data-insert="sqrt(">√</button>
           <button type="button" class="shortcut" data-insert="e">e</button>
@@ -57,8 +61,8 @@
           <button type="button" class="shortcut" data-insert="log2(">log₂</button>
           <button type="button" class="shortcut" data-insert="abs(">abs</button>
           <span class="shortcut-divider"></span>
-          <button id="clear-btn" type="button">Clear</button>
-          <button id="reset-btn" type="button">Reset</button>
+          <button id="clear-btn" type="button">clear</button>
+          <button id="reset-btn" type="button">reset</button>
         </div>
         <div id="input-row">
           <div id="history-nav">
@@ -72,6 +76,7 @@
               autocomplete="off"
               spellcheck="false"
               placeholder="e.g. 1 km/h to m/s"
+              aria-label="Expression"
               autofocus
             />
             <button type="submit" title="Calculate" aria-label="Calculate">↵</button>
@@ -80,6 +85,8 @@
         <div id="mobile-sidebar-buttons">
           <button type="button" id="mobile-vars-btn">Variables</button>
           <button type="button" id="mobile-units-btn">Units</button>
+          <button type="button" id="mobile-dimensions-btn">Dimensions</button>
+          <button type="button" id="mobile-currencies-btn">Currencies</button>
           <button type="button" id="mobile-functions-btn">Functions</button>
         </div>
       </main>
@@ -87,8 +94,8 @@
         <div id="sidebar-middle">
           <div id="variables-section">
             <div class="section-header">
-              <span class="section-header-title">Variables</span>
               <button type="button" class="section-help-btn" id="vars-help-btn" title="About variables" aria-label="About variables">?</button>
+              <span class="section-header-title">Variables</span>
             </div>
             <div class="section-body">
               <div id="variables-list">
@@ -99,6 +106,8 @@
         </div>
         <div id="sidebar-panels">
           <button id="units-panel-btn" type="button">Units</button>
+          <button id="dimensions-panel-btn" type="button">Dimensions</button>
+          <button id="currencies-panel-btn" type="button">Currencies</button>
           <button id="functions-panel-btn" type="button">Functions</button>
         </div>
         <div id="sidebar-bottom">
@@ -108,11 +117,28 @@
             <button id="sidebar-collapse-btn" type="button" title="Collapse sidebar" aria-label="Collapse sidebar">›</button>
             <button id="mobile-sidebar-close" type="button" title="Close sidebar" aria-label="Close sidebar">×</button>
           </div>
-          <button id="pwa-update-btn" type="button" class="sidebar-link sidebar-update-btn" hidden>Update Now</button>
-          <a class="sidebar-link" href="https://github.com/mojzu/calcite" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
-          <a class="sidebar-link" href="https://numbat.dev/doc/" target="_blank" rel="noopener noreferrer">Numbat Documentation</a>
+          <button id="about-btn" type="button" class="sidebar-link sidebar-about-btn">About Calcite</button>
+          <a class="sidebar-link" href="https://github.com/mojzu/calcite" target="_blank" rel="noopener noreferrer">GitHub repository</a>
+          <a class="sidebar-link" href="https://numbat.dev/docs/" target="_blank" rel="noopener noreferrer">Numbat documentation</a>
         </div>
       </aside>
+    </div>
+
+    <div id="about-popup-backdrop" class="popup-backdrop"></div>
+    <div id="about-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="about-popup-title">
+      <div class="popup-header">
+        <h3 id="about-popup-title">About Calcite</h3>
+        <button id="about-popup-close" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="popup-body about-popup-body">
+        <p class="about-blurb">Calcite is a calculator built on Numbat — a statically typed language for arithmetic with units, currencies, and dimensions.</p>
+        <p class="about-version">Version <span id="about-version"></span></p>
+        <div class="about-actions">
+          <button id="about-check-btn" type="button" class="about-action-btn">Check for update</button>
+          <button id="about-update-btn" type="button" class="about-action-btn about-action-update" hidden>Update now</button>
+          <button id="about-reset-btn" type="button" class="about-action-btn about-action-danger">Reset app data</button>
+        </div>
+      </div>
     </div>
 
     <div id="info-popup-backdrop" class="popup-backdrop"></div>
@@ -144,22 +170,45 @@
     <div id="units-popup-backdrop" class="popup-backdrop"></div>
     <div id="units-popup" class="popup popup-tall" role="dialog" aria-modal="true" aria-labelledby="units-popup-title">
       <div class="popup-header">
-        <h3 id="units-popup-title">Units</h3>
         <button type="button" class="section-help-btn" id="units-help-btn" title="About units" aria-label="About units">?</button>
+        <h3 id="units-popup-title">Units</h3>
         <button id="units-popup-close" type="button" aria-label="Close">×</button>
       </div>
       <div id="units-section-body" class="popup-body"></div>
     </div>
 
+    <div id="dimensions-popup-backdrop" class="popup-backdrop"></div>
+    <div id="dimensions-popup" class="popup popup-tall" role="dialog" aria-modal="true" aria-labelledby="dimensions-popup-title">
+      <div class="popup-header">
+        <button type="button" class="section-help-btn" id="dimensions-help-btn" title="About dimensions" aria-label="About dimensions">?</button>
+        <h3 id="dimensions-popup-title">Dimensions</h3>
+        <button id="dimensions-popup-close" type="button" aria-label="Close">×</button>
+      </div>
+      <div id="dimensions-section-body" class="popup-body"></div>
+    </div>
+
     <div id="functions-popup-backdrop" class="popup-backdrop"></div>
     <div id="functions-popup" class="popup popup-tall" role="dialog" aria-modal="true" aria-labelledby="functions-popup-title">
       <div class="popup-header">
-        <h3 id="functions-popup-title">Functions</h3>
         <button type="button" class="section-help-btn" id="functions-help-btn" title="About functions" aria-label="About functions">?</button>
+        <h3 id="functions-popup-title">Functions</h3>
         <button id="functions-popup-close" type="button" aria-label="Close">×</button>
       </div>
       <div id="functions-list" class="popup-body">
         <p class="no-vars">No functions yet</p>
+      </div>
+    </div>
+
+    <div id="currencies-popup-backdrop" class="popup-backdrop"></div>
+    <div id="currencies-popup" class="popup popup-tall" role="dialog" aria-modal="true" aria-labelledby="currencies-popup-title">
+      <div class="popup-header">
+        <button type="button" class="section-help-btn" id="currencies-help-btn" title="About currencies" aria-label="About currencies">?</button>
+        <h3 id="currencies-popup-title">Currencies</h3>
+        <button id="currencies-popup-close" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="popup-body">
+        <p id="currencies-status" class="currencies-loading">Loading…</p>
+        <div id="currencies-list"></div>
       </div>
     </div>
 

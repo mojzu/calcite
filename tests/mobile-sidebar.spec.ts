@@ -54,6 +54,21 @@ test('sidebar close button dismisses the sidebar overlay', async ({ page }) => {
   await expect(page.locator('#variables')).not.toHaveClass(/mobile-open/)
 })
 
+test('tapping a variable in the sidebar closes the sidebar overlay', async ({ page }) => {
+  await gotoMobile(page)
+
+  // Define a variable so one appears in the list
+  await page.locator('#input').fill('let x = 42')
+  await page.locator('button[type="submit"]').click()
+  await page.locator('.var-item').waitFor({ state: 'attached' })
+
+  await page.locator('#mobile-vars-btn').click()
+  await expect(page.locator('#variables')).toHaveClass(/mobile-open/)
+
+  await page.locator('.var-item').first().click()
+  await expect(page.locator('#variables')).not.toHaveClass(/mobile-open/)
+})
+
 // ── Units button ──────────────────────────────────────────────────────────────
 
 test('Units button opens the units popup', async ({ page }) => {
