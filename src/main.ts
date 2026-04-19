@@ -787,7 +787,7 @@ async function fetchExchangeRates(): Promise<void> {
     const date = dateMatch
       ? new Date(dateMatch[1]).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
       : 'unknown date'
-    statusEl.textContent = `Rates · ${date}`
+    statusEl.textContent = `European Central Bank rates · ${date}`
     statusEl.className = ''
     buildCurrencyChips(exchangeRatesXml)
   } catch {

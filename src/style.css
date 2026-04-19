@@ -350,11 +350,12 @@ body {
 #numpad {
   display: flex;
   gap: var(--sp-2);
-  padding: var(--sp-3) 0 var(--sp-2);
+  padding: var(--sp-3) var(--sp-6) var(--sp-2) 1rem;
+  margin: 0 calc(-1 * var(--sp-6)) 0 -1rem;
   overflow-x: auto;
   flex-shrink: 0;
   scrollbar-width: none;
-  mask-image: linear-gradient(to right, black calc(100% - 40px), transparent);
+  mask-image: linear-gradient(to right, transparent, black var(--sp-4), black calc(100% - var(--sp-6)), transparent);
 }
 
 #numpad::-webkit-scrollbar {
@@ -375,11 +376,12 @@ body {
 #shortcuts {
   display: flex;
   gap: var(--sp-2);
-  padding: var(--sp-1) 0 var(--sp-3);
+  padding: var(--sp-1) var(--sp-6) var(--sp-3) 1rem;
+  margin: 0 calc(-1 * var(--sp-6)) 0 -1rem;
   overflow-x: auto;
   flex-shrink: 0;
   scrollbar-width: none;
-  mask-image: linear-gradient(to right, black calc(100% - 40px), transparent);
+  mask-image: linear-gradient(to right, transparent, black var(--sp-4), black calc(100% - var(--sp-6)), transparent);
 }
 
 #shortcuts::-webkit-scrollbar {
@@ -1106,8 +1108,11 @@ aside#variables.collapsed {
 /* ── Currencies status ─────────────────────────────────────────────────────── */
 
 #currencies-status {
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
+  font-weight: 600;
   color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   margin-bottom: var(--sp-3);
 }
 
@@ -1231,6 +1236,13 @@ aside#variables.collapsed {
   #main {
     padding-right: var(--sp-4);
   }
+
+  #numpad,
+  #shortcuts {
+    padding-right: var(--sp-4);
+    margin-right: calc(-1 * var(--sp-4));
+    mask-image: linear-gradient(to right, transparent, black var(--sp-4), black calc(100% - var(--sp-4)), transparent);
+  }
 }
 
 /* ── Mobile ────────────────────────────────────────────────────────────────── */
@@ -1255,6 +1267,9 @@ aside#variables.collapsed {
   #shortcuts {
     padding-top: 0;
     padding-bottom: var(--sp-2);
+    padding-right: 1rem;
+    margin-right: -1rem;
+    mask-image: linear-gradient(to right, transparent, black var(--sp-4), black calc(100% - var(--sp-4)), transparent);
   }
 
   #input-row {
@@ -1293,6 +1308,10 @@ aside#variables.collapsed {
     overflow-x: visible;
     flex-wrap: unset;
     mask-image: none;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   /* Divider and hex digits hidden on mobile — numbers only */

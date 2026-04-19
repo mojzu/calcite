@@ -86,7 +86,7 @@ test('currencies status shows the ECB rate date after rates load', async ({ page
   await waitForInit(page)
   await waitForRates(page)
 
-  await expect(page.locator('#currencies-status')).toHaveText('Rates · 18 Apr 2026')
+  await expect(page.locator('#currencies-status')).toHaveText('European Central Bank rates · 18 Apr 2026')
 })
 
 test('currencies status shows Unavailable when the fetch fails', async ({ page }) => {
