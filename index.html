@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Calcite</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/src/style.css" />
@@ -13,7 +13,7 @@
         <div id="tab-bar">
           <div id="tabs-scroll"></div>
           <select id="session-select"></select>
-          <button id="new-session-btn" type="button" class="tab-new" title="New session">+</button>
+          <button id="new-session-btn" type="button" class="tab-new" title="New session" aria-label="New session">+</button>
         </div>
         <div id="output" aria-live="polite" aria-label="Calculation history"></div>
         <div id="numpad">
@@ -62,8 +62,8 @@
         </div>
         <div id="input-row">
           <div id="history-nav">
-            <button type="button" id="history-prev" title="Previous input (↑)">↑</button>
-            <button type="button" id="history-next" title="Next input (↓)">↓</button>
+            <button type="button" id="history-prev" title="Previous input (↑)" aria-label="Previous input">↑</button>
+            <button type="button" id="history-next" title="Next input (↓)" aria-label="Next input">↓</button>
           </div>
           <form id="form">
             <input
@@ -80,24 +80,19 @@
         <div id="mobile-sidebar-buttons">
           <button type="button" id="mobile-vars-btn">Variables</button>
           <button type="button" id="mobile-units-btn">Units</button>
+          <button type="button" id="mobile-functions-btn">Functions</button>
         </div>
       </main>
-      <aside id="variables">
-        <div id="sidebar-top">
-          <img id="sidebar-logo" src="/icon-title.svg" />
-          <span id="sidebar-title">Calcite</span>
-          <button id="sidebar-collapse-btn" type="button" title="Collapse sidebar">›</button>
-          <button id="mobile-sidebar-close" type="button" title="Close">×</button>
-        </div>
+      <aside id="variables" aria-label="Tools">
         <div id="sidebar-middle">
           <div id="variables-section">
             <div class="section-header">
               <span class="section-header-title">Variables</span>
-              <button type="button" class="section-help-btn" id="vars-help-btn" title="About variables">?</button>
+              <button type="button" class="section-help-btn" id="vars-help-btn" title="About variables" aria-label="About variables">?</button>
             </div>
             <div class="section-body">
               <div id="variables-list">
-                <p class="no-vars">No variables defined</p>
+                <p class="no-vars">No variables yet</p>
               </div>
             </div>
           </div>
@@ -107,41 +102,24 @@
           <button id="functions-panel-btn" type="button">Functions</button>
         </div>
         <div id="sidebar-bottom">
-          <button id="commands-btn" type="button">Help</button>
-          <a id="docs-link" href="https://numbat.dev/book/" target="_blank" rel="noopener">Documentation</a>
+          <div id="sidebar-brand">
+            <img id="sidebar-logo" src="/icon-title.svg" alt="" />
+            <span id="sidebar-title">Calcite</span>
+            <button id="sidebar-collapse-btn" type="button" title="Collapse sidebar" aria-label="Collapse sidebar">›</button>
+            <button id="mobile-sidebar-close" type="button" title="Close sidebar" aria-label="Close sidebar">×</button>
+          </div>
+          <button id="pwa-update-btn" type="button" class="sidebar-link sidebar-update-btn" hidden>Update Now</button>
+          <a class="sidebar-link" href="https://github.com/mojzu/calcite" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+          <a class="sidebar-link" href="https://numbat.dev/doc/" target="_blank" rel="noopener noreferrer">Numbat Documentation</a>
         </div>
       </aside>
-    </div>
-
-    <div id="commands-popup-backdrop" class="popup-backdrop"></div>
-    <div id="commands-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="commands-popup-title">
-      <div class="popup-header">
-        <h3 id="commands-popup-title">Built-in Commands</h3>
-        <button id="commands-popup-close" type="button">×</button>
-      </div>
-      <div class="popup-body">
-        <dl class="commands-list">
-          <dt>clear</dt>
-          <dd>Clear the output and reset the current session's input history</dd>
-          <dt>reset</dt>
-          <dd>Reset the interpreter state, clear output, and start a new session</dd>
-          <dt>list</dt>
-          <dd>List all defined variables, functions, and units</dd>
-          <dt>list units</dt>
-          <dd>List all available units</dd>
-          <dt>list functions</dt>
-          <dd>List all available functions</dd>
-          <dt>list dimensions</dt>
-          <dd>List all dimensions</dd>
-        </dl>
-      </div>
     </div>
 
     <div id="info-popup-backdrop" class="popup-backdrop"></div>
     <div id="info-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="info-popup-title">
       <div class="popup-header">
         <h3 id="info-popup-title"></h3>
-        <button id="info-popup-close" type="button">×</button>
+        <button id="info-popup-close" type="button" aria-label="Close">×</button>
       </div>
       <div class="popup-body">
         <p id="info-popup-message"></p>
@@ -152,7 +130,7 @@
     <div id="confirm-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="confirm-popup-title">
       <div class="popup-header">
         <h3 id="confirm-popup-title"></h3>
-        <button id="confirm-popup-close" type="button">×</button>
+        <button id="confirm-popup-close" type="button" aria-label="Close">×</button>
       </div>
       <div class="popup-body confirm-popup-body">
         <p id="confirm-popup-message"></p>
@@ -167,8 +145,8 @@
     <div id="units-popup" class="popup popup-tall" role="dialog" aria-modal="true" aria-labelledby="units-popup-title">
       <div class="popup-header">
         <h3 id="units-popup-title">Units</h3>
-        <button type="button" class="section-help-btn" id="units-help-btn" title="About units">?</button>
-        <button id="units-popup-close" type="button">×</button>
+        <button type="button" class="section-help-btn" id="units-help-btn" title="About units" aria-label="About units">?</button>
+        <button id="units-popup-close" type="button" aria-label="Close">×</button>
       </div>
       <div id="units-section-body" class="popup-body"></div>
     </div>
@@ -177,11 +155,11 @@
     <div id="functions-popup" class="popup popup-tall" role="dialog" aria-modal="true" aria-labelledby="functions-popup-title">
       <div class="popup-header">
         <h3 id="functions-popup-title">Functions</h3>
-        <button type="button" class="section-help-btn" id="functions-help-btn" title="About functions">?</button>
-        <button id="functions-popup-close" type="button">×</button>
+        <button type="button" class="section-help-btn" id="functions-help-btn" title="About functions" aria-label="About functions">?</button>
+        <button id="functions-popup-close" type="button" aria-label="Close">×</button>
       </div>
       <div id="functions-list" class="popup-body">
-        <p class="no-vars">No functions defined</p>
+        <p class="no-vars">No functions yet</p>
       </div>
     </div>
 

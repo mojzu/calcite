@@ -1,5 +1,6 @@
 # Todo
 
+- Load functions from a file or show built-in Numbat functions in the functions panel
 - Fix and add tests for currency handling
 - Add clear all app state button
 - Improve app sizing based on screen size

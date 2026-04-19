@@ -11,7 +11,7 @@ export default defineConfig({
     wasm(),
     topLevelAwait(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
       manifest: {
         name: 'Calcite',
         short_name: 'Calcite',

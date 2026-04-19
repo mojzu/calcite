@@ -1,4 +1,5 @@
 import init, { Numbat, FormatType } from 'numbat-wasm'
+import { registerSW } from 'virtual:pwa-register'
 
 // Keep --vh in sync with the visible viewport so the layout shrinks correctly
 // when the mobile keyboard opens. visualViewport is more reliable than dvh on
@@ -64,13 +65,14 @@ function escapeHtml(str: string): string {
 }
 
 function insertIntoInput(text: string): void {
+  const hadFocus = document.activeElement === input
   input.setRangeText(
     text,
     input.selectionStart ?? input.value.length,
     input.selectionEnd  ?? input.value.length,
     'end',
   )
-  input.focus()
+  if (hadFocus) input.focus()
 }
 
 function resetHistory(): void {
@@ -85,7 +87,7 @@ function appendEntry(query: string, result: string, isError: boolean): void {
   const queryEl = document.createElement('div')
   queryEl.className = 'query'
   queryEl.textContent = query
-  queryEl.title = 'Insert expression'
+  queryEl.title = 'Re-use this expression'
   queryEl.addEventListener('click', () => { insertIntoInput(query) })
 
   const resultEl = document.createElement('div')
@@ -102,7 +104,7 @@ function appendEntry(query: string, result: string, isError: boolean): void {
 
 function updateVariables(): void {
   if (variables.size === 0) {
-    variablesList.innerHTML = '<p class="no-vars">No variables defined</p>'
+    variablesList.innerHTML = '<p class="no-vars">No variables yet</p>'
     return
   }
   variablesList.innerHTML = ''
@@ -135,7 +137,7 @@ function updateVariables(): void {
 function updateFunctions(): void {
   const list = document.getElementById('functions-list')!
   if (functions.size === 0) {
-    list.innerHTML = '<p class="no-vars">No functions defined</p>'
+    list.innerHTML = '<p class="no-vars">No functions yet</p>'
     return
   }
   list.innerHTML = ''
@@ -689,21 +691,30 @@ function doClear(): void {
 
 // ── Popups ────────────────────────────────────────────────────────────────────
 
+let popupTrigger: HTMLElement | null = null
+
 function showPopup(id: string): void {
-  document.getElementById(id)!.classList.add('visible')
+  popupTrigger = document.activeElement as HTMLElement
+  const popup = document.getElementById(id)!
+  popup.classList.add('visible')
   document.getElementById(id + '-backdrop')!.classList.add('visible')
+  const first = popup.querySelector<HTMLElement>('button, [href], input, select, [tabindex]')
+  first?.focus()
 }
 
 function hidePopup(id: string): void {
   document.getElementById(id)!.classList.remove('visible')
   document.getElementById(id + '-backdrop')!.classList.remove('visible')
+  popupTrigger?.focus()
+  popupTrigger = null
 }
 
 let confirmCallback: (() => void) | null = null
 
-function showConfirmPopup(title: string, message: string, onConfirm: () => void): void {
+function showConfirmPopup(title: string, message: string, onConfirm: () => void, okLabel = 'Confirm'): void {
   document.getElementById('confirm-popup-title')!.textContent = title
   document.getElementById('confirm-popup-message')!.textContent = message
+  document.getElementById('confirm-popup-ok')!.textContent = okLabel
   confirmCallback = onConfirm
   showPopup('confirm-popup')
 }
@@ -721,21 +732,18 @@ function showInfoPopup(title: string, message: string): void {
 
 function hideInfoPopup(): void { hidePopup('info-popup') }
 
-function showCommandsPopup(): void { showPopup('commands-popup') }
-function hideCommandsPopup(): void { hidePopup('commands-popup') }
-
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 async function main(): Promise<void> {
   const initMsg = document.createElement('div')
   initMsg.className = 'entry init-msg'
-  initMsg.textContent = 'Initialising Numbat…'
+  initMsg.textContent = 'Loading…'
   output.appendChild(initMsg)
 
   try {
     await init()
   } catch (err) {
-    initMsg.textContent = 'Failed to initialise Numbat: ' + (err instanceof Error ? err.message : String(err))
+    initMsg.textContent = 'Failed to load: ' + (err instanceof Error ? err.message : String(err))
     initMsg.classList.add('error')
     return
   }
@@ -766,16 +774,16 @@ async function main(): Promise<void> {
   document.getElementById('info-popup-close')!.addEventListener('click', hideInfoPopup)
   document.getElementById('info-popup-backdrop')!.addEventListener('click', hideInfoPopup)
   document.getElementById('vars-help-btn')!.addEventListener('click', () => {
-    showInfoPopup('Variables', 'Define variables with "let name = expression" to store a value for reuse. Defined variables appear in this list. Click any variable to insert its name into the input.')
+    showInfoPopup('Variables', 'Define variables with let name = expression to store a value for reuse. Tap a variable to insert it into your expression.')
   })
   document.getElementById('functions-help-btn')!.addEventListener('click', () => {
-    showInfoPopup('Functions', 'Define functions with "fn name(params) = expression". Defined functions appear in this list. Click any function to insert its name into the input with an opening parenthesis.')
+    showInfoPopup('Functions', 'Define functions with fn name(params) = expression. Tap a function to insert it at the cursor.')
   })
   // document.getElementById('currencies-help-btn')!.addEventListener('click', () => {
   //   showInfoPopup('Currencies', 'Exchange rates are loaded from the European Central Bank (updated daily). Use currency codes in expressions — for example "100 USD to EUR" or "50 GBP + 30 CHF to EUR".')
   // })
   document.getElementById('units-help-btn')!.addEventListener('click', () => {
-    showInfoPopup('Units', 'Click any unit symbol to insert it at the cursor position. Units can be used in expressions and conversions — for example "1 km to mi" or "9.81 m/s^2 * 80 kg to N".')
+    showInfoPopup('Units', 'Units can be used in expressions and conversions — for example "1 km to mi" or "9.81 m/s^2 * 80 kg to N". Tap any unit to insert it at the cursor.')
   })
 
   // fetchExchangeRates()
@@ -792,18 +800,14 @@ async function main(): Promise<void> {
 
   // Session action buttons
   document.getElementById('clear-btn')!.addEventListener('click', () => {
-    showConfirmPopup('Clear session', 'Clear the output and input history for the current session?', doClear)
+    showConfirmPopup('Clear session', 'Clear all output and history for this session?', doClear, 'Clear')
   })
   document.getElementById('reset-btn')!.addEventListener('click', () => {
-    showConfirmPopup('Reset', 'Reset the interpreter, clear all output, and start a new session?', doReset)
+    showConfirmPopup('Reset', 'Clear all output, variables, and functions, and start fresh?', doReset, 'Reset')
   })
 
-  // Commands popup
-  document.getElementById('commands-btn')!.addEventListener('click', showCommandsPopup)
-  document.getElementById('commands-popup-close')!.addEventListener('click', hideCommandsPopup)
-  document.getElementById('commands-popup-backdrop')!.addEventListener('click', hideCommandsPopup)
   document.addEventListener('keydown', (e: KeyboardEvent) => {
-    if (e.key === 'Escape') { hideCommandsPopup(); hideConfirmPopup(); hideInfoPopup(); hidePopup('units-popup'); hidePopup('functions-popup') }
+    if (e.key === 'Escape') { hideConfirmPopup(); hideInfoPopup(); hidePopup('units-popup'); hidePopup('functions-popup') }
   })
 
   // Mobile sidebar buttons
@@ -814,6 +818,9 @@ async function main(): Promise<void> {
   })
   document.getElementById('mobile-units-btn')!.addEventListener('click', () => {
     showPopup('units-popup')
+  })
+  document.getElementById('mobile-functions-btn')!.addEventListener('click', () => {
+    showPopup('functions-popup')
   })
   document.getElementById('mobile-sidebar-close')!.addEventListener('click', () => {
     sidebar.classList.remove('mobile-open')
@@ -940,5 +947,19 @@ async function main(): Promise<void> {
 
   input.focus()
 }
+
+// ── PWA update ────────────────────────────────────────────────────────────────
+
+const pwaUpdateBtn = document.getElementById('pwa-update-btn') as HTMLButtonElement
+
+const updateSW = registerSW({
+  onNeedRefresh() {
+    pwaUpdateBtn.hidden = false
+  },
+})
+
+pwaUpdateBtn.addEventListener('click', () => {
+  void updateSW(true)
+})
 
 main()
