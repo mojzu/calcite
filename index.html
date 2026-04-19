@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Calcite</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script type="module" crossorigin src="/assets/index-BUgubBt6.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DXO3V8EV.css">
+    <script type="module" crossorigin src="/assets/index-C4J1ln3V.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-D1j2kPfU.css">
   <link rel="manifest" href="/manifest.webmanifest"></head>
   <body>
     <div id="app">
@@ -16,7 +16,7 @@
           <select id="session-select"></select>
           <button id="new-session-btn" type="button" class="tab-new" title="New session" aria-label="New session">+</button>
         </div>
-        <div id="output" aria-live="polite" aria-label="Calculation history"></div>
+        <div id="output" role="tabpanel" aria-live="polite" aria-label="Calculation history"></div>
         <div id="numpad">
           <button type="button" class="shortcut" data-insert="0">0</button>
           <button type="button" class="shortcut" data-insert="1">1</button>
@@ -77,6 +77,7 @@
               autocomplete="off"
               spellcheck="false"
               placeholder="e.g. 1 km/h to m/s"
+              aria-label="Expression"
               autofocus
             />
             <button type="submit" title="Calculate" aria-label="Calculate">↵</button>
@@ -85,8 +86,8 @@
         <div id="mobile-sidebar-buttons">
           <button type="button" id="mobile-vars-btn">Variables</button>
           <button type="button" id="mobile-units-btn">Units</button>
-          <button type="button" id="mobile-functions-btn">Functions</button>
           <button type="button" id="mobile-currencies-btn">Currencies</button>
+          <button type="button" id="mobile-functions-btn">Functions</button>
         </div>
       </main>
       <aside id="variables" aria-label="Tools">
@@ -105,8 +106,8 @@
         </div>
         <div id="sidebar-panels">
           <button id="units-panel-btn" type="button">Units</button>
-          <button id="functions-panel-btn" type="button">Functions</button>
           <button id="currencies-panel-btn" type="button">Currencies</button>
+          <button id="functions-panel-btn" type="button">Functions</button>
         </div>
         <div id="sidebar-bottom">
           <div id="sidebar-brand">
