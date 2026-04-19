@@ -254,7 +254,7 @@
             } : n;
         }
     }
-    function Ne() {
+    function Re() {
         const t = {};
         return t.wbg = {}, t.wbg.__wbg_error_7534b8e9a36f1ab4 = function(e, n) {
             let o, r;
@@ -303,16 +303,16 @@
             throw new Error(O(e, n));
         }, t;
     }
-    function Re(t, e) {
+    function Ne(t, e) {
         return a = t.exports, be.__wbindgen_wasm_module = e, x = null, P = null, a.__wbindgen_start(), a;
     }
     async function be(t) {
         if (a !== void 0) return a;
         typeof t < "u" && (Object.getPrototypeOf(t) === Object.prototype ? { module_or_path: t } = t : console.warn("using deprecated parameters for the initialization function; pass a single object instead")), typeof t > "u" && (t = new URL("/assets/numbat_wasm_bg-BTss0vKK.wasm", import.meta.url));
-        const e = Ne();
+        const e = Re();
         (typeof t == "string" || typeof Request == "function" && t instanceof Request || typeof URL == "function" && t instanceof URL) && (t = fetch(t));
         const { instance: n, module: o } = await Se(await t, e);
-        return Re(n, o);
+        return Ne(n, o);
     }
     const Me = "modulepreload", Ae = function(t) {
         return "/" + t;
@@ -402,7 +402,7 @@
     }
     Q();
     window.visualViewport ? window.visualViewport.addEventListener("resize", Q) : window.addEventListener("resize", Q);
-    const y = document.getElementById("output"), He = document.getElementById("form"), l = document.getElementById("input"), Z = document.getElementById("variables-list"), X = document.getElementById("tabs-scroll"), N = document.getElementById("session-select"), We = document.getElementById("sidebar-middle"), _e = /^let\s+([a-zA-Z_][a-zA-Z0-9_]*)/, ge = /^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/, ye = "calcite-sessions", Oe = 10, L = new Set, I = new Map;
+    const y = document.getElementById("output"), He = document.getElementById("form"), l = document.getElementById("input"), Z = document.getElementById("variables-list"), X = document.getElementById("tabs-scroll"), R = document.getElementById("session-select"), We = document.getElementById("sidebar-middle"), _e = /^let\s+([a-zA-Z_][a-zA-Z0-9_]*)/, ge = /^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/, ye = "calcite-sessions", Oe = 10, L = new Set, I = new Map;
     let T, F = null, p, f = -1, H = "";
     function he(t) {
         return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -410,7 +410,7 @@
     function Fe() {
         document.getElementById("variables").classList.remove("mobile-open");
     }
-    function R(t) {
+    function N(t) {
         const e = document.activeElement === l;
         l.setRangeText(t, l.selectionStart ?? l.value.length, l.selectionEnd ?? l.value.length, "end"), e && l.focus();
     }
@@ -422,7 +422,7 @@
         o.className = "entry" + (n ? " error" : "");
         const r = document.createElement("div");
         r.className = "query", r.textContent = t, r.title = "Re-use this expression", r.addEventListener("click", ()=>{
-            R(t);
+            N(t);
         });
         const i = document.createElement("div");
         i.className = "result", i.innerHTML = e, o.appendChild(r), o.appendChild(i), y.appendChild(o), y.scrollTop = y.scrollHeight;
@@ -438,7 +438,7 @@
             if (!e.is_error) {
                 const n = document.createElement("div");
                 n.className = "var-item", n.title = `Insert "${t}"`, n.addEventListener("click", ()=>{
-                    R(t), Fe();
+                    N(t), Fe();
                 });
                 const o = document.createElement("span");
                 o.className = "var-name", o.textContent = t;
@@ -457,7 +457,7 @@
         for (const [e, n] of I){
             const o = document.createElement("div");
             o.className = "fn-item", o.title = `Insert "${e}("`, o.addEventListener("click", ()=>{
-                R(e + "("), g("functions-popup");
+                N(e + "("), g("functions-popup");
             });
             const r = document.createElement("span");
             r.className = "fn-name", r.textContent = e;
@@ -518,7 +518,7 @@
         n && n.scrollIntoView({
             block: "nearest",
             inline: "nearest"
-        }), N.innerHTML = "";
+        }), R.innerHTML = "";
         const o = e.filter((s)=>s.named), r = e.filter((s)=>!s.named);
         function i(s, c) {
             const m = document.createElement("option");
@@ -526,10 +526,10 @@
         }
         if (o.length > 0 && r.length > 0) {
             const s = document.createElement("optgroup");
-            s.label = "Saved", o.forEach((m)=>i(m, s)), N.appendChild(s);
+            s.label = "Saved", o.forEach((m)=>i(m, s)), R.appendChild(s);
             const c = document.createElement("optgroup");
-            c.label = "Recent", r.forEach((m)=>i(m, c)), N.appendChild(c);
-        } else e.forEach((s)=>i(s, N));
+            c.label = "Recent", r.forEach((m)=>i(m, c)), R.appendChild(c);
+        } else e.forEach((s)=>i(s, R));
     }
     function Ue(t, e) {
         const n = document.createElement("input");
@@ -1146,7 +1146,7 @@
             for (const i of e.units){
                 const s = document.createElement("button");
                 s.type = "button", s.className = "unit-chip", s.textContent = i.symbol, s.title = i.name, s.addEventListener("click", ()=>{
-                    R(i.symbol), g("units-popup");
+                    N(i.symbol), g("units-popup");
                 }), r.appendChild(s);
             }
             n.appendChild(r), t.appendChild(n);
@@ -1166,6 +1166,7 @@
         const e = document.getElementById("currencies-list");
         e.innerHTML = "";
         const n = [
+            "EUR",
             ...new Set([
                 ...t.matchAll(/currency='([A-Z]{3})'/g)
             ].map((r)=>r[1]))
@@ -1176,7 +1177,7 @@
         for (const r of n){
             const i = document.createElement("button");
             i.type = "button", i.className = "unit-chip", i.textContent = r, i.addEventListener("click", ()=>{
-                R(r), g("currencies-popup");
+                N(r), g("currencies-popup");
             }), o.appendChild(i);
         }
         e.appendChild(o);
@@ -1273,10 +1274,10 @@
         });
         function r(i) {
             const s = i.target.closest(".shortcut");
-            s && R(s.dataset.insert ?? "");
+            s && N(s.dataset.insert ?? "");
         }
-        document.getElementById("numpad").addEventListener("click", r), document.getElementById("shortcuts").addEventListener("click", r), document.getElementById("new-session-btn").addEventListener("click", ()=>Ee()), N.addEventListener("change", ()=>{
-            G(parseInt(N.value));
+        document.getElementById("numpad").addEventListener("click", r), document.getElementById("shortcuts").addEventListener("click", r), document.getElementById("new-session-btn").addEventListener("click", ()=>Ee()), R.addEventListener("change", ()=>{
+            G(parseInt(R.value));
         }), l.addEventListener("keydown", (i)=>{
             const s = p.inputs;
             if (i.key === "ArrowUp") {
