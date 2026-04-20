@@ -81,7 +81,10 @@ function stripJqueryTerminal(text: string): string {
 }
 
 function formatCommandOutput(raw: string): string {
-  return escapeHtml(stripJqueryTerminal(raw)).replace(/\n/g, '<br>')
+  // Numbat is initialised with FormatType.Html, so error output from commands
+  // may already be HTML. Strip jquery.terminal markup but do not re-escape, as
+  // doing so would double-encode any HTML tags in the output.
+  return stripJqueryTerminal(raw).replace(/\n/g, '<br>')
 }
 
 function closeMobileSidebar(): void {
