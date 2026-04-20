@@ -21,7 +21,7 @@
         }
     })();
     let c;
-    const ge = typeof TextDecoder < "u" ? new TextDecoder("utf-8", {
+    const ye = typeof TextDecoder < "u" ? new TextDecoder("utf-8", {
         ignoreBOM: !0,
         fatal: !0
     }) : {
@@ -29,26 +29,26 @@
             throw Error("TextDecoder not available");
         }
     };
-    typeof TextDecoder < "u" && ge.decode();
+    typeof TextDecoder < "u" && ye.decode();
     let F = null;
     function z() {
         return (F === null || F.byteLength === 0) && (F = new Uint8Array(c.memory.buffer)), F;
     }
     function U(t, e) {
-        return t = t >>> 0, ge.decode(z().subarray(t, t + e));
+        return t = t >>> 0, ye.decode(z().subarray(t, t + e));
     }
-    function xe(t, e) {
+    function Te(t, e) {
         return t = t >>> 0, z().subarray(t / 1, t / 1 + e);
     }
-    function Te(t) {
+    function Se(t) {
         const e = c.__externref_table_alloc();
         return c.__wbindgen_export_3.set(e, t), e;
     }
-    function ce(t, e) {
+    function le(t, e) {
         try {
             return t.apply(this, e);
         } catch (n) {
-            const s = Te(n);
+            const s = Se(n);
             c.__wbindgen_exn_store(s);
         }
     }
@@ -57,7 +57,7 @@
         encode: ()=>{
             throw Error("TextEncoder not available");
         }
-    }, Se = typeof $.encodeInto == "function" ? function(t, e) {
+    }, Me = typeof $.encodeInto == "function" ? function(t, e) {
         return $.encodeInto(t, e);
     } : function(t, e) {
         const n = $.encode(t);
@@ -81,7 +81,7 @@
         }
         if (i !== s) {
             i !== 0 && (t = t.slice(i)), o = n(o, s, s = i + t.length * 3, 1) >>> 0;
-            const a = z().subarray(o + i, o + s), l = Se(t, a);
+            const a = z().subarray(o + i, o + s), l = Me(t, a);
             i += l.written, o = n(o, s, i, 1) >>> 0;
         }
         return v = i, o;
@@ -90,21 +90,21 @@
     function H() {
         return (T === null || T.buffer.detached === !0 || T.buffer.detached === void 0 && T.buffer !== c.memory.buffer) && (T = new DataView(c.memory.buffer)), T;
     }
-    function Me(t) {
+    function Re(t) {
         return t == null;
     }
-    function le(t, e) {
+    function me(t, e) {
         t = t >>> 0;
         const n = H(), s = [];
         for(let o = t; o < t + 4 * e; o += 4)s.push(c.__wbindgen_export_3.get(n.getUint32(o, !0)));
         return c.__externref_drop_slice(t, e), s;
     }
-    const Re = Object.freeze({
+    const Ae = Object.freeze({
         JqueryTerminal: 0,
         0: "JqueryTerminal",
         Html: 1,
         1: "Html"
-    }), me = typeof FinalizationRegistry > "u" ? {
+    }), ue = typeof FinalizationRegistry > "u" ? {
         register: ()=>{},
         unregister: ()=>{}
     } : new FinalizationRegistry((t)=>c.__wbg_commandresult_free(t >>> 0, 1));
@@ -112,11 +112,11 @@
         static __wrap(e) {
             e = e >>> 0;
             const n = Object.create(oe.prototype);
-            return n.__wbg_ptr = e, me.register(n, n.__wbg_ptr, n), n;
+            return n.__wbg_ptr = e, ue.register(n, n.__wbg_ptr, n), n;
         }
         __destroy_into_raw() {
             const e = this.__wbg_ptr;
-            return this.__wbg_ptr = 0, me.unregister(this), e;
+            return this.__wbg_ptr = 0, ue.unregister(this), e;
         }
         free() {
             const e = this.__destroy_into_raw();
@@ -150,7 +150,7 @@
             c.__wbg_set_commandresult_should_reset(this.__wbg_ptr, e);
         }
     }
-    const ue = typeof FinalizationRegistry > "u" ? {
+    const de = typeof FinalizationRegistry > "u" ? {
         register: ()=>{},
         unregister: ()=>{}
     } : new FinalizationRegistry((t)=>c.__wbg_interpreteroutput_free(t >>> 0, 1));
@@ -158,11 +158,11 @@
         static __wrap(e) {
             e = e >>> 0;
             const n = Object.create(se.prototype);
-            return n.__wbg_ptr = e, ue.register(n, n.__wbg_ptr, n), n;
+            return n.__wbg_ptr = e, de.register(n, n.__wbg_ptr, n), n;
         }
         __destroy_into_raw() {
             const e = this.__wbg_ptr;
-            return this.__wbg_ptr = 0, ue.unregister(this), e;
+            return this.__wbg_ptr = 0, de.unregister(this), e;
         }
         free() {
             const e = this.__destroy_into_raw();
@@ -184,7 +184,7 @@
             c.__wbg_set_commandresult_is_command(this.__wbg_ptr, e);
         }
     }
-    const de = typeof FinalizationRegistry > "u" ? {
+    const pe = typeof FinalizationRegistry > "u" ? {
         register: ()=>{},
         unregister: ()=>{}
     } : new FinalizationRegistry((t)=>c.__wbg_numbat_free(t >>> 0, 1));
@@ -192,11 +192,11 @@
         static __wrap(e) {
             e = e >>> 0;
             const n = Object.create(J.prototype);
-            return n.__wbg_ptr = e, de.register(n, n.__wbg_ptr, n), n;
+            return n.__wbg_ptr = e, pe.register(n, n.__wbg_ptr, n), n;
         }
         __destroy_into_raw() {
             const e = this.__wbg_ptr;
-            return this.__wbg_ptr = 0, de.unregister(this), e;
+            return this.__wbg_ptr = 0, pe.unregister(this), e;
         }
         free() {
             const e = this.__destroy_into_raw();
@@ -216,12 +216,12 @@
         }
         get_completions_for(e) {
             const n = k(e, c.__wbindgen_malloc, c.__wbindgen_realloc), s = v, o = c.numbat_get_completions_for(this.__wbg_ptr, n, s);
-            var r = le(o[0], o[1]).slice();
+            var r = me(o[0], o[1]).slice();
             return c.__wbindgen_free(o[0], o[1] * 4, 4), r;
         }
         get_unicode_completion(e) {
             const n = k(e, c.__wbindgen_malloc, c.__wbindgen_realloc), s = v, o = c.numbat_get_unicode_completion(this.__wbg_ptr, n, s);
-            var r = le(o[0], o[1]).slice();
+            var r = me(o[0], o[1]).slice();
             return c.__wbindgen_free(o[0], o[1] * 4, 4), r;
         }
         static new(e, n, s) {
@@ -236,7 +236,7 @@
             return se.__wrap(o);
         }
     }
-    async function Ae(t, e) {
+    async function Ne(t, e) {
         if (typeof Response == "function" && t instanceof Response) {
             if (typeof WebAssembly.instantiateStreaming == "function") try {
                 return await WebAssembly.instantiateStreaming(t, e);
@@ -254,7 +254,7 @@
             } : n;
         }
     }
-    function Ne() {
+    function De() {
         const t = {};
         return t.wbg = {}, t.wbg.__wbg_error_7534b8e9a36f1ab4 = function(e, n) {
             let s, o;
@@ -264,13 +264,13 @@
                 c.__wbindgen_free(s, o, 1);
             }
         }, t.wbg.__wbg_getRandomValues_3c9c0d586e575a16 = function() {
-            return ce(function(e, n) {
-                globalThis.crypto.getRandomValues(xe(e, n));
+            return le(function(e, n) {
+                globalThis.crypto.getRandomValues(Te(e, n));
             }, arguments);
         }, t.wbg.__wbg_getTime_46267b1c24877e30 = function(e) {
             return e.getTime();
         }, t.wbg.__wbg_get_67b2ba62fc30de12 = function() {
-            return ce(function(e, n) {
+            return le(function(e, n) {
                 return Reflect.get(e, n);
             }, arguments);
         }, t.wbg.__wbg_new0_f788a2397c7ca929 = function() {
@@ -295,7 +295,7 @@
             return e;
         }, t.wbg.__wbindgen_string_get = function(e, n) {
             const s = n, o = typeof s == "string" ? s : void 0;
-            var r = Me(o) ? 0 : k(o, c.__wbindgen_malloc, c.__wbindgen_realloc), i = v;
+            var r = Re(o) ? 0 : k(o, c.__wbindgen_malloc, c.__wbindgen_realloc), i = v;
             H().setInt32(e + 4, i, !0), H().setInt32(e + 0, r, !0);
         }, t.wbg.__wbindgen_string_new = function(e, n) {
             return U(e, n);
@@ -303,20 +303,20 @@
             throw new Error(U(e, n));
         }, t;
     }
-    function De(t, e) {
-        return c = t.exports, ye.__wbindgen_wasm_module = e, T = null, F = null, c.__wbindgen_start(), c;
+    function Pe(t, e) {
+        return c = t.exports, _e.__wbindgen_wasm_module = e, T = null, F = null, c.__wbindgen_start(), c;
     }
-    async function ye(t) {
+    async function _e(t) {
         if (c !== void 0) return c;
         typeof t < "u" && (Object.getPrototypeOf(t) === Object.prototype ? { module_or_path: t } = t : console.warn("using deprecated parameters for the initialization function; pass a single object instead")), typeof t > "u" && (t = new URL("/assets/numbat_wasm_bg-BTss0vKK.wasm", import.meta.url));
-        const e = Ne();
+        const e = De();
         (typeof t == "string" || typeof Request == "function" && t instanceof Request || typeof URL == "function" && t instanceof URL) && (t = fetch(t));
-        const { instance: n, module: s } = await Ae(await t, e);
-        return De(n, s);
+        const { instance: n, module: s } = await Ne(await t, e);
+        return Pe(n, s);
     }
-    const Pe = "modulepreload", Oe = function(t) {
+    const Oe = "modulepreload", Fe = function(t) {
         return "/" + t;
-    }, pe = {}, Fe = function(e, n, s) {
+    }, be = {}, He = function(e, n, s) {
         let o = Promise.resolve();
         if (n && n.length > 0) {
             let i = function(u) {
@@ -331,12 +331,12 @@
             document.getElementsByTagName("link");
             const a = document.querySelector("meta[property=csp-nonce]"), l = a?.nonce || a?.getAttribute("nonce");
             o = i(n.map((u)=>{
-                if (u = Oe(u), u in pe) return;
-                pe[u] = !0;
+                if (u = Fe(u), u in be) return;
+                be[u] = !0;
                 const b = u.endsWith(".css"), g = b ? '[rel="stylesheet"]' : "";
                 if (document.querySelector(`link[href="${u}"]${g}`)) return;
                 const d = document.createElement("link");
-                if (d.rel = b ? "stylesheet" : Pe, b || (d.as = "script"), d.crossOrigin = "", d.href = u, l && d.setAttribute("nonce", l), document.head.appendChild(d), b) return new Promise((_, E)=>{
+                if (d.rel = b ? "stylesheet" : Oe, b || (d.as = "script"), d.crossOrigin = "", d.href = u, l && d.setAttribute("nonce", l), document.head.appendChild(d), b) return new Promise((_, E)=>{
                     d.addEventListener("load", _), d.addEventListener("error", ()=>E(new Error(`Unable to preload CSS for ${u}`)));
                 });
             }));
@@ -352,7 +352,7 @@
             return e().catch(r);
         });
     };
-    function He(t = {}) {
+    function We(t = {}) {
         const { immediate: e = !1, onNeedRefresh: n, onOfflineReady: s, onRegistered: o, onRegisteredSW: r, onRegisterError: i } = t;
         let a, l, u;
         const b = async (d = !0)=>{
@@ -360,7 +360,7 @@
         };
         async function g() {
             if ("serviceWorker" in navigator) {
-                if (a = await Fe(async ()=>{
+                if (a = await He(async ()=>{
                     const { Workbox: d } = await import("./workbox-window.prod.es5-BIl4cyR9.js");
                     return {
                         Workbox: d
@@ -402,22 +402,30 @@
     }
     te();
     window.visualViewport ? window.visualViewport.addEventListener("resize", te) : window.addEventListener("resize", te);
-    const w = document.getElementById("output"), We = document.getElementById("form"), m = document.getElementById("input"), Y = document.getElementById("variables-list"), D = document.getElementById("tabs-scroll"), A = document.getElementById("session-select"), ze = document.getElementById("sidebar-middle"), _e = /^let\s+([a-zA-Z_][a-zA-Z0-9_]*)/, he = /^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/, we = "calcite-sessions", Ue = 10, L = new Set, I = new Map;
+    const w = document.getElementById("output"), ze = document.getElementById("form"), m = document.getElementById("input"), Y = document.getElementById("variables-list"), D = document.getElementById("tabs-scroll"), A = document.getElementById("session-select"), Ue = document.getElementById("sidebar-middle"), he = /^let\s+([a-zA-Z_][a-zA-Z0-9_]*)/, we = /^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/, Ee = "calcite-sessions", qe = 10, L = new Set, I = new Map;
     let S, q = null, p, y = -1, W = "";
-    function Ee(t) {
+    function ie(t) {
         return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
     }
-    function qe() {
+    function Ve(t) {
+        let e = "";
+        for(; e !== t;)e = t, t = t.replace(/\[\[[^\]]*\]([\s\S]*?)\]/g, "$1");
+        return t;
+    }
+    function ve(t) {
+        return ie(Ve(t)).replace(/\n/g, "<br>");
+    }
+    function je() {
         document.getElementById("variables").classList.remove("mobile-open");
     }
-    const ve = 'button:not([disabled]),[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
-    function Ve(t, e) {
-        const n = Array.from(e.querySelectorAll(ve));
+    const ke = 'button:not([disabled]),[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+    function Ge(t, e) {
+        const n = Array.from(e.querySelectorAll(ke));
         if (n.length === 0) return;
         const s = n[0], o = n[n.length - 1];
         t.shiftKey ? document.activeElement === s && (t.preventDefault(), o.focus()) : document.activeElement === o && (t.preventDefault(), s.focus());
     }
-    function ie(t, e) {
+    function re(t, e) {
         t.setAttribute("role", "button"), t.tabIndex = 0, t.addEventListener("click", e), t.addEventListener("keydown", (n)=>{
             (n.key === "Enter" || n.key === " ") && (n.preventDefault(), e());
         });
@@ -429,11 +437,11 @@
     function j() {
         y = -1, W = "";
     }
-    function ke(t, e, n) {
+    function Le(t, e, n) {
         const s = document.createElement("div");
         s.className = "entry" + (n ? " error" : "");
         const o = document.createElement("div");
-        o.className = "query", o.textContent = t, o.title = "Re-use this expression", ie(o, ()=>M(t));
+        o.className = "query", o.textContent = t, o.title = "Re-use this expression", re(o, ()=>M(t));
         const r = document.createElement("div");
         r.className = "result", r.innerHTML = e, s.appendChild(o), s.appendChild(r), w.appendChild(s), w.scrollTop = w.scrollHeight;
     }
@@ -447,8 +455,8 @@
             const e = S.interpret(t);
             if (!e.is_error) {
                 const n = document.createElement("div");
-                n.className = "var-item", n.title = `Insert "${t}"`, ie(n, ()=>{
-                    M(t), qe();
+                n.className = "var-item", n.title = `Insert "${t}"`, re(n, ()=>{
+                    M(t), je();
                 });
                 const s = document.createElement("span");
                 s.className = "var-name", s.textContent = t;
@@ -466,7 +474,7 @@
         t.innerHTML = "";
         for (const [e, n] of I){
             const s = document.createElement("div");
-            s.className = "fn-item", s.title = `Insert "${e}("`, ie(s, ()=>{
+            s.className = "fn-item", s.title = `Insert "${e}("`, re(s, ()=>{
                 M(e + "("), f("functions-popup");
             });
             const o = document.createElement("span");
@@ -477,15 +485,15 @@
     }
     function x() {
         try {
-            return JSON.parse(localStorage.getItem(we) ?? "[]");
+            return JSON.parse(localStorage.getItem(Ee) ?? "[]");
         } catch  {
             return [];
         }
     }
     function G(t) {
-        localStorage.setItem(we, JSON.stringify(t));
+        localStorage.setItem(Ee, JSON.stringify(t));
     }
-    function re() {
+    function ae() {
         return {
             id: Date.now(),
             label: new Date().toLocaleString("en-GB", {
@@ -502,7 +510,7 @@
         const t = x(), e = t.findIndex((o)=>o.id === p.id);
         e >= 0 ? t[e] = p : t.unshift(p);
         let n = 0;
-        const s = t.filter((o)=>o.named ? !0 : (n++, n <= Ue));
+        const s = t.filter((o)=>o.named ? !0 : (n++, n <= qe));
         G(s);
     }
     function N() {
@@ -517,13 +525,13 @@
             u.className = "tab-label", u.textContent = i.label, a || (u.tabIndex = 0, u.addEventListener("click", ()=>V(i.id)), u.addEventListener("keydown", (g)=>{
                 (g.key === "Enter" || g.key === " ") && (g.preventDefault(), V(i.id));
             })), u.addEventListener("dblclick", (g)=>{
-                g.stopPropagation(), je(i, u);
+                g.stopPropagation(), $e(i, u);
             }), l.appendChild(u);
             const b = document.createElement("button");
             b.className = "tab-close", b.textContent = "×", b.title = "Close session", b.addEventListener("click", (g)=>{
                 g.stopPropagation();
                 const _ = x().filter((E)=>E.id !== i.id);
-                G(_), a ? (p.inputs = [], _.length > 0 ? V(_[0].id) : Le()) : N();
+                G(_), a ? (p.inputs = [], _.length > 0 ? V(_[0].id) : Ie()) : N();
             }), l.appendChild(b), D.appendChild(l);
         }
         const n = D.querySelector(".tab.active");
@@ -543,7 +551,7 @@
             a.label = "Recent", o.forEach((l)=>r(l, a)), A.appendChild(a);
         } else e.forEach((i)=>r(i, A));
     }
-    function je(t, e) {
+    function $e(t, e) {
         const n = document.createElement("input");
         n.type = "text", n.className = "tab-rename-input", n.value = t.label, e.replaceWith(n), n.focus(), n.select();
         function s() {
@@ -559,8 +567,8 @@
             o.key === "Enter" && (o.preventDefault(), n.blur()), o.key === "Escape" && (n.value = t.label, n.blur());
         });
     }
-    function Le() {
-        p && (p.inputs.length === 0 ? G(x().filter((t)=>t.id !== p.id)) : C()), X(), L.clear(), I.clear(), w.innerHTML = "", K(), Z(), p = re(), C(), N(), j(), m.value = "", m.focus();
+    function Ie() {
+        p && (p.inputs.length === 0 ? G(x().filter((t)=>t.id !== p.id)) : C()), X(), L.clear(), I.clear(), w.innerHTML = "", K(), Z(), p = ae(), C(), N(), j(), m.value = "", m.focus();
     }
     async function V(t) {
         const n = x().find((s)=>s.id === t);
@@ -570,25 +578,25 @@
                 let o = "", r = !1;
                 try {
                     const i = S.try_run_command(s);
-                    if (i.is_command) i.should_reset ? (w.innerHTML = "", L.clear(), I.clear()) : i.should_clear ? w.innerHTML = "" : o = i.output ?? "(command executed)";
+                    if (i.is_command) i.should_reset ? (w.innerHTML = "", L.clear(), I.clear()) : i.should_clear ? w.innerHTML = "" : o = ve(i.output ?? "(command executed)");
                     else {
                         const a = S.interpret(s);
                         if (o = a.output, r = a.is_error, !r) {
-                            const l = s.match(_e);
+                            const l = s.match(he);
                             l && L.add(l[1]);
-                            const u = s.match(he);
+                            const u = s.match(we);
                             u && I.set(u[1], u[2]);
                         }
                     }
                 } catch (i) {
-                    o = Ee(i instanceof Error ? i.message : String(i)), r = !0;
+                    o = ie(i instanceof Error ? i.message : String(i)), r = !0;
                 }
-                o && ke(s, o, r);
+                o && Le(s, o, r);
             }
             K(), Z(), m.focus();
         }
     }
-    const Ge = [
+    const Je = [
         {
             name: "Length",
             units: [
@@ -1146,9 +1154,9 @@
             ]
         }
     ];
-    function $e() {
+    function Ke() {
         const t = document.getElementById("units-section-body");
-        for (const e of Ge){
+        for (const e of Je){
             const n = document.createElement("div");
             n.className = "unit-category";
             const s = document.createElement("h4");
@@ -1164,7 +1172,7 @@
             n.appendChild(o), t.appendChild(n);
         }
     }
-    const Je = [
+    const Ze = [
         {
             name: "Base",
             dimensions: [
@@ -1265,9 +1273,9 @@
             ]
         }
     ];
-    function Ke() {
+    function Xe() {
         const t = document.getElementById("dimensions-section-body");
-        for (const e of Je){
+        for (const e of Ze){
             const n = document.createElement("div");
             n.className = "unit-category";
             const s = document.createElement("h4");
@@ -1283,7 +1291,7 @@
             n.appendChild(o), t.appendChild(n);
         }
     }
-    function Ie() {
+    function Ce() {
         if (!q) return;
         const t = [
             ...q.matchAll(/currency='([A-Z]{3})'\s+rate='([0-9.]+)'/g)
@@ -1291,9 +1299,9 @@
         for (const [, e, n] of t)S.interpret(`unit ${e} : Money = (1 / ${n}) EUR`);
     }
     function X() {
-        S = J.new(!0, !0, Re.Html), Ie();
+        S = J.new(!0, !0, Ae.Html), Ce();
     }
-    function Ze(t) {
+    function Ye(t) {
         const e = document.getElementById("currencies-list");
         e.innerHTML = "";
         const n = [
@@ -1313,27 +1321,27 @@
         }
         e.appendChild(s);
     }
-    async function Xe() {
+    async function Qe() {
         const t = document.getElementById("currencies-status");
         t.textContent = "Loading…", t.className = "currencies-loading";
         try {
             const e = await fetch("/ecb-rates.xml");
             if (!e.ok) throw new Error(`HTTP ${e.status}`);
-            q = await e.text(), Ie();
+            q = await e.text(), Ce();
             const n = q.match(/time='(\d{4}-\d{2}-\d{2})'/), s = n ? new Date(n[1]).toLocaleDateString("en-GB", {
                 day: "numeric",
                 month: "short",
                 year: "numeric"
             }) : "unknown date";
-            t.textContent = `European Central Bank rates · ${s}`, t.className = "", Ze(q);
+            t.textContent = `European Central Bank rates · ${s}`, t.className = "", Ye(q);
         } catch  {
             t.textContent = "Unavailable", t.className = "currencies-error";
         }
     }
-    function be() {
-        X(), w.innerHTML = "", L.clear(), I.clear(), K(), Z(), p = re(), C(), N(), m.value = "", j();
-    }
     function fe() {
+        X(), w.innerHTML = "", L.clear(), I.clear(), K(), Z(), p = ae(), C(), N(), m.value = "", j();
+    }
+    function ge() {
         w.innerHTML = "", p.inputs = [], C(), m.value = "", j();
     }
     let ne = null;
@@ -1341,19 +1349,19 @@
     function h(t) {
         B.length === 0 && (ne = document.activeElement), B.push(t);
         const e = document.getElementById(t);
-        e.classList.add("visible"), document.getElementById(t + "-backdrop").classList.add("visible"), e.querySelector(ve)?.focus();
+        e.classList.add("visible"), document.getElementById(t + "-backdrop").classList.add("visible"), e.querySelector(ke)?.focus();
     }
     function f(t) {
         document.getElementById(t).classList.remove("visible"), document.getElementById(t + "-backdrop").classList.remove("visible");
         const e = B.lastIndexOf(t);
         e >= 0 && B.splice(e, 1), B.length === 0 && (ne?.focus(), ne = null);
     }
-    let ae = null;
+    let ce = null;
     function Q(t, e, n, s = "Confirm") {
-        document.getElementById("confirm-popup-title").textContent = t, document.getElementById("confirm-popup-message").textContent = e, document.getElementById("confirm-popup-ok").textContent = s, ae = n, h("confirm-popup");
+        document.getElementById("confirm-popup-title").textContent = t, document.getElementById("confirm-popup-message").textContent = e, document.getElementById("confirm-popup-ok").textContent = s, ce = n, h("confirm-popup");
     }
     function P() {
-        f("confirm-popup"), ae = null;
+        f("confirm-popup"), ce = null;
     }
     function O(t, e) {
         document.getElementById("info-popup-title").textContent = t, document.getElementById("info-popup-message").textContent = e, h("info-popup");
@@ -1361,18 +1369,18 @@
     function ee() {
         f("info-popup");
     }
-    async function Ye() {
+    async function et() {
         const t = document.createElement("div");
         t.className = "entry init-msg", t.textContent = "Loading…", w.appendChild(t);
         try {
-            await ye();
+            await _e();
         } catch (i) {
             t.textContent = "Failed to load: " + (i instanceof Error ? i.message : String(i)), t.classList.add("error");
             return;
         }
-        X(), w.removeChild(t), await Xe();
+        X(), w.removeChild(t), await Qe();
         const e = x();
-        e.length > 0 ? await V(e[0].id) : (p = re(), C(), N()), $e(), document.getElementById("units-panel-btn").addEventListener("click", ()=>h("units-popup")), document.getElementById("units-popup-close").addEventListener("click", ()=>f("units-popup")), document.getElementById("units-popup-backdrop").addEventListener("click", ()=>f("units-popup")), Ke(), document.getElementById("dimensions-panel-btn").addEventListener("click", ()=>h("dimensions-popup")), document.getElementById("dimensions-popup-close").addEventListener("click", ()=>f("dimensions-popup")), document.getElementById("dimensions-popup-backdrop").addEventListener("click", ()=>f("dimensions-popup")), document.getElementById("functions-panel-btn").addEventListener("click", ()=>h("functions-popup")), document.getElementById("functions-popup-close").addEventListener("click", ()=>f("functions-popup")), document.getElementById("functions-popup-backdrop").addEventListener("click", ()=>f("functions-popup")), document.getElementById("currencies-panel-btn").addEventListener("click", ()=>h("currencies-popup")), document.getElementById("currencies-popup-close").addEventListener("click", ()=>f("currencies-popup")), document.getElementById("currencies-popup-backdrop").addEventListener("click", ()=>f("currencies-popup")), document.getElementById("info-popup-close").addEventListener("click", ee), document.getElementById("info-popup-backdrop").addEventListener("click", ee), document.getElementById("vars-help-btn").addEventListener("click", ()=>{
+        e.length > 0 ? await V(e[0].id) : (p = ae(), C(), N()), Ke(), document.getElementById("units-panel-btn").addEventListener("click", ()=>h("units-popup")), document.getElementById("units-popup-close").addEventListener("click", ()=>f("units-popup")), document.getElementById("units-popup-backdrop").addEventListener("click", ()=>f("units-popup")), Xe(), document.getElementById("dimensions-panel-btn").addEventListener("click", ()=>h("dimensions-popup")), document.getElementById("dimensions-popup-close").addEventListener("click", ()=>f("dimensions-popup")), document.getElementById("dimensions-popup-backdrop").addEventListener("click", ()=>f("dimensions-popup")), document.getElementById("functions-panel-btn").addEventListener("click", ()=>h("functions-popup")), document.getElementById("functions-popup-close").addEventListener("click", ()=>f("functions-popup")), document.getElementById("functions-popup-backdrop").addEventListener("click", ()=>f("functions-popup")), document.getElementById("currencies-panel-btn").addEventListener("click", ()=>h("currencies-popup")), document.getElementById("currencies-popup-close").addEventListener("click", ()=>f("currencies-popup")), document.getElementById("currencies-popup-backdrop").addEventListener("click", ()=>f("currencies-popup")), document.getElementById("info-popup-close").addEventListener("click", ee), document.getElementById("info-popup-backdrop").addEventListener("click", ee), document.getElementById("vars-help-btn").addEventListener("click", ()=>{
             O("Variables", "Define variables with let name = expression to store a value for reuse. Tap a variable to insert it into your expression.");
         }), document.getElementById("functions-help-btn").addEventListener("click", ()=>{
             O("Functions", "Define functions with fn name(params) = expression. Tap a function to insert it at the cursor.");
@@ -1383,23 +1391,23 @@
         }), document.getElementById("dimensions-help-btn").addEventListener("click", ()=>{
             O("Dimensions", 'Dimensions are physical quantity types used in type annotations — for example "let x: Length = 5 m" or "fn speed(d: Length, t: Time) -> Velocity = d / t". Tap a dimension to insert it at the cursor.');
         }), document.getElementById("confirm-popup-close").addEventListener("click", P), document.getElementById("confirm-popup-backdrop").addEventListener("click", P), document.getElementById("confirm-popup-cancel").addEventListener("click", P), document.getElementById("confirm-popup-ok").addEventListener("click", ()=>{
-            const i = ae;
+            const i = ce;
             P(), i && i();
         }), document.getElementById("about-btn").addEventListener("click", ()=>h("about-popup")), document.getElementById("about-popup-close").addEventListener("click", ()=>f("about-popup")), document.getElementById("about-popup-backdrop").addEventListener("click", ()=>f("about-popup")), document.getElementById("about-reset-btn").addEventListener("click", ()=>{
-            Q("Reset app data", "This will erase all sessions, variables, and cached data. The app will reload.", et, "Reset");
+            Q("Reset app data", "This will erase all sessions, variables, and cached data. The app will reload.", nt, "Reset");
         }), document.getElementById("clear-btn").addEventListener("click", ()=>{
-            Q("Clear session", "Clear all output and history for this session?", fe, "Clear");
+            Q("Clear session", "Clear all output and history for this session?", ge, "Clear");
         }), document.getElementById("reset-btn").addEventListener("click", ()=>{
-            Q("Reset", "Clear all output, variables, and functions, and start fresh?", be, "Reset");
+            Q("Reset", "Clear all output, variables, and functions, and start fresh?", fe, "Reset");
         }), document.addEventListener("keydown", (i)=>{
             if (i.key === "Escape" && (P(), ee(), f("about-popup"), f("units-popup"), f("dimensions-popup"), f("functions-popup"), f("currencies-popup")), i.key === "Tab" && B.length > 0) {
                 const a = B[B.length - 1];
-                Ve(i, document.getElementById(a));
+                Ge(i, document.getElementById(a));
             }
         });
         const n = document.getElementById("variables");
         document.getElementById("mobile-vars-btn").addEventListener("click", ()=>{
-            n.classList.add("mobile-open"), ze.scrollTop = 0;
+            n.classList.add("mobile-open"), Ue.scrollTop = 0;
         }), document.getElementById("mobile-units-btn").addEventListener("click", ()=>{
             h("units-popup");
         }), document.getElementById("mobile-dimensions-btn").addEventListener("click", ()=>{
@@ -1421,7 +1429,7 @@
             const a = i.target.closest(".shortcut");
             a && M(a.dataset.insert ?? "");
         }
-        document.getElementById("numpad").addEventListener("click", r), document.getElementById("shortcuts").addEventListener("click", r), document.getElementById("new-session-btn").addEventListener("click", ()=>Le()), A.addEventListener("change", ()=>{
+        document.getElementById("numpad").addEventListener("click", r), document.getElementById("shortcuts").addEventListener("click", r), document.getElementById("new-session-btn").addEventListener("click", ()=>Ie()), A.addEventListener("change", ()=>{
             V(parseInt(A.value));
         }), m.addEventListener("keydown", (i)=>{
             const a = p.inputs;
@@ -1437,7 +1445,7 @@
             i.length !== 0 && (y === -1 && (W = m.value), y = Math.min(y + 1, i.length - 1), m.value = i[i.length - 1 - y], m.focus(), m.setSelectionRange(m.value.length, m.value.length));
         }), document.getElementById("history-next").addEventListener("click", ()=>{
             y !== -1 && (y--, m.value = y === -1 ? W : p.inputs[p.inputs.length - 1 - y], m.focus(), m.setSelectionRange(m.value.length, m.value.length));
-        }), We.addEventListener("submit", (i)=>{
+        }), ze.addEventListener("submit", (i)=>{
             i.preventDefault();
             const a = m.value.trim();
             if (!a) return;
@@ -1447,45 +1455,45 @@
                 const b = S.try_run_command(a);
                 if (b.is_command) {
                     if (b.should_reset) {
-                        be();
-                        return;
-                    }
-                    if (b.should_clear) {
                         fe();
                         return;
                     }
-                    l = b.output ?? "(command executed)", p.inputs.push(a), C();
+                    if (b.should_clear) {
+                        ge();
+                        return;
+                    }
+                    l = ve(b.output ?? "(command executed)"), p.inputs.push(a), C();
                 } else {
                     p.inputs.push(a), C();
                     const g = S.interpret(a);
                     if (l = g.output, u = g.is_error, !u) {
-                        const d = a.match(_e);
+                        const d = a.match(he);
                         d && (L.add(d[1]), K());
-                        const _ = a.match(he);
+                        const _ = a.match(we);
                         _ && (I.set(_[1], _[2]), Z());
                     }
                 }
             } catch (b) {
-                l = Ee(b instanceof Error ? b.message : String(b)), u = !0;
+                l = ie(b instanceof Error ? b.message : String(b)), u = !0;
             }
-            ke(a, l, u), m.value = "";
+            Le(a, l, u), m.value = "";
         }), m.focus();
     }
-    const R = document.getElementById("about-check-btn"), Ce = document.getElementById("about-update-btn");
-    document.getElementById("about-version").textContent = "0.2.3";
-    let Be = !1;
-    const Qe = He({
+    const R = document.getElementById("about-check-btn"), Be = document.getElementById("about-update-btn");
+    document.getElementById("about-version").textContent = "0.2.4";
+    let xe = !1;
+    const tt = We({
         onNeedRefresh () {
-            Be = !0, R.hidden = !0, Ce.hidden = !1;
+            xe = !0, R.hidden = !0, Be.hidden = !1;
         }
     });
     R.addEventListener("click", async ()=>{
-        R.textContent = "Checking…", R.disabled = !0, await (await navigator.serviceWorker.getRegistration())?.update(), Be || (R.textContent = "Check for update", R.disabled = !1);
+        R.textContent = "Checking…", R.disabled = !0, await (await navigator.serviceWorker.getRegistration())?.update(), xe || (R.textContent = "Check for update", R.disabled = !1);
     });
-    Ce.addEventListener("click", ()=>{
-        Qe(!0);
+    Be.addEventListener("click", ()=>{
+        tt(!0);
     });
-    function et() {
+    function nt() {
         (async ()=>{
             localStorage.clear();
             const t = await navigator.serviceWorker.getRegistrations();
@@ -1494,5 +1502,5 @@
             await Promise.all(e.map((n)=>caches.delete(n))), location.reload();
         })();
     }
-    Ye();
+    et();
 })();
