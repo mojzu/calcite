@@ -423,8 +423,8 @@
         });
     }
     function M(t) {
-        const e = document.activeElement === m;
-        m.setRangeText(t, m.selectionStart ?? m.value.length, m.selectionEnd ?? m.value.length, "end"), e && m.focus();
+        const e = m.value.length, n = document.activeElement === m, s = n ? m.selectionStart ?? e : e, o = n ? m.selectionEnd ?? e : e;
+        m.setRangeText(t, s, o, "end"), m.focus();
     }
     function j() {
         y = -1, W = "";
@@ -1472,7 +1472,7 @@
         }), m.focus();
     }
     const R = document.getElementById("about-check-btn"), Ce = document.getElementById("about-update-btn");
-    document.getElementById("about-version").textContent = "0.2.2";
+    document.getElementById("about-version").textContent = "0.2.3";
     let Be = !1;
     const Qe = He({
         onNeedRefresh () {
