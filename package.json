@@ -1,11 +1,11 @@
 {
   "name": "numbat-web",
   "private": true,
-  "version": "0.2.2",
+  "version": "0.2.3",
   "type": "module",
   "scripts": {
     "dev": "vite preview",
-    "check": "tsc -p tsconfig.json && tsc -p tsconfig.node.json",
+    "check": "tsc -p tsconfig.json && tsc -p tsconfig.node.json && tsc -p tsconfig.tests.json",
     "prebuild": "tsx scripts/fetch-wasm.ts && tsx scripts/fetch-rates.ts && tsx scripts/generate-icons.ts",
     "build": "npm run check && vite build && echo 'calcite.mojzu.net' > dist/CNAME",
     "clean": "rm -rf dist",

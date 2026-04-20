@@ -100,14 +100,12 @@ function makeInteractive(el: HTMLElement, handler: () => void): void {
 }
 
 function insertIntoInput(text: string): void {
-  const hadFocus = document.activeElement === input
-  input.setRangeText(
-    text,
-    input.selectionStart ?? input.value.length,
-    input.selectionEnd  ?? input.value.length,
-    'end',
-  )
-  if (hadFocus) input.focus()
+  const len   = input.value.length
+  const focused = document.activeElement === input
+  const start = focused ? (input.selectionStart ?? len) : len
+  const end   = focused ? (input.selectionEnd   ?? len) : len
+  input.setRangeText(text, start, end, 'end')
+  input.focus()
 }
 
 function resetHistory(): void {
