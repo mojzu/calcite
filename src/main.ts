@@ -70,6 +70,20 @@ function escapeHtml(str: string): string {
     .replace(/'/g, '&#39;')
 }
 
+function stripJqueryTerminal(text: string): string {
+  // jquery.terminal format: [[style]content] — strip markup, keep content
+  let prev = ''
+  while (prev !== text) {
+    prev = text
+    text = text.replace(/\[\[[^\]]*\]([\s\S]*?)\]/g, '$1')
+  }
+  return text
+}
+
+function formatCommandOutput(raw: string): string {
+  return escapeHtml(stripJqueryTerminal(raw)).replace(/\n/g, '<br>')
+}
+
 function closeMobileSidebar(): void {
   document.getElementById('variables')!.classList.remove('mobile-open')
 }
@@ -425,7 +439,7 @@ async function replaySession(sessionId: number): Promise<void> {
         } else if (cmdResult.should_clear) {
           output.innerHTML = ''
         } else {
-          result = cmdResult.output ?? '(command executed)'
+          result = formatCommandOutput(cmdResult.output ?? '(command executed)')
         }
       } else {
         const interpreterOutput = numbat.interpret(query)
@@ -1091,7 +1105,7 @@ async function main(): Promise<void> {
           doClear()
           return
         }
-        result = cmdResult.output ?? '(command executed)'
+        result = formatCommandOutput(cmdResult.output ?? '(command executed)')
         currentSession.inputs.push(query)
         saveCurrentSession()
       } else {
