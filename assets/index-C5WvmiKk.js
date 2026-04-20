@@ -21,7 +21,7 @@
         }
     })();
     let c;
-    const ye = typeof TextDecoder < "u" ? new TextDecoder("utf-8", {
+    const ge = typeof TextDecoder < "u" ? new TextDecoder("utf-8", {
         ignoreBOM: !0,
         fatal: !0
     }) : {
@@ -29,13 +29,13 @@
             throw Error("TextDecoder not available");
         }
     };
-    typeof TextDecoder < "u" && ye.decode();
+    typeof TextDecoder < "u" && ge.decode();
     let F = null;
     function z() {
         return (F === null || F.byteLength === 0) && (F = new Uint8Array(c.memory.buffer)), F;
     }
     function U(t, e) {
-        return t = t >>> 0, ye.decode(z().subarray(t, t + e));
+        return t = t >>> 0, ge.decode(z().subarray(t, t + e));
     }
     function Te(t, e) {
         return t = t >>> 0, z().subarray(t / 1, t / 1 + e);
@@ -44,7 +44,7 @@
         const e = c.__externref_table_alloc();
         return c.__wbindgen_export_3.set(e, t), e;
     }
-    function le(t, e) {
+    function ce(t, e) {
         try {
             return t.apply(this, e);
         } catch (n) {
@@ -93,7 +93,7 @@
     function Re(t) {
         return t == null;
     }
-    function me(t, e) {
+    function le(t, e) {
         t = t >>> 0;
         const n = H(), s = [];
         for(let o = t; o < t + 4 * e; o += 4)s.push(c.__wbindgen_export_3.get(n.getUint32(o, !0)));
@@ -104,7 +104,7 @@
         0: "JqueryTerminal",
         Html: 1,
         1: "Html"
-    }), ue = typeof FinalizationRegistry > "u" ? {
+    }), me = typeof FinalizationRegistry > "u" ? {
         register: ()=>{},
         unregister: ()=>{}
     } : new FinalizationRegistry((t)=>c.__wbg_commandresult_free(t >>> 0, 1));
@@ -112,11 +112,11 @@
         static __wrap(e) {
             e = e >>> 0;
             const n = Object.create(oe.prototype);
-            return n.__wbg_ptr = e, ue.register(n, n.__wbg_ptr, n), n;
+            return n.__wbg_ptr = e, me.register(n, n.__wbg_ptr, n), n;
         }
         __destroy_into_raw() {
             const e = this.__wbg_ptr;
-            return this.__wbg_ptr = 0, ue.unregister(this), e;
+            return this.__wbg_ptr = 0, me.unregister(this), e;
         }
         free() {
             const e = this.__destroy_into_raw();
@@ -150,7 +150,7 @@
             c.__wbg_set_commandresult_should_reset(this.__wbg_ptr, e);
         }
     }
-    const de = typeof FinalizationRegistry > "u" ? {
+    const ue = typeof FinalizationRegistry > "u" ? {
         register: ()=>{},
         unregister: ()=>{}
     } : new FinalizationRegistry((t)=>c.__wbg_interpreteroutput_free(t >>> 0, 1));
@@ -158,11 +158,11 @@
         static __wrap(e) {
             e = e >>> 0;
             const n = Object.create(se.prototype);
-            return n.__wbg_ptr = e, de.register(n, n.__wbg_ptr, n), n;
+            return n.__wbg_ptr = e, ue.register(n, n.__wbg_ptr, n), n;
         }
         __destroy_into_raw() {
             const e = this.__wbg_ptr;
-            return this.__wbg_ptr = 0, de.unregister(this), e;
+            return this.__wbg_ptr = 0, ue.unregister(this), e;
         }
         free() {
             const e = this.__destroy_into_raw();
@@ -184,7 +184,7 @@
             c.__wbg_set_commandresult_is_command(this.__wbg_ptr, e);
         }
     }
-    const pe = typeof FinalizationRegistry > "u" ? {
+    const de = typeof FinalizationRegistry > "u" ? {
         register: ()=>{},
         unregister: ()=>{}
     } : new FinalizationRegistry((t)=>c.__wbg_numbat_free(t >>> 0, 1));
@@ -192,11 +192,11 @@
         static __wrap(e) {
             e = e >>> 0;
             const n = Object.create(J.prototype);
-            return n.__wbg_ptr = e, pe.register(n, n.__wbg_ptr, n), n;
+            return n.__wbg_ptr = e, de.register(n, n.__wbg_ptr, n), n;
         }
         __destroy_into_raw() {
             const e = this.__wbg_ptr;
-            return this.__wbg_ptr = 0, pe.unregister(this), e;
+            return this.__wbg_ptr = 0, de.unregister(this), e;
         }
         free() {
             const e = this.__destroy_into_raw();
@@ -216,12 +216,12 @@
         }
         get_completions_for(e) {
             const n = k(e, c.__wbindgen_malloc, c.__wbindgen_realloc), s = v, o = c.numbat_get_completions_for(this.__wbg_ptr, n, s);
-            var r = me(o[0], o[1]).slice();
+            var r = le(o[0], o[1]).slice();
             return c.__wbindgen_free(o[0], o[1] * 4, 4), r;
         }
         get_unicode_completion(e) {
             const n = k(e, c.__wbindgen_malloc, c.__wbindgen_realloc), s = v, o = c.numbat_get_unicode_completion(this.__wbg_ptr, n, s);
-            var r = me(o[0], o[1]).slice();
+            var r = le(o[0], o[1]).slice();
             return c.__wbindgen_free(o[0], o[1] * 4, 4), r;
         }
         static new(e, n, s) {
@@ -264,13 +264,13 @@
                 c.__wbindgen_free(s, o, 1);
             }
         }, t.wbg.__wbg_getRandomValues_3c9c0d586e575a16 = function() {
-            return le(function(e, n) {
+            return ce(function(e, n) {
                 globalThis.crypto.getRandomValues(Te(e, n));
             }, arguments);
         }, t.wbg.__wbg_getTime_46267b1c24877e30 = function(e) {
             return e.getTime();
         }, t.wbg.__wbg_get_67b2ba62fc30de12 = function() {
-            return le(function(e, n) {
+            return ce(function(e, n) {
                 return Reflect.get(e, n);
             }, arguments);
         }, t.wbg.__wbg_new0_f788a2397c7ca929 = function() {
@@ -304,9 +304,9 @@
         }, t;
     }
     function Pe(t, e) {
-        return c = t.exports, _e.__wbindgen_wasm_module = e, T = null, F = null, c.__wbindgen_start(), c;
+        return c = t.exports, ye.__wbindgen_wasm_module = e, T = null, F = null, c.__wbindgen_start(), c;
     }
-    async function _e(t) {
+    async function ye(t) {
         if (c !== void 0) return c;
         typeof t < "u" && (Object.getPrototypeOf(t) === Object.prototype ? { module_or_path: t } = t : console.warn("using deprecated parameters for the initialization function; pass a single object instead")), typeof t > "u" && (t = new URL("/assets/numbat_wasm_bg-BTss0vKK.wasm", import.meta.url));
         const e = De();
@@ -316,7 +316,7 @@
     }
     const Oe = "modulepreload", Fe = function(t) {
         return "/" + t;
-    }, be = {}, He = function(e, n, s) {
+    }, pe = {}, He = function(e, n, s) {
         let o = Promise.resolve();
         if (n && n.length > 0) {
             let i = function(u) {
@@ -331,8 +331,8 @@
             document.getElementsByTagName("link");
             const a = document.querySelector("meta[property=csp-nonce]"), l = a?.nonce || a?.getAttribute("nonce");
             o = i(n.map((u)=>{
-                if (u = Fe(u), u in be) return;
-                be[u] = !0;
+                if (u = Fe(u), u in pe) return;
+                pe[u] = !0;
                 const b = u.endsWith(".css"), g = b ? '[rel="stylesheet"]' : "";
                 if (document.querySelector(`link[href="${u}"]${g}`)) return;
                 const d = document.createElement("link");
@@ -402,9 +402,9 @@
     }
     te();
     window.visualViewport ? window.visualViewport.addEventListener("resize", te) : window.addEventListener("resize", te);
-    const w = document.getElementById("output"), ze = document.getElementById("form"), m = document.getElementById("input"), Y = document.getElementById("variables-list"), D = document.getElementById("tabs-scroll"), A = document.getElementById("session-select"), Ue = document.getElementById("sidebar-middle"), he = /^let\s+([a-zA-Z_][a-zA-Z0-9_]*)/, we = /^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/, Ee = "calcite-sessions", qe = 10, L = new Set, I = new Map;
+    const w = document.getElementById("output"), ze = document.getElementById("form"), m = document.getElementById("input"), Y = document.getElementById("variables-list"), D = document.getElementById("tabs-scroll"), A = document.getElementById("session-select"), Ue = document.getElementById("sidebar-middle"), _e = /^let\s+([a-zA-Z_][a-zA-Z0-9_]*)/, he = /^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/, we = "calcite-sessions", qe = 10, L = new Set, I = new Map;
     let S, q = null, p, y = -1, W = "";
-    function ie(t) {
+    function Ee(t) {
         return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
     }
     function Ve(t) {
@@ -413,7 +413,7 @@
         return t;
     }
     function ve(t) {
-        return ie(Ve(t)).replace(/\n/g, "<br>");
+        return Ve(t).replace(/\n/g, "<br>");
     }
     function je() {
         document.getElementById("variables").classList.remove("mobile-open");
@@ -425,7 +425,7 @@
         const s = n[0], o = n[n.length - 1];
         t.shiftKey ? document.activeElement === s && (t.preventDefault(), o.focus()) : document.activeElement === o && (t.preventDefault(), s.focus());
     }
-    function re(t, e) {
+    function ie(t, e) {
         t.setAttribute("role", "button"), t.tabIndex = 0, t.addEventListener("click", e), t.addEventListener("keydown", (n)=>{
             (n.key === "Enter" || n.key === " ") && (n.preventDefault(), e());
         });
@@ -441,7 +441,7 @@
         const s = document.createElement("div");
         s.className = "entry" + (n ? " error" : "");
         const o = document.createElement("div");
-        o.className = "query", o.textContent = t, o.title = "Re-use this expression", re(o, ()=>M(t));
+        o.className = "query", o.textContent = t, o.title = "Re-use this expression", ie(o, ()=>M(t));
         const r = document.createElement("div");
         r.className = "result", r.innerHTML = e, s.appendChild(o), s.appendChild(r), w.appendChild(s), w.scrollTop = w.scrollHeight;
     }
@@ -455,7 +455,7 @@
             const e = S.interpret(t);
             if (!e.is_error) {
                 const n = document.createElement("div");
-                n.className = "var-item", n.title = `Insert "${t}"`, re(n, ()=>{
+                n.className = "var-item", n.title = `Insert "${t}"`, ie(n, ()=>{
                     M(t), je();
                 });
                 const s = document.createElement("span");
@@ -474,7 +474,7 @@
         t.innerHTML = "";
         for (const [e, n] of I){
             const s = document.createElement("div");
-            s.className = "fn-item", s.title = `Insert "${e}("`, re(s, ()=>{
+            s.className = "fn-item", s.title = `Insert "${e}("`, ie(s, ()=>{
                 M(e + "("), f("functions-popup");
             });
             const o = document.createElement("span");
@@ -485,15 +485,15 @@
     }
     function x() {
         try {
-            return JSON.parse(localStorage.getItem(Ee) ?? "[]");
+            return JSON.parse(localStorage.getItem(we) ?? "[]");
         } catch  {
             return [];
         }
     }
     function G(t) {
-        localStorage.setItem(Ee, JSON.stringify(t));
+        localStorage.setItem(we, JSON.stringify(t));
     }
-    function ae() {
+    function re() {
         return {
             id: Date.now(),
             label: new Date().toLocaleString("en-GB", {
@@ -568,7 +568,7 @@
         });
     }
     function Ie() {
-        p && (p.inputs.length === 0 ? G(x().filter((t)=>t.id !== p.id)) : C()), X(), L.clear(), I.clear(), w.innerHTML = "", K(), Z(), p = ae(), C(), N(), j(), m.value = "", m.focus();
+        p && (p.inputs.length === 0 ? G(x().filter((t)=>t.id !== p.id)) : C()), X(), L.clear(), I.clear(), w.innerHTML = "", K(), Z(), p = re(), C(), N(), j(), m.value = "", m.focus();
     }
     async function V(t) {
         const n = x().find((s)=>s.id === t);
@@ -582,14 +582,14 @@
                     else {
                         const a = S.interpret(s);
                         if (o = a.output, r = a.is_error, !r) {
-                            const l = s.match(he);
+                            const l = s.match(_e);
                             l && L.add(l[1]);
-                            const u = s.match(we);
+                            const u = s.match(he);
                             u && I.set(u[1], u[2]);
                         }
                     }
                 } catch (i) {
-                    o = ie(i instanceof Error ? i.message : String(i)), r = !0;
+                    o = Ee(i instanceof Error ? i.message : String(i)), r = !0;
                 }
                 o && Le(s, o, r);
             }
@@ -1338,10 +1338,10 @@
             t.textContent = "Unavailable", t.className = "currencies-error";
         }
     }
-    function fe() {
-        X(), w.innerHTML = "", L.clear(), I.clear(), K(), Z(), p = ae(), C(), N(), m.value = "", j();
+    function be() {
+        X(), w.innerHTML = "", L.clear(), I.clear(), K(), Z(), p = re(), C(), N(), m.value = "", j();
     }
-    function ge() {
+    function fe() {
         w.innerHTML = "", p.inputs = [], C(), m.value = "", j();
     }
     let ne = null;
@@ -1356,12 +1356,12 @@
         const e = B.lastIndexOf(t);
         e >= 0 && B.splice(e, 1), B.length === 0 && (ne?.focus(), ne = null);
     }
-    let ce = null;
+    let ae = null;
     function Q(t, e, n, s = "Confirm") {
-        document.getElementById("confirm-popup-title").textContent = t, document.getElementById("confirm-popup-message").textContent = e, document.getElementById("confirm-popup-ok").textContent = s, ce = n, h("confirm-popup");
+        document.getElementById("confirm-popup-title").textContent = t, document.getElementById("confirm-popup-message").textContent = e, document.getElementById("confirm-popup-ok").textContent = s, ae = n, h("confirm-popup");
     }
     function P() {
-        f("confirm-popup"), ce = null;
+        f("confirm-popup"), ae = null;
     }
     function O(t, e) {
         document.getElementById("info-popup-title").textContent = t, document.getElementById("info-popup-message").textContent = e, h("info-popup");
@@ -1373,14 +1373,14 @@
         const t = document.createElement("div");
         t.className = "entry init-msg", t.textContent = "Loading…", w.appendChild(t);
         try {
-            await _e();
+            await ye();
         } catch (i) {
             t.textContent = "Failed to load: " + (i instanceof Error ? i.message : String(i)), t.classList.add("error");
             return;
         }
         X(), w.removeChild(t), await Qe();
         const e = x();
-        e.length > 0 ? await V(e[0].id) : (p = ae(), C(), N()), Ke(), document.getElementById("units-panel-btn").addEventListener("click", ()=>h("units-popup")), document.getElementById("units-popup-close").addEventListener("click", ()=>f("units-popup")), document.getElementById("units-popup-backdrop").addEventListener("click", ()=>f("units-popup")), Xe(), document.getElementById("dimensions-panel-btn").addEventListener("click", ()=>h("dimensions-popup")), document.getElementById("dimensions-popup-close").addEventListener("click", ()=>f("dimensions-popup")), document.getElementById("dimensions-popup-backdrop").addEventListener("click", ()=>f("dimensions-popup")), document.getElementById("functions-panel-btn").addEventListener("click", ()=>h("functions-popup")), document.getElementById("functions-popup-close").addEventListener("click", ()=>f("functions-popup")), document.getElementById("functions-popup-backdrop").addEventListener("click", ()=>f("functions-popup")), document.getElementById("currencies-panel-btn").addEventListener("click", ()=>h("currencies-popup")), document.getElementById("currencies-popup-close").addEventListener("click", ()=>f("currencies-popup")), document.getElementById("currencies-popup-backdrop").addEventListener("click", ()=>f("currencies-popup")), document.getElementById("info-popup-close").addEventListener("click", ee), document.getElementById("info-popup-backdrop").addEventListener("click", ee), document.getElementById("vars-help-btn").addEventListener("click", ()=>{
+        e.length > 0 ? await V(e[0].id) : (p = re(), C(), N()), Ke(), document.getElementById("units-panel-btn").addEventListener("click", ()=>h("units-popup")), document.getElementById("units-popup-close").addEventListener("click", ()=>f("units-popup")), document.getElementById("units-popup-backdrop").addEventListener("click", ()=>f("units-popup")), Xe(), document.getElementById("dimensions-panel-btn").addEventListener("click", ()=>h("dimensions-popup")), document.getElementById("dimensions-popup-close").addEventListener("click", ()=>f("dimensions-popup")), document.getElementById("dimensions-popup-backdrop").addEventListener("click", ()=>f("dimensions-popup")), document.getElementById("functions-panel-btn").addEventListener("click", ()=>h("functions-popup")), document.getElementById("functions-popup-close").addEventListener("click", ()=>f("functions-popup")), document.getElementById("functions-popup-backdrop").addEventListener("click", ()=>f("functions-popup")), document.getElementById("currencies-panel-btn").addEventListener("click", ()=>h("currencies-popup")), document.getElementById("currencies-popup-close").addEventListener("click", ()=>f("currencies-popup")), document.getElementById("currencies-popup-backdrop").addEventListener("click", ()=>f("currencies-popup")), document.getElementById("info-popup-close").addEventListener("click", ee), document.getElementById("info-popup-backdrop").addEventListener("click", ee), document.getElementById("vars-help-btn").addEventListener("click", ()=>{
             O("Variables", "Define variables with let name = expression to store a value for reuse. Tap a variable to insert it into your expression.");
         }), document.getElementById("functions-help-btn").addEventListener("click", ()=>{
             O("Functions", "Define functions with fn name(params) = expression. Tap a function to insert it at the cursor.");
@@ -1391,14 +1391,14 @@
         }), document.getElementById("dimensions-help-btn").addEventListener("click", ()=>{
             O("Dimensions", 'Dimensions are physical quantity types used in type annotations — for example "let x: Length = 5 m" or "fn speed(d: Length, t: Time) -> Velocity = d / t". Tap a dimension to insert it at the cursor.');
         }), document.getElementById("confirm-popup-close").addEventListener("click", P), document.getElementById("confirm-popup-backdrop").addEventListener("click", P), document.getElementById("confirm-popup-cancel").addEventListener("click", P), document.getElementById("confirm-popup-ok").addEventListener("click", ()=>{
-            const i = ce;
+            const i = ae;
             P(), i && i();
         }), document.getElementById("about-btn").addEventListener("click", ()=>h("about-popup")), document.getElementById("about-popup-close").addEventListener("click", ()=>f("about-popup")), document.getElementById("about-popup-backdrop").addEventListener("click", ()=>f("about-popup")), document.getElementById("about-reset-btn").addEventListener("click", ()=>{
             Q("Reset app data", "This will erase all sessions, variables, and cached data. The app will reload.", nt, "Reset");
         }), document.getElementById("clear-btn").addEventListener("click", ()=>{
-            Q("Clear session", "Clear all output and history for this session?", ge, "Clear");
+            Q("Clear session", "Clear all output and history for this session?", fe, "Clear");
         }), document.getElementById("reset-btn").addEventListener("click", ()=>{
-            Q("Reset", "Clear all output, variables, and functions, and start fresh?", fe, "Reset");
+            Q("Reset", "Clear all output, variables, and functions, and start fresh?", be, "Reset");
         }), document.addEventListener("keydown", (i)=>{
             if (i.key === "Escape" && (P(), ee(), f("about-popup"), f("units-popup"), f("dimensions-popup"), f("functions-popup"), f("currencies-popup")), i.key === "Tab" && B.length > 0) {
                 const a = B[B.length - 1];
@@ -1455,11 +1455,11 @@
                 const b = S.try_run_command(a);
                 if (b.is_command) {
                     if (b.should_reset) {
-                        fe();
+                        be();
                         return;
                     }
                     if (b.should_clear) {
-                        ge();
+                        fe();
                         return;
                     }
                     l = ve(b.output ?? "(command executed)"), p.inputs.push(a), C();
@@ -1467,20 +1467,20 @@
                     p.inputs.push(a), C();
                     const g = S.interpret(a);
                     if (l = g.output, u = g.is_error, !u) {
-                        const d = a.match(he);
+                        const d = a.match(_e);
                         d && (L.add(d[1]), K());
-                        const _ = a.match(we);
+                        const _ = a.match(he);
                         _ && (I.set(_[1], _[2]), Z());
                     }
                 }
             } catch (b) {
-                l = ie(b instanceof Error ? b.message : String(b)), u = !0;
+                l = Ee(b instanceof Error ? b.message : String(b)), u = !0;
             }
             Le(a, l, u), m.value = "";
         }), m.focus();
     }
     const R = document.getElementById("about-check-btn"), Be = document.getElementById("about-update-btn");
-    document.getElementById("about-version").textContent = "0.2.4";
+    document.getElementById("about-version").textContent = "0.2.5";
     let xe = !1;
     const tt = We({
         onNeedRefresh () {
