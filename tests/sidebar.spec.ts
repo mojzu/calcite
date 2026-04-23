@@ -14,7 +14,7 @@ test('GitHub Repository link points to the correct repository and opens in a new
   await expect(link).toHaveAttribute('href', 'https://github.com/mojzu/calcite')
   await expect(link).toHaveAttribute('target', '_blank')
   await expect(link).toHaveAttribute('rel', 'noopener noreferrer')
-  await expect(link).toHaveText('GitHub repository')
+  await expect(link).toHaveText('GitHub repository ↗')
 })
 
 test('Numbat documentation link points to the correct URL and opens in a new tab', async ({ page }) => {

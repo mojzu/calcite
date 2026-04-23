@@ -27,7 +27,6 @@ Read README.md for build information.
 - Add ability to upload custom currency conversion rates
 - Automated method of updating ECB currency file
 - Add export to script file button
-- Add links to specific Numbat documentation pages in help sections
 
 ## Design Context
 

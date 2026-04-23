@@ -829,6 +829,19 @@ aside#variables.collapsed {
   line-height: 1.6;
 }
 
+#info-popup-link {
+  display: inline-block;
+  margin-top: var(--sp-4);
+  font-size: var(--text-sm);
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.1s;
+}
+
+#info-popup-link:hover {
+  color: var(--accent);
+}
+
 
 /* ── Confirm popup ─────────────────────────────────────────────────────────── */
 
@@ -1372,26 +1385,21 @@ aside#variables.collapsed {
   }
 
   /* Tighten vertical rhythm on the bottom UI rows to maximise output space */
-  #numpad {
-    padding-top: var(--sp-2);
-    padding-bottom: var(--sp-2);
-  }
-
   #shortcuts {
     padding-top: 0;
-    padding-bottom: var(--sp-2);
+    padding-bottom: var(--sp-1);
     padding-right: 1rem;
     margin-right: -1rem;
     mask-image: linear-gradient(to right, transparent, black var(--sp-4), black calc(100% - var(--sp-4)), transparent);
   }
 
   #input-row {
-    padding-top: var(--sp-2);
-    padding-bottom: var(--sp-2);
+    padding-top: var(--sp-1);
+    padding-bottom: var(--sp-1);
   }
 
   #mobile-sidebar-buttons {
-    margin-top: var(--sp-1);
+    margin-top: 0;
   }
 
   /* Swap to dropdown on mobile */
@@ -1414,17 +1422,15 @@ aside#variables.collapsed {
     outline: none;
   }
 
-  /* Numpad: 5-column grid with adequate touch targets */
+  /* Numpad: single row of all 10 digits */
   #numpad {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(10, 1fr);
+    gap: var(--sp-1);
     overflow-x: visible;
-    flex-wrap: unset;
     mask-image: none;
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: 0;
-    margin-right: 0;
+    padding: var(--sp-1) 0;
+    margin: 0;
   }
 
   /* Divider and hex digits hidden on mobile — numbers only */
@@ -1434,15 +1440,16 @@ aside#variables.collapsed {
   }
 
   #numpad .shortcut {
-    min-height: 2.75rem;
+    min-height: 2.25rem;
+    padding-left: var(--sp-1);
+    padding-right: var(--sp-1);
     justify-content: center;
   }
 
-  /* Adequate touch targets for operator shortcuts */
   #shortcuts .shortcut,
   #shortcuts #clear-btn,
   #shortcuts #reset-btn {
-    min-height: 2.75rem;
+    min-height: 2.25rem;
   }
 
   /* Hide sidebar collapse on mobile (sidebar is an overlay) */
@@ -1468,7 +1475,7 @@ aside#variables.collapsed {
     border-radius: 4px;
     color: var(--text-muted);
     cursor: pointer;
-    min-height: 2.75rem;
+    min-height: 2.25rem;
     padding: 0;
     display: flex;
     align-items: center;

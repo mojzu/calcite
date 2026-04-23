@@ -30,11 +30,18 @@ const FN_PATTERN           = /^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/
 const SESSIONS_KEY         = 'calcite-sessions'
 const MAX_UNNAMED_SESSIONS = 10
 
+interface ScriptEntry {
+  name: string
+  fnCount: number
+  letCount: number
+}
+
 interface Session {
   id: number
   label: string
   named: boolean
   inputs: string[]
+  scripts: ScriptEntry[]
 }
 
 interface UnitEntry {
@@ -265,6 +272,7 @@ function createSession(): Session {
     }),
     named: false,
     inputs: [],
+    scripts: [],
   }
 }
 
@@ -422,6 +430,7 @@ function startNewSession(): void {
   variables.clear()
   functions.clear()
   output.innerHTML = ''
+  document.getElementById('scripts-list')!.innerHTML = '<p class="no-vars">No scripts loaded</p>'
   updateVariables()
   updateFunctions()
 
@@ -455,6 +464,7 @@ async function replaySession(sessionId: number): Promise<void> {
   variables.clear()
   functions.clear()
   output.innerHTML = ''
+  document.getElementById('scripts-list')!.innerHTML = '<p class="no-vars">No scripts loaded</p>'
 
   currentSession = session
   resetHistory()
@@ -493,6 +503,9 @@ async function replaySession(sessionId: number): Promise<void> {
 
   updateVariables()
   updateFunctions()
+  for (const script of session.scripts ?? []) {
+    addScriptItem(script.name, script.fnCount, script.letCount, false)
+  }
   input.focus()
 }
 
@@ -780,6 +793,26 @@ function buildDimensionsSection(): void {
   }
 }
 
+// ── Script download ───────────────────────────────────────────────────────────
+
+function downloadNbt(): void {
+  // Only export user-typed let/fn definitions — not uploaded script file contents
+  const definitions = currentSession.inputs.filter(
+    input => !input.includes('\n') && (LET_PATTERN.test(input) || FN_PATTERN.test(input))
+  )
+  const content = definitions.join('\n')
+  const blob = new Blob([content], { type: 'text/plain' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  const slug = currentSession.label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+  a.download = `${slug || 'session'}.nbt`
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  URL.revokeObjectURL(url)
+}
+
 // ── Exchange rates ────────────────────────────────────────────────────────────
 
 // Uses interpret-based definitions exclusively — set_exchange_rates can only be
@@ -926,9 +959,16 @@ function hideConfirmPopup(): void {
   confirmCallback = null
 }
 
-function showInfoPopup(title: string, message: string): void {
+function showInfoPopup(title: string, message: string, docUrl?: string): void {
   document.getElementById('info-popup-title')!.textContent = title
   document.getElementById('info-popup-message')!.textContent = message
+  const link = document.getElementById('info-popup-link') as HTMLAnchorElement
+  if (docUrl) {
+    link.href = docUrl
+    link.hidden = false
+  } else {
+    link.hidden = true
+  }
   showPopup('info-popup')
 }
 
@@ -982,6 +1022,7 @@ async function main(): Promise<void> {
   document.getElementById('scripts-popup-close')!.addEventListener('click', () => hidePopup('scripts-popup'))
   document.getElementById('scripts-popup-backdrop')!.addEventListener('click', () => hidePopup('scripts-popup'))
   document.getElementById('scripts-upload-btn')!.addEventListener('click', () => scriptsFileInput.click())
+  document.getElementById('scripts-download-btn')!.addEventListener('click', downloadNbt)
   scriptsFileInput.addEventListener('change', async () => {
     const file = scriptsFileInput.files?.[0]
     if (!file) return
@@ -994,6 +1035,7 @@ async function main(): Promise<void> {
         for (const m of fnMatches)  functions.set(m[1], m[2])
         for (const m of letMatches) variables.add(m[1])
         currentSession.inputs.push(text)
+        currentSession.scripts.push({ name: file.name, fnCount: fnMatches.length, letCount: letMatches.length })
         saveCurrentSession()
         updateVariables()
         updateFunctions()
@@ -1014,22 +1056,22 @@ async function main(): Promise<void> {
   document.getElementById('info-popup-close')!.addEventListener('click', hideInfoPopup)
   document.getElementById('info-popup-backdrop')!.addEventListener('click', hideInfoPopup)
   document.getElementById('vars-help-btn')!.addEventListener('click', () => {
-    showInfoPopup('Variables', 'Define variables with let name = expression to store a value for reuse. Tap a variable to insert it into your expression.')
+    showInfoPopup('Variables', 'Define variables with let name = expression to store a value for reuse. Tap a variable to insert it into your expression.', 'https://numbat.dev/docs/basics/variables/')
   })
   document.getElementById('functions-help-btn')!.addEventListener('click', () => {
-    showInfoPopup('Functions', 'Define functions with fn name(params) = expression. Tap a function to insert it at the cursor.')
+    showInfoPopup('Functions', 'Define functions with fn name(params) = expression. Tap a function to insert it at the cursor.', 'https://numbat.dev/docs/basics/functions/')
   })
   document.getElementById('currencies-help-btn')!.addEventListener('click', () => {
     showInfoPopup('Currencies', 'Exchange rates are loaded from the European Central Bank (updated daily). Use currency codes in expressions — for example "100 USD to EUR" or "50 GBP + 30 CHF to EUR".')
   })
   document.getElementById('units-help-btn')!.addEventListener('click', () => {
-    showInfoPopup('Units', 'Units can be used in expressions and conversions — for example "1 km to mi" or "9.81 m/s^2 * 80 kg to N". Tap any unit to insert it at the cursor.')
+    showInfoPopup('Units', 'Units can be used in expressions and conversions — for example "1 km to mi" or "9.81 m/s^2 * 80 kg to N". Tap any unit to insert it at the cursor.', 'https://numbat.dev/docs/prelude/list-units/')
   })
   document.getElementById('dimensions-help-btn')!.addEventListener('click', () => {
-    showInfoPopup('Dimensions', 'Dimensions are physical quantity types used in type annotations — for example "let x: Length = 5 m" or "fn speed(d: Length, t: Time) -> Velocity = d / t". Tap a dimension to insert it at the cursor.')
+    showInfoPopup('Dimensions', 'Dimensions are physical quantity types used in type annotations — for example "let x: Length = 5 m" or "fn speed(d: Length, t: Time) -> Velocity = d / t". Tap a dimension to insert it at the cursor.', 'https://numbat.dev/docs/advanced/dimension-definitions/')
   })
   document.getElementById('scripts-help-btn')!.addEventListener('click', () => {
-    showInfoPopup('Scripts', 'Upload Numbat script files (.nbt) to load function and variable definitions into the current session. Uploaded scripts appear here; their functions appear in the Functions panel.')
+    showInfoPopup('Scripts', 'Upload Numbat script files (.nbt) to load function and variable definitions into the current session. Uploaded scripts appear here; their functions appear in the Functions panel.', 'https://numbat.dev/docs/examples/example-numbat_syntax/')
   })
 
   // Confirm popup

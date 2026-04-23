@@ -33,7 +33,7 @@ test('scripts popup shows upload button with icon', async ({ page }) => {
 
   const btn = page.locator('#scripts-upload-btn')
   await expect(btn).toBeVisible()
-  await expect(btn).toContainText('Upload file')
+  await expect(btn).toContainText('Upload')
   await expect(btn.locator('svg')).toBeVisible()
 })
 
@@ -244,6 +244,42 @@ test('uploading multiple scripts shows each as a separate entry in the list', as
   await expect(items.locator('.script-name').filter({ hasText: 'paper_sizes.nbt' })).toBeVisible()
 })
 
+// ── Page refresh ─────────────────────────────────────────────────────────────
+
+test('scripts list is restored after a page refresh', async ({ page }) => {
+  await page.goto('/')
+  await waitForInit(page)
+  await openScriptsPopup(page)
+  await uploadScript(page, 'bmi.nbt')
+  await expect(page.locator('#scripts-list .script-item')).toHaveCount(1)
+
+  await page.reload()
+  await waitForInit(page)
+  await openScriptsPopup(page)
+
+  const item = page.locator('#scripts-list .script-item')
+  await expect(item).toHaveCount(1)
+  await expect(item.locator('.script-name')).toHaveText('bmi.nbt')
+  await expect(item.locator('.script-meta')).toHaveText('1 function')
+})
+
+test('multiple scripts are all restored after a page refresh', async ({ page }) => {
+  await page.goto('/')
+  await waitForInit(page)
+  await openScriptsPopup(page)
+  await uploadScript(page, 'bmi.nbt')
+  await uploadScript(page, 'factorial.nbt')
+
+  await page.reload()
+  await waitForInit(page)
+  await openScriptsPopup(page)
+
+  const items = page.locator('#scripts-list .script-item')
+  await expect(items).toHaveCount(2)
+  await expect(items.locator('.script-name').filter({ hasText: 'bmi.nbt' })).toBeVisible()
+  await expect(items.locator('.script-name').filter({ hasText: 'factorial.nbt' })).toBeVisible()
+})
+
 // ── Reset ─────────────────────────────────────────────────────────────────────
 
 test('reset clears the scripts list', async ({ page }) => {
@@ -278,4 +314,100 @@ test('functions panel still shows user-defined functions alongside loaded script
   const fnNames = page.locator('#functions-list .fn-item .fn-name')
   await expect(fnNames.filter({ hasText: 'body_mass_index' })).toBeVisible()
   await expect(fnNames.filter({ hasText: 'span_length' })).toBeVisible()
+})
+
+// ── Download ──────────────────────────────────────────────────────────────────
+
+test('scripts popup shows a download button', async ({ page }) => {
+  await page.goto('/')
+  await waitForInit(page)
+  await openScriptsPopup(page)
+
+  const btn = page.locator('#scripts-download-btn')
+  await expect(btn).toBeVisible()
+  await expect(btn).toContainText('Export')
+  await expect(btn.locator('svg')).toBeVisible()
+})
+
+test('download exports let and fn definitions as an .nbt file', async ({ page }) => {
+  await page.goto('/')
+  await waitForInit(page)
+
+  await page.locator('#input').fill('let weight = 80 kg')
+  await page.locator('#input').press('Enter')
+  await page.locator('#input').fill('fn double(n: Scalar) = 2 * n')
+  await page.locator('#input').press('Enter')
+  await page.locator('#input').fill('1 km to mi')
+  await page.locator('#input').press('Enter')
+
+  await openScriptsPopup(page)
+
+  const [download] = await Promise.all([
+    page.waitForEvent('download'),
+    page.locator('#scripts-download-btn').click(),
+  ])
+
+  const path = await download.path()
+  const { readFileSync } = await import('fs')
+  const content = readFileSync(path!, 'utf8')
+  expect(content).toContain('let weight = 80 kg')
+  expect(content).toContain('fn double(n: Scalar) = 2 * n')
+  expect(content).not.toContain('1 km to mi')
+})
+
+test('downloaded file has a .nbt extension', async ({ page }) => {
+  await page.goto('/')
+  await waitForInit(page)
+  await page.locator('#input').fill('let x = 42')
+  await page.locator('#input').press('Enter')
+  await openScriptsPopup(page)
+
+  const [download] = await Promise.all([
+    page.waitForEvent('download'),
+    page.locator('#scripts-download-btn').click(),
+  ])
+
+  expect(download.suggestedFilename()).toMatch(/\.nbt$/)
+})
+
+test('download produces an empty file when the session has no definitions', async ({ page }) => {
+  await page.goto('/')
+  await waitForInit(page)
+  await page.locator('#input').fill('1 km to mi')
+  await page.locator('#input').press('Enter')
+  await openScriptsPopup(page)
+
+  const [download] = await Promise.all([
+    page.waitForEvent('download'),
+    page.locator('#scripts-download-btn').click(),
+  ])
+
+  const path = await download.path()
+  const { readFileSync } = await import('fs')
+  const content = readFileSync(path!, 'utf8')
+  expect(content).toBe('')
+})
+
+test('download does not include uploaded script file contents', async ({ page }) => {
+  await page.goto('/')
+  await waitForInit(page)
+  await openScriptsPopup(page)
+  await uploadScript(page, 'bmi.nbt')
+  await page.locator('#scripts-popup-close').click()
+
+  await page.locator('#input').fill('let my_weight = 80 kg')
+  await page.locator('#input').press('Enter')
+
+  await openScriptsPopup(page)
+
+  const [download] = await Promise.all([
+    page.waitForEvent('download'),
+    page.locator('#scripts-download-btn').click(),
+  ])
+
+  const path = await download.path()
+  const { readFileSync } = await import('fs')
+  const content = readFileSync(path!, 'utf8')
+  expect(content).toContain('let my_weight = 80 kg')
+  expect(content).not.toContain('body_mass_index')
 })
