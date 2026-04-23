@@ -797,6 +797,16 @@ function initNumbat(): void {
   applyExchangeRates()
 }
 
+const CURRENCY_SYMBOLS: Record<string, string> = {
+  AUD: 'A$',  BGN: 'лв',  BRL: 'R$',  CAD: 'C$',  CHF: 'Fr',
+  CNY: '¥',   CZK: 'Kč',  DKK: 'kr',  EUR: '€',   GBP: '£',
+  HKD: 'HK$', HUF: 'Ft',  IDR: 'Rp',  ILS: '₪',   INR: '₹',
+  ISK: 'kr',  JPY: '¥',   KRW: '₩',   MXN: '$',   MYR: 'RM',
+  NOK: 'kr',  NZD: 'NZ$', PHP: '₱',   PLN: 'zł',  RON: 'lei',
+  SEK: 'kr',  SGD: 'S$',  THB: '฿',   TRY: '₺',   USD: '$',
+  ZAR: 'R',
+}
+
 function buildCurrencyChips(xml: string): void {
   const list = document.getElementById('currencies-list')!
   list.innerHTML = ''
@@ -807,9 +817,19 @@ function buildCurrencyChips(xml: string): void {
   for (const code of codes) {
     const chip = document.createElement('button')
     chip.type = 'button'
-    chip.className = 'unit-chip'
-    chip.textContent = code
+    chip.className = 'unit-chip currency-chip'
     chip.addEventListener('click', () => { insertIntoInput(code); hidePopup('currencies-popup') })
+
+    const symbolEl = document.createElement('span')
+    symbolEl.className = 'chip-symbol'
+    symbolEl.textContent = CURRENCY_SYMBOLS[code] ?? code
+
+    const codeEl = document.createElement('span')
+    codeEl.className = 'chip-code'
+    codeEl.textContent = code
+
+    chip.appendChild(symbolEl)
+    chip.appendChild(codeEl)
     chips.appendChild(chip)
   }
   list.appendChild(chips)

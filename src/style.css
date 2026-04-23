@@ -182,10 +182,31 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* Numbat HTML formatter output elements */
-.result b {
+/* Numbat HTML formatter output token colours */
+.result .numbat-value {
   font-weight: 600;
   color: var(--result-bold);
+}
+
+.result .numbat-unit,
+.result .numbat-keyword {
+  color: var(--accent);
+}
+
+.result .numbat-operator {
+  color: var(--text-muted);
+}
+
+.result .numbat-identifier {
+  color: var(--text);
+}
+
+.result .numbat-type-identifier {
+  color: var(--text-dim);
+}
+
+.result .numbat-dimmed {
+  color: var(--text-faint);
 }
 
 .entry.error .result {
@@ -196,6 +217,14 @@ body {
   border-radius: 4px;
   white-space: pre-wrap;
   font-size: var(--text-ui);
+}
+
+.entry.error .result .numbat-diagnostic-bold {
+  font-weight: 600;
+}
+
+.entry.error .result .numbat-diagnostic-blue {
+  opacity: 0.55;
 }
 
 /* ── Tab bar ───────────────────────────────────────────────────────────────── */
@@ -1115,6 +1144,29 @@ aside#variables.collapsed {
   background: var(--accent);
   color: var(--accent-text);
   border-color: var(--accent);
+}
+
+.currency-chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15em;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+}
+
+.chip-symbol {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.chip-code {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1;
+  opacity: 0.6;
 }
 
 /* ── Currencies status ─────────────────────────────────────────────────────── */

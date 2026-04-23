@@ -164,6 +164,68 @@ test('paper_size_A from paper_sizes.nbt returns the correct A0 width', async ({ 
   await expect(result).toContainText('841')
 })
 
+// ── population_growth.nbt ─────────────────────────────────────────────────────
+
+test('loading population_growth.nbt adds an entry to the scripts list', async ({ page }) => {
+  await page.goto('/')
+  await waitForInit(page)
+  await openScriptsPopup(page)
+
+  await uploadScript(page, 'population_growth.nbt')
+
+  const item = page.locator('#scripts-list .script-item')
+  await expect(item).toHaveCount(1)
+  await expect(item.locator('.script-name')).toHaveText('population_growth.nbt')
+  await expect(item.locator('.script-meta')).toHaveText('1 function, 2 variables')
+  await expect(item).not.toHaveClass(/error/)
+})
+
+test('predict_population from population_growth.nbt can be used in a calculation', async ({ page }) => {
+  await page.goto('/')
+  await waitForInit(page)
+  await openScriptsPopup(page)
+  await uploadScript(page, 'population_growth.nbt')
+  await page.locator('#scripts-popup-close').click()
+
+  await page.locator('#input').fill('predict_population(10 years)')
+  await page.locator('#input').press('Enter')
+
+  const result = page.locator('.result').last()
+  await expect(result).not.toHaveClass(/error/)
+  await expect(result).toContainText('person')
+})
+
+// ── recipe.nbt ────────────────────────────────────────────────────────────────
+
+test('loading recipe.nbt adds an entry to the scripts list', async ({ page }) => {
+  await page.goto('/')
+  await waitForInit(page)
+  await openScriptsPopup(page)
+
+  await uploadScript(page, 'recipe.nbt')
+
+  const item = page.locator('#scripts-list .script-item')
+  await expect(item).toHaveCount(1)
+  await expect(item.locator('.script-name')).toHaveText('recipe.nbt')
+  await expect(item.locator('.script-meta')).toHaveText('1 function, 2 variables')
+  await expect(item).not.toHaveClass(/error/)
+})
+
+test('scale from recipe.nbt correctly scales an ingredient quantity', async ({ page }) => {
+  await page.goto('/')
+  await waitForInit(page)
+  await openScriptsPopup(page)
+  await uploadScript(page, 'recipe.nbt')
+  await page.locator('#scripts-popup-close').click()
+
+  await page.locator('#input').fill('scale(200 g)')
+  await page.locator('#input').press('Enter')
+
+  const result = page.locator('.result').last()
+  await expect(result).not.toHaveClass(/error/)
+  await expect(result).toContainText('300')
+})
+
 // ── Multiple scripts ──────────────────────────────────────────────────────────
 
 test('uploading multiple scripts shows each as a separate entry in the list', async ({ page }) => {
@@ -209,11 +271,11 @@ test('functions panel still shows user-defined functions alongside loaded script
   await uploadScript(page, 'bmi.nbt')
   await page.locator('#scripts-popup-close').click()
 
-  await page.locator('#input').fill('fn double(x: Scalar) = 2 x')
+  await page.locator('#input').fill('fn span_length(a: Length, b: Length) = a + b')
   await page.locator('#input').press('Enter')
 
   await page.locator('#functions-panel-btn').click()
   const fnNames = page.locator('#functions-list .fn-item .fn-name')
   await expect(fnNames.filter({ hasText: 'body_mass_index' })).toBeVisible()
-  await expect(fnNames.filter({ hasText: 'double' })).toBeVisible()
+  await expect(fnNames.filter({ hasText: 'span_length' })).toBeVisible()
 })
