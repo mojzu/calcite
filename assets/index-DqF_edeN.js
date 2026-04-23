@@ -1480,7 +1480,7 @@
         }), m.focus();
     }
     const R = document.getElementById("about-check-btn"), Be = document.getElementById("about-update-btn");
-    document.getElementById("about-version").textContent = "0.2.5";
+    document.getElementById("about-version").textContent = "0.2.6";
     let xe = !1;
     const tt = We({
         onNeedRefresh () {
