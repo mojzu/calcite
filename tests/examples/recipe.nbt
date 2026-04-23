@@ -1,0 +1,10 @@
+# Scale ingredient quantities based on desired servings.
+
+@aliases(servings)
+unit serving
+
+let original_recipe_servings = 2 servings
+let desired_servings = 3 servings
+
+fn scale(quantity) =
+    quantity × desired_servings / original_recipe_servings

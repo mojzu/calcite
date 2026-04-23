@@ -1,0 +1,7 @@
+# Exponential model for population growth
+
+let initial_population = 50_000 people
+let growth_rate = 2% per year
+
+fn predict_population(t) =
+    initial_population × e^(growth_rate·t) |> round_in(people)

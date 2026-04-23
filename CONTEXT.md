@@ -21,6 +21,7 @@ Read README.md for build information.
 
 ## Todo
 
-- Load functions from a file or show built-in Numbat functions in the functions panel
-- Add playwright tests to confirm behaviours/test builds before deployment
+- Show built-in Numbat functions/variables?
 - Add ability to upload custom currency conversion rates
+- Automated method of updating ECB currency file
+- Add export to script file button

@@ -19,10 +19,11 @@ if (window.visualViewport) {
 const output           = document.getElementById('output')!
 const form             = document.getElementById('form') as HTMLFormElement
 const input            = document.getElementById('input') as HTMLInputElement
-const variablesList    = document.getElementById('variables-list')!
-const tabsScroll       = document.getElementById('tabs-scroll')!
-const sessionSelect    = document.getElementById('session-select') as HTMLSelectElement
-const sidebarMiddle    = document.getElementById('sidebar-middle')!
+const variablesList      = document.getElementById('variables-list')!
+const tabsScroll         = document.getElementById('tabs-scroll')!
+const sessionSelect      = document.getElementById('session-select') as HTMLSelectElement
+const sidebarMiddle      = document.getElementById('sidebar-middle')!
+const scriptsFileInput = document.getElementById('scripts-file-input') as HTMLInputElement
 
 const LET_PATTERN          = /^let\s+([a-zA-Z_][a-zA-Z0-9_]*)/
 const FN_PATTERN           = /^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/
@@ -209,6 +210,36 @@ function updateFunctions(): void {
     item.appendChild(paramsEl)
     list.appendChild(item)
   }
+}
+
+// ── Scripts sidebar ───────────────────────────────────────────────────────────
+
+function addScriptItem(name: string, fnCount: number, letCount: number, isError: boolean): void {
+  const list = document.getElementById('scripts-list')!
+  const placeholder = list.querySelector('.no-vars')
+  if (placeholder) list.removeChild(placeholder)
+
+  const item = document.createElement('div')
+  item.className = 'script-item' + (isError ? ' error' : '')
+
+  const nameEl = document.createElement('span')
+  nameEl.className = 'script-name'
+  nameEl.textContent = name
+
+  const metaEl = document.createElement('span')
+  metaEl.className = 'script-meta'
+  if (isError) {
+    metaEl.textContent = 'failed to load'
+  } else {
+    const parts: string[] = []
+    if (fnCount  > 0) parts.push(`${fnCount} function${fnCount  !== 1 ? 's' : ''}`)
+    if (letCount > 0) parts.push(`${letCount} variable${letCount !== 1 ? 's' : ''}`)
+    metaEl.textContent = parts.length > 0 ? parts.join(', ') : 'loaded'
+  }
+
+  item.appendChild(nameEl)
+  item.appendChild(metaEl)
+  list.appendChild(item)
 }
 
 // ── Session storage ───────────────────────────────────────────────────────────
@@ -449,10 +480,8 @@ async function replaySession(sessionId: number): Promise<void> {
         result  = interpreterOutput.output
         isError = interpreterOutput.is_error
         if (!isError) {
-          const letMatch = query.match(LET_PATTERN)
-          if (letMatch) variables.add(letMatch[1])
-          const fnMatch = query.match(FN_PATTERN)
-          if (fnMatch) functions.set(fnMatch[1], fnMatch[2])
+          for (const m of query.matchAll(/^let\s+([a-zA-Z_][a-zA-Z0-9_]*)/gm)) variables.add(m[1])
+          for (const m of query.matchAll(/^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/gm)) functions.set(m[1], m[2])
         }
       }
     } catch (err) {
@@ -820,6 +849,7 @@ function doReset(): void {
   functions.clear()
   updateVariables()
   updateFunctions()
+  document.getElementById('scripts-list')!.innerHTML = '<p class="no-vars">No scripts loaded</p>'
   currentSession = createSession()
   saveCurrentSession()
   renderTabBar()
@@ -928,6 +958,34 @@ async function main(): Promise<void> {
   document.getElementById('functions-panel-btn')!.addEventListener('click', () => showPopup('functions-popup'))
   document.getElementById('functions-popup-close')!.addEventListener('click', () => hidePopup('functions-popup'))
   document.getElementById('functions-popup-backdrop')!.addEventListener('click', () => hidePopup('functions-popup'))
+  document.getElementById('scripts-panel-btn')!.addEventListener('click', () => showPopup('scripts-popup'))
+  document.getElementById('scripts-popup-close')!.addEventListener('click', () => hidePopup('scripts-popup'))
+  document.getElementById('scripts-popup-backdrop')!.addEventListener('click', () => hidePopup('scripts-popup'))
+  document.getElementById('scripts-upload-btn')!.addEventListener('click', () => scriptsFileInput.click())
+  scriptsFileInput.addEventListener('change', async () => {
+    const file = scriptsFileInput.files?.[0]
+    if (!file) return
+    try {
+      const text = await file.text()
+      const out = numbat.interpret(text)
+      if (!out.is_error) {
+        const fnMatches  = [...text.matchAll(/^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/gm)]
+        const letMatches = [...text.matchAll(/^let\s+([a-zA-Z_][a-zA-Z0-9_]*)/gm)]
+        for (const m of fnMatches)  functions.set(m[1], m[2])
+        for (const m of letMatches) variables.add(m[1])
+        currentSession.inputs.push(text)
+        saveCurrentSession()
+        updateVariables()
+        updateFunctions()
+        addScriptItem(file.name, fnMatches.length, letMatches.length, false)
+      } else {
+        addScriptItem(file.name, 0, 0, true)
+      }
+    } catch {
+      addScriptItem(file.name, 0, 0, true)
+    }
+    scriptsFileInput.value = ''
+  })
   document.getElementById('currencies-panel-btn')!.addEventListener('click', () => showPopup('currencies-popup'))
   document.getElementById('currencies-popup-close')!.addEventListener('click', () => hidePopup('currencies-popup'))
   document.getElementById('currencies-popup-backdrop')!.addEventListener('click', () => hidePopup('currencies-popup'))
@@ -949,6 +1007,9 @@ async function main(): Promise<void> {
   })
   document.getElementById('dimensions-help-btn')!.addEventListener('click', () => {
     showInfoPopup('Dimensions', 'Dimensions are physical quantity types used in type annotations — for example "let x: Length = 5 m" or "fn speed(d: Length, t: Time) -> Velocity = d / t". Tap a dimension to insert it at the cursor.')
+  })
+  document.getElementById('scripts-help-btn')!.addEventListener('click', () => {
+    showInfoPopup('Scripts', 'Upload Numbat script files (.nbt) to load function and variable definitions into the current session. Uploaded scripts appear here; their functions appear in the Functions panel.')
   })
 
   // Confirm popup
@@ -983,7 +1044,7 @@ async function main(): Promise<void> {
   })
 
   document.addEventListener('keydown', (e: KeyboardEvent) => {
-    if (e.key === 'Escape') { hideConfirmPopup(); hideInfoPopup(); hidePopup('about-popup'); hidePopup('units-popup'); hidePopup('dimensions-popup'); hidePopup('functions-popup'); hidePopup('currencies-popup') }
+    if (e.key === 'Escape') { hideConfirmPopup(); hideInfoPopup(); hidePopup('about-popup'); hidePopup('units-popup'); hidePopup('dimensions-popup'); hidePopup('functions-popup'); hidePopup('currencies-popup'); hidePopup('scripts-popup') }
     if (e.key === 'Tab' && openPopups.length > 0) {
       const topId = openPopups[openPopups.length - 1]
       trapFocus(e, document.getElementById(topId)!)
@@ -1004,6 +1065,9 @@ async function main(): Promise<void> {
   })
   document.getElementById('mobile-functions-btn')!.addEventListener('click', () => {
     showPopup('functions-popup')
+  })
+  document.getElementById('mobile-scripts-btn')!.addEventListener('click', () => {
+    showPopup('scripts-popup')
   })
   document.getElementById('mobile-currencies-btn')!.addEventListener('click', () => {
     showPopup('currencies-popup')

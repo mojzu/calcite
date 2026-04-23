@@ -628,12 +628,14 @@ aside#variables.collapsed {
   padding: var(--sp-3) 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: var(--sp-2);
   transition: color 0.1s;
 }
 
 #sidebar-panels button::after {
   content: '›';
+  margin-left: auto;
 }
 
 #sidebar-panels button:hover {
@@ -996,6 +998,15 @@ aside#variables.collapsed {
   color: var(--text-dim);
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.panel-icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
 }
 
 .section-toggle-icon {
@@ -1183,6 +1194,12 @@ aside#variables.collapsed {
   min-height: 0;
 }
 
+@media (min-width: 681px) {
+  .popup {
+    width: min(600px, calc(100vw - 2rem));
+  }
+}
+
 .popup-header {
   display: flex;
   align-items: center;
@@ -1218,6 +1235,49 @@ aside#variables.collapsed {
   padding: var(--sp-4) var(--sp-5);
   overflow-y: auto;
 }
+
+.popup-header-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  font-size: var(--text-sm) !important;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.popup-header-action:hover {
+  color: var(--accent) !important;
+}
+
+.script-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: var(--sp-2) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.script-item:last-child { border-bottom: none; }
+
+.script-name {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.script-meta {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.script-item.error .script-name { color: var(--error-color); }
+.script-item.error .script-meta { color: var(--error-color); }
 
 /* ── Tablet ─────────────────────────────────────────────────────────────────── */
 
@@ -1356,14 +1416,21 @@ aside#variables.collapsed {
     border-radius: 4px;
     color: var(--text-muted);
     cursor: pointer;
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
     min-height: 2.75rem;
-    padding: 0 var(--sp-2);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: color 0.1s, border-color 0.1s, background 0.1s;
+  }
+
+  #mobile-sidebar-buttons button span {
+    display: none;
+  }
+
+  #mobile-sidebar-buttons .panel-icon {
+    width: 1.25rem;
+    height: 1.25rem;
   }
 
   #mobile-sidebar-buttons button:hover {
