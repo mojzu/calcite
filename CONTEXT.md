@@ -11,8 +11,10 @@ A public git repository for a web-based calculator.
 ├── vite.config.ts                      Vite configuration
 ├── index.html                          Web entry point
 └── src/
+    ├── env.d.ts                        TypeScript environment declarations
     ├── main.ts                         TypeScript source
-    └── style.css                       CSS stylesheet
+    ├── style.css                       CSS stylesheet
+    └── vite-env.d.ts                   Vite environment type declarations
 ```
 
 ## Rules
