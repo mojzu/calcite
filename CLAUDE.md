@@ -1,1 +1,1 @@
-Read CONTEXT.md
+@/CONTEXT.md
