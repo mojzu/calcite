@@ -1,1 +1,1 @@
-@/CONTEXT.md
+@/.context.md
