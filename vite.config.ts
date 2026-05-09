@@ -37,9 +37,9 @@ export default defineConfig({
             purpose: 'any maskable',
           },
           {
-            src: 'favicon.svg',
+            src: 'favicon.ico',
             sizes: 'any',
-            type: 'image/svg+xml',
+            type: 'image/x-icon',
           },
         ],
       },
