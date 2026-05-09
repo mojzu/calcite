@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Calcite</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script type="module" crossorigin src="/assets/index-FTEhqSLu.js"></script>
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <script type="module" crossorigin src="/assets/index-BXqhTsJt.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-BfEg893o.css">
   <link rel="manifest" href="/manifest.webmanifest"></head>
   <body>
@@ -14,7 +15,9 @@
         <div id="tab-bar">
           <div id="tabs-scroll"></div>
           <select id="session-select"></select>
-          <button id="new-session-btn" type="button" class="tab-new" title="New session" aria-label="New session">+</button>
+          <button id="new-session-btn" type="button" class="tab-new" title="New session" aria-label="New session">
+            +
+          </button>
         </div>
         <div id="output" role="tabpanel" aria-live="polite" aria-label="Calculation history"></div>
         <div id="numpad">
@@ -84,20 +87,141 @@
           </form>
         </div>
         <div id="mobile-sidebar-buttons">
-          <button type="button" id="mobile-vars-btn"><svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21s-4-3-4-9 4-9 4-9"/><path d="M16 3s4 3 4 9-4 9-4 9"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><span>Variables</span></button>
-          <button type="button" id="mobile-units-btn"><svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg><span>Units</span></button>
-          <button type="button" id="mobile-dimensions-btn"><svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg><span>Dimensions</span></button>
-          <button type="button" id="mobile-currencies-btn"><svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 0 0 4H8"/><path d="M12 18V6"/></svg><span>Currencies</span></button>
-          <button type="button" id="mobile-functions-btn"><svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/></svg><span>Functions</span></button>
-          <button type="button" id="mobile-scripts-btn"><svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m5 12-3 3 3 3"/><path d="m9 18 3-3-3-3"/></svg><span>Scripts</span></button>
+          <button type="button" id="mobile-vars-btn">
+            <svg
+              class="panel-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M8 21s-4-3-4-9 4-9 4-9" />
+              <path d="M16 3s4 3 4 9-4 9-4 9" />
+              <line x1="15" y1="9" x2="9" y2="15" />
+              <line x1="9" y1="9" x2="15" y2="15" /></svg
+            ><span>Variables</span>
+          </button>
+          <button type="button" id="mobile-units-btn">
+            <svg
+              class="panel-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path
+                d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"
+              />
+              <path d="m7.5 10.5 2 2" />
+              <path d="m10.5 7.5 2 2" />
+              <path d="m13.5 4.5 2 2" />
+              <path d="m4.5 13.5 2 2" /></svg
+            ><span>Units</span>
+          </button>
+          <button type="button" id="mobile-dimensions-btn">
+            <svg
+              class="panel-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path
+                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+              />
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+              <line x1="12" y1="22.08" x2="12" y2="12" /></svg
+            ><span>Dimensions</span>
+          </button>
+          <button type="button" id="mobile-currencies-btn">
+            <svg
+              class="panel-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 0 0 4H8" />
+              <path d="M12 18V6" /></svg
+            ><span>Currencies</span>
+          </button>
+          <button type="button" id="mobile-functions-btn">
+            <svg
+              class="panel-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1" />
+              <path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1" /></svg
+            ><span>Functions</span>
+          </button>
+          <button type="button" id="mobile-scripts-btn">
+            <svg
+              class="panel-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4" />
+              <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+              <path d="m5 12-3 3 3 3" />
+              <path d="m9 18 3-3-3-3" /></svg
+            ><span>Scripts</span>
+          </button>
         </div>
       </main>
       <aside id="variables" aria-label="Tools">
         <div id="sidebar-middle">
           <div id="variables-section">
             <div class="section-header">
-              <span class="section-header-title"><svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21s-4-3-4-9 4-9 4-9"/><path d="M16 3s4 3 4 9-4 9-4 9"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Variables</span>
-              <button type="button" class="section-help-btn" id="vars-help-btn" title="About variables" aria-label="About variables">?</button>
+              <span class="section-header-title"
+                ><svg
+                  class="panel-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M8 21s-4-3-4-9 4-9 4-9" />
+                  <path d="M16 3s4 3 4 9-4 9-4 9" />
+                  <line x1="15" y1="9" x2="9" y2="15" />
+                  <line x1="9" y1="9" x2="15" y2="15" /></svg
+                >Variables</span
+              >
+              <button
+                type="button"
+                class="section-help-btn"
+                id="vars-help-btn"
+                title="About variables"
+                aria-label="About variables"
+              >
+                ?
+              </button>
             </div>
             <div class="section-body">
               <div id="variables-list">
@@ -107,22 +231,109 @@
           </div>
         </div>
         <div id="sidebar-panels">
-          <button id="units-panel-btn" type="button"><svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg><span>Units</span></button>
-          <button id="dimensions-panel-btn" type="button"><svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg><span>Dimensions</span></button>
-          <button id="currencies-panel-btn" type="button"><svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 0 0 4H8"/><path d="M12 18V6"/></svg><span>Currencies</span></button>
-          <button id="functions-panel-btn" type="button"><svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/></svg><span>Functions</span></button>
-          <button id="scripts-panel-btn" type="button"><svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m5 12-3 3 3 3"/><path d="m9 18 3-3-3-3"/></svg><span>Scripts</span></button>
+          <button id="units-panel-btn" type="button">
+            <svg
+              class="panel-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path
+                d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"
+              />
+              <path d="m7.5 10.5 2 2" />
+              <path d="m10.5 7.5 2 2" />
+              <path d="m13.5 4.5 2 2" />
+              <path d="m4.5 13.5 2 2" /></svg
+            ><span>Units</span>
+          </button>
+          <button id="dimensions-panel-btn" type="button">
+            <svg
+              class="panel-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path
+                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+              />
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+              <line x1="12" y1="22.08" x2="12" y2="12" /></svg
+            ><span>Dimensions</span>
+          </button>
+          <button id="currencies-panel-btn" type="button">
+            <svg
+              class="panel-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 0 0 4H8" />
+              <path d="M12 18V6" /></svg
+            ><span>Currencies</span>
+          </button>
+          <button id="functions-panel-btn" type="button">
+            <svg
+              class="panel-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1" />
+              <path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1" /></svg
+            ><span>Functions</span>
+          </button>
+          <button id="scripts-panel-btn" type="button">
+            <svg
+              class="panel-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4" />
+              <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+              <path d="m5 12-3 3 3 3" />
+              <path d="m9 18 3-3-3-3" /></svg
+            ><span>Scripts</span>
+          </button>
         </div>
         <div id="sidebar-bottom">
           <div id="sidebar-brand">
-            <img id="sidebar-logo" src="/icon-title.svg" alt="" />
+            <img id="sidebar-logo" src="/icon-64.svg" alt="" />
             <span id="sidebar-title">Calcite</span>
-            <button id="sidebar-collapse-btn" type="button" title="Collapse sidebar" aria-label="Collapse sidebar">›</button>
+            <button id="sidebar-collapse-btn" type="button" title="Collapse sidebar" aria-label="Collapse sidebar">
+              ›
+            </button>
             <button id="mobile-sidebar-close" type="button" title="Close sidebar" aria-label="Close sidebar">×</button>
           </div>
           <button id="about-btn" type="button" class="sidebar-link sidebar-about-btn">About Calcite</button>
-          <a class="sidebar-link" href="https://numbat.dev/docs/" target="_blank" rel="noopener noreferrer">Numbat documentation ↗</a>
-          <a class="sidebar-link" href="https://github.com/mojzu/calcite" target="_blank" rel="noopener noreferrer">GitHub repository ↗</a>
+          <a class="sidebar-link" href="https://numbat.dev/docs/" target="_blank" rel="noopener noreferrer"
+            >Numbat documentation ↗</a
+          >
+          <a class="sidebar-link" href="https://github.com/mojzu/calcite" target="_blank" rel="noopener noreferrer"
+            >GitHub repository ↗</a
+          >
         </div>
       </aside>
     </div>
@@ -134,12 +345,19 @@
         <button id="about-popup-close" type="button" aria-label="Close">×</button>
       </div>
       <div class="popup-body about-popup-body">
-        <p class="about-blurb">Calcite is a calculator built on Numbat — a statically typed language for arithmetic with units, currencies, and dimensions.</p>
+        <p class="about-blurb">
+          Calcite is a calculator built on Numbat — a statically typed language for arithmetic with units, currencies,
+          and dimensions.
+        </p>
         <p class="about-version">Version <span id="about-version"></span></p>
         <div class="about-actions">
           <button id="about-check-btn" type="button" class="about-action-btn">Check for update</button>
-          <button id="about-update-btn" type="button" class="about-action-btn about-action-update" hidden>Update now</button>
-          <button id="about-reset-btn" type="button" class="about-action-btn about-action-danger">Reset app data</button>
+          <button id="about-update-btn" type="button" class="about-action-btn about-action-update" hidden>
+            Update now
+          </button>
+          <button id="about-reset-btn" type="button" class="about-action-btn about-action-danger">
+            Reset app data
+          </button>
         </div>
       </div>
     </div>
@@ -175,27 +393,57 @@
     <div id="units-popup" class="popup popup-tall" role="dialog" aria-modal="true" aria-labelledby="units-popup-title">
       <div class="popup-header">
         <h3 id="units-popup-title">Units</h3>
-        <button type="button" class="section-help-btn" id="units-help-btn" title="About units" aria-label="About units">?</button>
+        <button type="button" class="section-help-btn" id="units-help-btn" title="About units" aria-label="About units">
+          ?
+        </button>
         <button id="units-popup-close" type="button" aria-label="Close">×</button>
       </div>
       <div id="units-section-body" class="popup-body"></div>
     </div>
 
     <div id="dimensions-popup-backdrop" class="popup-backdrop"></div>
-    <div id="dimensions-popup" class="popup popup-tall" role="dialog" aria-modal="true" aria-labelledby="dimensions-popup-title">
+    <div
+      id="dimensions-popup"
+      class="popup popup-tall"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="dimensions-popup-title"
+    >
       <div class="popup-header">
         <h3 id="dimensions-popup-title">Dimensions</h3>
-        <button type="button" class="section-help-btn" id="dimensions-help-btn" title="About dimensions" aria-label="About dimensions">?</button>
+        <button
+          type="button"
+          class="section-help-btn"
+          id="dimensions-help-btn"
+          title="About dimensions"
+          aria-label="About dimensions"
+        >
+          ?
+        </button>
         <button id="dimensions-popup-close" type="button" aria-label="Close">×</button>
       </div>
       <div id="dimensions-section-body" class="popup-body"></div>
     </div>
 
     <div id="functions-popup-backdrop" class="popup-backdrop"></div>
-    <div id="functions-popup" class="popup popup-tall" role="dialog" aria-modal="true" aria-labelledby="functions-popup-title">
+    <div
+      id="functions-popup"
+      class="popup popup-tall"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="functions-popup-title"
+    >
       <div class="popup-header">
         <h3 id="functions-popup-title">Functions</h3>
-        <button type="button" class="section-help-btn" id="functions-help-btn" title="About functions" aria-label="About functions">?</button>
+        <button
+          type="button"
+          class="section-help-btn"
+          id="functions-help-btn"
+          title="About functions"
+          aria-label="About functions"
+        >
+          ?
+        </button>
         <button id="functions-popup-close" type="button" aria-label="Close">×</button>
       </div>
       <div id="functions-list" class="popup-body">
@@ -204,10 +452,24 @@
     </div>
 
     <div id="currencies-popup-backdrop" class="popup-backdrop"></div>
-    <div id="currencies-popup" class="popup popup-tall" role="dialog" aria-modal="true" aria-labelledby="currencies-popup-title">
+    <div
+      id="currencies-popup"
+      class="popup popup-tall"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="currencies-popup-title"
+    >
       <div class="popup-header">
         <h3 id="currencies-popup-title">Currencies</h3>
-        <button type="button" class="section-help-btn" id="currencies-help-btn" title="About currencies" aria-label="About currencies">?</button>
+        <button
+          type="button"
+          class="section-help-btn"
+          id="currencies-help-btn"
+          title="About currencies"
+          aria-label="About currencies"
+        >
+          ?
+        </button>
         <button id="currencies-popup-close" type="button" aria-label="Close">×</button>
       </div>
       <div class="popup-body">
@@ -217,19 +479,63 @@
     </div>
 
     <div id="scripts-popup-backdrop" class="popup-backdrop"></div>
-    <div id="scripts-popup" class="popup popup-tall" role="dialog" aria-modal="true" aria-labelledby="scripts-popup-title">
+    <div
+      id="scripts-popup"
+      class="popup popup-tall"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="scripts-popup-title"
+    >
       <div class="popup-header">
         <h3 id="scripts-popup-title">Scripts</h3>
         <button type="button" id="scripts-upload-btn" class="popup-header-action">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" y1="3" x2="12" y2="15" />
+          </svg>
           Upload
         </button>
         <input type="file" id="scripts-file-input" accept=".nbt,.txt" hidden />
         <button type="button" id="scripts-download-btn" class="popup-header-action">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="3" x2="12" y2="15" />
+          </svg>
           Export
         </button>
-        <button type="button" class="section-help-btn" id="scripts-help-btn" title="About scripts" aria-label="About scripts">?</button>
+        <button
+          type="button"
+          class="section-help-btn"
+          id="scripts-help-btn"
+          title="About scripts"
+          aria-label="About scripts"
+        >
+          ?
+        </button>
         <button id="scripts-popup-close" type="button" aria-label="Close">×</button>
       </div>
       <div id="scripts-list" class="popup-body">
