@@ -793,6 +793,169 @@ function buildDimensionsSection(): void {
   }
 }
 
+// ── Built-in reference data ───────────────────────────────────────────────────
+
+interface BuiltinFnEntry {
+  name: string
+  params: string
+}
+
+interface BuiltinFnCategory {
+  name: string
+  fns: BuiltinFnEntry[]
+}
+
+const BUILTIN_FN_CATEGORIES: BuiltinFnCategory[] = [
+  { name: 'Trigonometry', fns: [
+    { name: 'sin',   params: '(x)' },
+    { name: 'cos',   params: '(x)' },
+    { name: 'tan',   params: '(x)' },
+    { name: 'asin',  params: '(x)' },
+    { name: 'acos',  params: '(x)' },
+    { name: 'atan',  params: '(x)' },
+    { name: 'atan2', params: '(y, x)' },
+    { name: 'sinh',  params: '(x)' },
+    { name: 'cosh',  params: '(x)' },
+    { name: 'tanh',  params: '(x)' },
+    { name: 'asinh', params: '(x)' },
+    { name: 'acosh', params: '(x)' },
+    { name: 'atanh', params: '(x)' },
+  ]},
+  { name: 'Numeric', fns: [
+    { name: 'abs',   params: '(x)' },
+    { name: 'round', params: '(x)' },
+    { name: 'floor', params: '(x)' },
+    { name: 'ceil',  params: '(x)' },
+    { name: 'sqrt',  params: '(x)' },
+    { name: 'cbrt',  params: '(x)' },
+    { name: 'sqr',   params: '(x)' },
+    { name: 'mod',   params: '(x, y)' },
+    { name: 'gcd',   params: '(x, y)' },
+    { name: 'lcm',   params: '(x, y)' },
+  ]},
+  { name: 'Exponential', fns: [
+    { name: 'exp',   params: '(x)' },
+    { name: 'ln',    params: '(x)' },
+    { name: 'log',   params: '(x)' },
+    { name: 'log2',  params: '(x)' },
+    { name: 'log10', params: '(x)' },
+    { name: 'pow',   params: '(base, exp)' },
+  ]},
+]
+
+const BUILTIN_CONSTANT_NAMES = ['pi', 'tau', 'e', 'c', 'g', 'G', 'k_B', 'N_A']
+
+function buildBuiltinFunctionsSection(): void {
+  const list = document.getElementById('functions-list')!
+
+  const sep = document.createElement('hr')
+  sep.className = 'builtin-separator'
+  list.appendChild(sep)
+
+  const container = document.createElement('div')
+  container.id = 'builtin-functions-section'
+
+  const btn = document.createElement('button')
+  btn.type = 'button'
+  btn.className = 'section-header-btn'
+  btn.id = 'builtin-functions-toggle'
+
+  const label = document.createElement('span')
+  label.textContent = 'Built-in functions'
+  const icon = document.createElement('span')
+  icon.className = 'section-toggle-icon'
+  icon.setAttribute('aria-hidden', 'true')
+  icon.textContent = '›'
+  btn.appendChild(label)
+  btn.appendChild(icon)
+  btn.addEventListener('click', () => container.classList.toggle('open'))
+
+  const body = document.createElement('div')
+  body.id = 'builtin-functions-body'
+  body.className = 'section-body'
+
+  for (const category of BUILTIN_FN_CATEGORIES) {
+    const catEl = document.createElement('div')
+    catEl.className = 'unit-category'
+    const heading = document.createElement('h4')
+    heading.textContent = category.name
+    catEl.appendChild(heading)
+    const chips = document.createElement('div')
+    chips.className = 'unit-chips'
+    for (const fn of category.fns) {
+      const chip = document.createElement('button')
+      chip.type = 'button'
+      chip.className = 'unit-chip'
+      chip.textContent = fn.name
+      chip.title = fn.name + fn.params
+      chip.addEventListener('click', () => { insertIntoInput(fn.name + '('); hidePopup('functions-popup') })
+      chips.appendChild(chip)
+    }
+    catEl.appendChild(chips)
+    body.appendChild(catEl)
+  }
+
+  container.appendChild(btn)
+  container.appendChild(body)
+  list.appendChild(container)
+}
+
+function buildBuiltinConstantsSection(): void {
+  const sectionBody = document.querySelector<HTMLElement>('#variables-section .section-body')!
+
+  const sep = document.createElement('hr')
+  sep.className = 'builtin-separator'
+  sectionBody.appendChild(sep)
+
+  const container = document.createElement('div')
+  container.id = 'builtin-constants-section'
+
+  const btn = document.createElement('button')
+  btn.type = 'button'
+  btn.className = 'section-header-btn'
+  btn.id = 'builtin-constants-toggle'
+
+  const label = document.createElement('span')
+  label.textContent = 'Built-in constants'
+  const icon = document.createElement('span')
+  icon.className = 'section-toggle-icon'
+  icon.setAttribute('aria-hidden', 'true')
+  icon.textContent = '›'
+  btn.appendChild(label)
+  btn.appendChild(icon)
+  btn.addEventListener('click', () => container.classList.toggle('open'))
+
+  const body = document.createElement('div')
+  body.id = 'builtin-constants-body'
+  body.className = 'section-body'
+
+  for (const name of BUILTIN_CONSTANT_NAMES) {
+    try {
+      const result = numbat.interpret(name)
+      if (result.is_error) continue
+      const item = document.createElement('div')
+      item.className = 'var-item'
+      item.title = `Insert "${name}"`
+      makeInteractive(item, () => { insertIntoInput(name); closeMobileSidebar() })
+      const nameEl = document.createElement('span')
+      nameEl.className = 'var-name'
+      nameEl.textContent = name
+      const valueEl = document.createElement('span')
+      valueEl.className = 'var-value'
+      valueEl.innerHTML = result.output
+      item.appendChild(nameEl)
+      item.appendChild(valueEl)
+      body.appendChild(item)
+    } catch {
+      // skip
+    }
+  }
+
+  container.appendChild(btn)
+  container.appendChild(body)
+  sectionBody.appendChild(container)
+}
+
 // ── Script download ───────────────────────────────────────────────────────────
 
 function downloadNbt(): void {
@@ -992,6 +1155,8 @@ async function main(): Promise<void> {
 
   initNumbat()
   output.removeChild(initMsg)
+  buildBuiltinFunctionsSection()
+  buildBuiltinConstantsSection()
 
   // Fetch rates before replaying sessions so currency expressions don't error on reload
   await fetchExchangeRates()
