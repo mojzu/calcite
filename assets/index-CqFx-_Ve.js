@@ -2,22 +2,22 @@
     (function() {
         const e = document.createElement("link").relList;
         if (e && e.supports && e.supports("modulepreload")) return;
-        for (const s of document.querySelectorAll('link[rel="modulepreload"]'))o(s);
-        new MutationObserver((s)=>{
-            for (const a of s)if (a.type === "childList") for (const i of a.addedNodes)i.tagName === "LINK" && i.rel === "modulepreload" && o(i);
+        for (const o of document.querySelectorAll('link[rel="modulepreload"]'))s(o);
+        new MutationObserver((o)=>{
+            for (const r of o)if (r.type === "childList") for (const a of r.addedNodes)a.tagName === "LINK" && a.rel === "modulepreload" && s(a);
         }).observe(document, {
             childList: !0,
             subtree: !0
         });
-        function n(s) {
-            const a = {};
-            return s.integrity && (a.integrity = s.integrity), s.referrerPolicy && (a.referrerPolicy = s.referrerPolicy), s.crossOrigin === "use-credentials" ? a.credentials = "include" : s.crossOrigin === "anonymous" ? a.credentials = "omit" : a.credentials = "same-origin", a;
+        function n(o) {
+            const r = {};
+            return o.integrity && (r.integrity = o.integrity), o.referrerPolicy && (r.referrerPolicy = o.referrerPolicy), o.crossOrigin === "use-credentials" ? r.credentials = "include" : o.crossOrigin === "anonymous" ? r.credentials = "omit" : r.credentials = "same-origin", r;
         }
-        function o(s) {
-            if (s.ep) return;
-            s.ep = !0;
-            const a = n(s);
-            fetch(s.href, a);
+        function s(o) {
+            if (o.ep) return;
+            o.ep = !0;
+            const r = n(o);
+            fetch(o.href, r);
         }
     })();
     let c;
@@ -30,17 +30,17 @@
         }
     };
     typeof TextDecoder < "u" && _e.decode();
-    let O = null;
-    function U() {
-        return (O === null || O.byteLength === 0) && (O = new Uint8Array(c.memory.buffer)), O;
+    let P = null;
+    function z() {
+        return (P === null || P.byteLength === 0) && (P = new Uint8Array(c.memory.buffer)), P;
     }
     function W(t, e) {
-        return t = t >>> 0, _e.decode(U().subarray(t, t + e));
+        return t = t >>> 0, _e.decode(z().subarray(t, t + e));
     }
-    function Re(t, e) {
-        return t = t >>> 0, U().subarray(t / 1, t / 1 + e);
+    function Ae(t, e) {
+        return t = t >>> 0, z().subarray(t / 1, t / 1 + e);
     }
-    function Ne(t) {
+    function Re(t) {
         const e = c.__externref_table_alloc();
         return c.__wbindgen_export_3.set(e, t), e;
     }
@@ -48,8 +48,8 @@
         try {
             return t.apply(this, e);
         } catch (n) {
-            const o = Ne(n);
-            c.__wbindgen_exn_store(o);
+            const s = Re(n);
+            c.__wbindgen_exn_store(s);
         }
     }
     let v = 0;
@@ -57,7 +57,7 @@
         encode: ()=>{
             throw Error("TextEncoder not available");
         }
-    }, Ae = typeof J.encodeInto == "function" ? function(t, e) {
+    }, Me = typeof J.encodeInto == "function" ? function(t, e) {
         return J.encodeInto(t, e);
     } : function(t, e) {
         const n = J.encode(t);
@@ -66,40 +66,40 @@
             written: n.length
         };
     };
-    function C(t, e, n) {
+    function B(t, e, n) {
         if (n === void 0) {
-            const r = J.encode(t), l = e(r.length, 1) >>> 0;
-            return U().subarray(l, l + r.length).set(r), v = r.length, l;
+            const i = J.encode(t), l = e(i.length, 1) >>> 0;
+            return z().subarray(l, l + i.length).set(i), v = i.length, l;
         }
-        let o = t.length, s = e(o, 1) >>> 0;
-        const a = U();
-        let i = 0;
-        for(; i < o; i++){
-            const r = t.charCodeAt(i);
-            if (r > 127) break;
-            a[s + i] = r;
+        let s = t.length, o = e(s, 1) >>> 0;
+        const r = z();
+        let a = 0;
+        for(; a < s; a++){
+            const i = t.charCodeAt(a);
+            if (i > 127) break;
+            r[o + a] = i;
         }
-        if (i !== o) {
-            i !== 0 && (t = t.slice(i)), s = n(s, o, o = i + t.length * 3, 1) >>> 0;
-            const r = U().subarray(s + i, s + o), l = Ae(t, r);
-            i += l.written, s = n(s, o, i, 1) >>> 0;
+        if (a !== s) {
+            a !== 0 && (t = t.slice(a)), o = n(o, s, s = a + t.length * 3, 1) >>> 0;
+            const i = z().subarray(o + a, o + s), l = Me(t, i);
+            a += l.written, o = n(o, s, a, 1) >>> 0;
         }
-        return v = i, s;
+        return v = a, o;
     }
     let T = null;
-    function z() {
+    function F() {
         return (T === null || T.buffer.detached === !0 || T.buffer.detached === void 0 && T.buffer !== c.memory.buffer) && (T = new DataView(c.memory.buffer)), T;
     }
-    function Me(t) {
+    function De(t) {
         return t == null;
     }
     function de(t, e) {
         t = t >>> 0;
-        const n = z(), o = [];
-        for(let s = t; s < t + 4 * e; s += 4)o.push(c.__wbindgen_export_3.get(n.getUint32(s, !0)));
-        return c.__externref_drop_slice(t, e), o;
+        const n = F(), s = [];
+        for(let o = t; o < t + 4 * e; o += 4)s.push(c.__wbindgen_export_3.get(n.getUint32(o, !0)));
+        return c.__externref_drop_slice(t, e), s;
     }
-    const De = Object.freeze({
+    const Oe = Object.freeze({
         JqueryTerminal: 0,
         0: "JqueryTerminal",
         Html: 1,
@@ -125,8 +125,8 @@
         get output() {
             let e, n;
             try {
-                const o = c.commandresult_output(this.__wbg_ptr);
-                return e = o[0], n = o[1], W(o[0], o[1]);
+                const s = c.commandresult_output(this.__wbg_ptr);
+                return e = s[0], n = s[1], W(s[0], s[1]);
             } finally{
                 c.__wbindgen_free(e, n, 1);
             }
@@ -171,8 +171,8 @@
         get output() {
             let e, n;
             try {
-                const o = c.interpreteroutput_output(this.__wbg_ptr);
-                return e = o[0], n = o[1], W(o[0], o[1]);
+                const s = c.interpreteroutput_output(this.__wbg_ptr);
+                return e = s[0], n = s[1], W(s[0], s[1]);
             } finally{
                 c.__wbindgen_free(e, n, 1);
             }
@@ -203,46 +203,46 @@
             c.__wbg_numbat_free(e, 0);
         }
         print_info(e) {
-            const n = C(e, c.__wbindgen_malloc, c.__wbindgen_realloc), o = v;
-            return c.numbat_print_info(this.__wbg_ptr, n, o);
+            const n = B(e, c.__wbindgen_malloc, c.__wbindgen_realloc), s = v;
+            return c.numbat_print_info(this.__wbg_ptr, n, s);
         }
         try_run_command(e) {
-            const n = C(e, c.__wbindgen_malloc, c.__wbindgen_realloc), o = v, s = c.numbat_try_run_command(this.__wbg_ptr, n, o);
-            return ie.__wrap(s);
+            const n = B(e, c.__wbindgen_malloc, c.__wbindgen_realloc), s = v, o = c.numbat_try_run_command(this.__wbg_ptr, n, s);
+            return ie.__wrap(o);
         }
         set_exchange_rates(e) {
-            const n = C(e, c.__wbindgen_malloc, c.__wbindgen_realloc), o = v;
-            c.numbat_set_exchange_rates(this.__wbg_ptr, n, o);
+            const n = B(e, c.__wbindgen_malloc, c.__wbindgen_realloc), s = v;
+            c.numbat_set_exchange_rates(this.__wbg_ptr, n, s);
         }
         get_completions_for(e) {
-            const n = C(e, c.__wbindgen_malloc, c.__wbindgen_realloc), o = v, s = c.numbat_get_completions_for(this.__wbg_ptr, n, o);
-            var a = de(s[0], s[1]).slice();
-            return c.__wbindgen_free(s[0], s[1] * 4, 4), a;
+            const n = B(e, c.__wbindgen_malloc, c.__wbindgen_realloc), s = v, o = c.numbat_get_completions_for(this.__wbg_ptr, n, s);
+            var r = de(o[0], o[1]).slice();
+            return c.__wbindgen_free(o[0], o[1] * 4, 4), r;
         }
         get_unicode_completion(e) {
-            const n = C(e, c.__wbindgen_malloc, c.__wbindgen_realloc), o = v, s = c.numbat_get_unicode_completion(this.__wbg_ptr, n, o);
-            var a = de(s[0], s[1]).slice();
-            return c.__wbindgen_free(s[0], s[1] * 4, 4), a;
+            const n = B(e, c.__wbindgen_malloc, c.__wbindgen_realloc), s = v, o = c.numbat_get_unicode_completion(this.__wbg_ptr, n, s);
+            var r = de(o[0], o[1]).slice();
+            return c.__wbindgen_free(o[0], o[1] * 4, 4), r;
         }
-        static new(e, n, o) {
-            const s = c.numbat_new(e, n, o);
-            return X.__wrap(s);
+        static new(e, n, s) {
+            const o = c.numbat_new(e, n, s);
+            return X.__wrap(o);
         }
         help() {
             return c.numbat_help(this.__wbg_ptr);
         }
         interpret(e) {
-            const n = C(e, c.__wbindgen_malloc, c.__wbindgen_realloc), o = v, s = c.numbat_interpret(this.__wbg_ptr, n, o);
-            return re.__wrap(s);
+            const n = B(e, c.__wbindgen_malloc, c.__wbindgen_realloc), s = v, o = c.numbat_interpret(this.__wbg_ptr, n, s);
+            return re.__wrap(o);
         }
     }
-    async function Pe(t, e) {
+    async function He(t, e) {
         if (typeof Response == "function" && t instanceof Response) {
             if (typeof WebAssembly.instantiateStreaming == "function") try {
                 return await WebAssembly.instantiateStreaming(t, e);
-            } catch (o) {
-                if (t.headers.get("Content-Type") != "application/wasm") console.warn("`WebAssembly.instantiateStreaming` failed because your server does not serve Wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", o);
-                else throw o;
+            } catch (s) {
+                if (t.headers.get("Content-Type") != "application/wasm") console.warn("`WebAssembly.instantiateStreaming` failed because your server does not serve Wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", s);
+                else throw s;
             }
             const n = await t.arrayBuffer();
             return await WebAssembly.instantiate(n, e);
@@ -254,18 +254,18 @@
             } : n;
         }
     }
-    function He() {
+    function Pe() {
         const t = {};
         return t.wbg = {}, t.wbg.__wbg_error_7534b8e9a36f1ab4 = function(e, n) {
-            let o, s;
+            let s, o;
             try {
-                o = e, s = n, console.error(W(e, n));
+                s = e, o = n, console.error(W(e, n));
             } finally{
-                c.__wbindgen_free(o, s, 1);
+                c.__wbindgen_free(s, o, 1);
             }
         }, t.wbg.__wbg_getRandomValues_3c9c0d586e575a16 = function() {
             return me(function(e, n) {
-                globalThis.crypto.getRandomValues(Re(e, n));
+                globalThis.crypto.getRandomValues(Ae(e, n));
             }, arguments);
         }, t.wbg.__wbg_getTime_46267b1c24877e30 = function(e) {
             return e.getTime();
@@ -286,115 +286,115 @@
         }, t.wbg.__wbg_resolvedOptions_d495c21c27a8f865 = function(e) {
             return e.resolvedOptions();
         }, t.wbg.__wbg_stack_0ed75d68575b0f3c = function(e, n) {
-            const o = n.stack, s = C(o, c.__wbindgen_malloc, c.__wbindgen_realloc), a = v;
-            z().setInt32(e + 4, a, !0), z().setInt32(e + 0, s, !0);
+            const s = n.stack, o = B(s, c.__wbindgen_malloc, c.__wbindgen_realloc), r = v;
+            F().setInt32(e + 4, r, !0), F().setInt32(e + 0, o, !0);
         }, t.wbg.__wbindgen_init_externref_table = function() {
             const e = c.__wbindgen_export_3, n = e.grow(4);
             e.set(0, void 0), e.set(n + 0, void 0), e.set(n + 1, null), e.set(n + 2, !0), e.set(n + 3, !1);
         }, t.wbg.__wbindgen_number_new = function(e) {
             return e;
         }, t.wbg.__wbindgen_string_get = function(e, n) {
-            const o = n, s = typeof o == "string" ? o : void 0;
-            var a = Me(s) ? 0 : C(s, c.__wbindgen_malloc, c.__wbindgen_realloc), i = v;
-            z().setInt32(e + 4, i, !0), z().setInt32(e + 0, a, !0);
+            const s = n, o = typeof s == "string" ? s : void 0;
+            var r = De(o) ? 0 : B(o, c.__wbindgen_malloc, c.__wbindgen_realloc), a = v;
+            F().setInt32(e + 4, a, !0), F().setInt32(e + 0, r, !0);
         }, t.wbg.__wbindgen_string_new = function(e, n) {
             return W(e, n);
         }, t.wbg.__wbindgen_throw = function(e, n) {
             throw new Error(W(e, n));
         }, t;
     }
-    function Oe(t, e) {
-        return c = t.exports, he.__wbindgen_wasm_module = e, T = null, O = null, c.__wbindgen_start(), c;
+    function Fe(t, e) {
+        return c = t.exports, he.__wbindgen_wasm_module = e, T = null, P = null, c.__wbindgen_start(), c;
     }
     async function he(t) {
         if (c !== void 0) return c;
         typeof t < "u" && (Object.getPrototypeOf(t) === Object.prototype ? { module_or_path: t } = t : console.warn("using deprecated parameters for the initialization function; pass a single object instead")), typeof t > "u" && (t = new URL("/assets/numbat_wasm_bg-BTss0vKK.wasm", import.meta.url));
-        const e = He();
+        const e = Pe();
         (typeof t == "string" || typeof Request == "function" && t instanceof Request || typeof URL == "function" && t instanceof URL) && (t = fetch(t));
-        const { instance: n, module: o } = await Pe(await t, e);
-        return Oe(n, o);
+        const { instance: n, module: s } = await He(await t, e);
+        return Fe(n, s);
     }
-    const ze = "modulepreload", Fe = function(t) {
+    const Ue = "modulepreload", ze = function(t) {
         return "/" + t;
-    }, fe = {}, Ue = function(e, n, o) {
-        let s = Promise.resolve();
+    }, fe = {}, We = function(e, n, s) {
+        let o = Promise.resolve();
         if (n && n.length > 0) {
-            let i = function(m) {
-                return Promise.all(m.map((b)=>Promise.resolve(b).then((g)=>({
+            let a = function(m) {
+                return Promise.all(m.map((d)=>Promise.resolve(d).then((b)=>({
                             status: "fulfilled",
-                            value: g
-                        }), (g)=>({
+                            value: b
+                        }), (b)=>({
                             status: "rejected",
-                            reason: g
+                            reason: b
                         }))));
             };
             document.getElementsByTagName("link");
-            const r = document.querySelector("meta[property=csp-nonce]"), l = r?.nonce || r?.getAttribute("nonce");
-            s = i(n.map((m)=>{
-                if (m = Fe(m), m in fe) return;
+            const i = document.querySelector("meta[property=csp-nonce]"), l = i?.nonce || i?.getAttribute("nonce");
+            o = a(n.map((m)=>{
+                if (m = ze(m), m in fe) return;
                 fe[m] = !0;
-                const b = m.endsWith(".css"), g = b ? '[rel="stylesheet"]' : "";
-                if (document.querySelector(`link[href="${m}"]${g}`)) return;
-                const p = document.createElement("link");
-                if (p.rel = b ? "stylesheet" : ze, b || (p.as = "script"), p.crossOrigin = "", p.href = m, l && p.setAttribute("nonce", l), document.head.appendChild(p), b) return new Promise((h, w)=>{
-                    p.addEventListener("load", h), p.addEventListener("error", ()=>w(new Error(`Unable to preload CSS for ${m}`)));
+                const d = m.endsWith(".css"), b = d ? '[rel="stylesheet"]' : "";
+                if (document.querySelector(`link[href="${m}"]${b}`)) return;
+                const u = document.createElement("link");
+                if (u.rel = d ? "stylesheet" : Ue, d || (u.as = "script"), u.crossOrigin = "", u.href = m, l && u.setAttribute("nonce", l), document.head.appendChild(u), d) return new Promise((h, w)=>{
+                    u.addEventListener("load", h), u.addEventListener("error", ()=>w(new Error(`Unable to preload CSS for ${m}`)));
                 });
             }));
         }
-        function a(i) {
-            const r = new Event("vite:preloadError", {
+        function r(a) {
+            const i = new Event("vite:preloadError", {
                 cancelable: !0
             });
-            if (r.payload = i, window.dispatchEvent(r), !r.defaultPrevented) throw i;
+            if (i.payload = a, window.dispatchEvent(i), !i.defaultPrevented) throw a;
         }
-        return s.then((i)=>{
-            for (const r of i || [])r.status === "rejected" && a(r.reason);
-            return e().catch(a);
+        return o.then((a)=>{
+            for (const i of a || [])i.status === "rejected" && r(i.reason);
+            return e().catch(r);
         });
     };
-    function We(t = {}) {
-        const { immediate: e = !1, onNeedRefresh: n, onOfflineReady: o, onRegistered: s, onRegisteredSW: a, onRegisterError: i } = t;
-        let r, l, m;
-        const b = async (p = !0)=>{
+    function qe(t = {}) {
+        const { immediate: e = !1, onNeedRefresh: n, onOfflineReady: s, onRegistered: o, onRegisteredSW: r, onRegisterError: a } = t;
+        let i, l, m;
+        const d = async (u = !0)=>{
             await l, m?.();
         };
-        async function g() {
+        async function b() {
             if ("serviceWorker" in navigator) {
-                if (r = await Ue(async ()=>{
-                    const { Workbox: p } = await import("./workbox-window.prod.es5-BIl4cyR9.js");
+                if (i = await We(async ()=>{
+                    const { Workbox: u } = await import("./workbox-window.prod.es5-BIl4cyR9.js");
                     return {
-                        Workbox: p
+                        Workbox: u
                     };
-                }, []).then(({ Workbox: p })=>new p("/sw.js", {
+                }, []).then(({ Workbox: u })=>new u("/sw.js", {
                         scope: "/",
                         type: "classic"
-                    })).catch((p)=>{
-                    i?.(p);
-                }), !r) return;
+                    })).catch((u)=>{
+                    a?.(u);
+                }), !i) return;
                 m = ()=>{
-                    r?.messageSkipWaiting();
+                    i?.messageSkipWaiting();
                 };
                 {
-                    let p = !1;
+                    let u = !1;
                     const h = ()=>{
-                        p = !0, r?.addEventListener("controlling", (w)=>{
+                        u = !0, i?.addEventListener("controlling", (w)=>{
                             w.isUpdate && window.location.reload();
                         }), n?.();
                     };
-                    r.addEventListener("installed", (w)=>{
-                        typeof w.isUpdate > "u" ? typeof w.isExternal < "u" && w.isExternal ? h() : !p && o?.() : w.isUpdate || o?.();
-                    }), r.addEventListener("waiting", h);
+                    i.addEventListener("installed", (w)=>{
+                        typeof w.isUpdate > "u" ? typeof w.isExternal < "u" && w.isExternal ? h() : !u && s?.() : w.isUpdate || s?.();
+                    }), i.addEventListener("waiting", h);
                 }
-                r.register({
+                i.register({
                     immediate: e
-                }).then((p)=>{
-                    a ? a("/sw.js", p) : s?.(p);
-                }).catch((p)=>{
-                    i?.(p);
+                }).then((u)=>{
+                    r ? r("/sw.js", u) : o?.(u);
+                }).catch((u)=>{
+                    a?.(u);
                 });
             }
         }
-        return l = g(), b;
+        return l = b(), d;
     }
     function oe() {
         const t = window.visualViewport ? window.visualViewport.height : window.innerHeight;
@@ -402,101 +402,101 @@
     }
     oe();
     window.visualViewport ? window.visualViewport.addEventListener("resize", oe) : window.addEventListener("resize", oe);
-    const E = document.getElementById("output"), qe = document.getElementById("form"), d = document.getElementById("input"), ee = document.getElementById("variables-list"), P = document.getElementById("tabs-scroll"), M = document.getElementById("session-select"), Ve = document.getElementById("sidebar-middle"), G = document.getElementById("scripts-file-input"), Ee = /^let\s+([a-zA-Z_][a-zA-Z0-9_]*)/, we = /^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/, ve = "calcite-sessions", $e = 10, L = new Set, I = new Map;
-    let B, q = null, u, y = -1, F = "";
+    const E = document.getElementById("output"), Ve = document.getElementById("form"), p = document.getElementById("input"), te = document.getElementById("variables-list"), O = document.getElementById("tabs-scroll"), M = document.getElementById("session-select"), $e = document.getElementById("sidebar-middle"), G = document.getElementById("scripts-file-input"), Ee = /^let\s+([a-zA-Z_][a-zA-Z0-9_]*)/, we = /^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/, ve = "calcite-sessions", je = 10, C = new Set, L = new Map;
+    let x, q = null, f, y = -1, U = "";
     function ke(t) {
         return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
     }
-    function je(t) {
+    function Ke(t) {
         let e = "";
         for(; e !== t;)e = t, t = t.replace(/\[\[[^\]]*\]([\s\S]*?)\]/g, "$1");
         return t;
     }
-    function Le(t) {
-        return je(t).replace(/\n/g, "<br>");
+    function Ce(t) {
+        return Ke(t).replace(/\n/g, "<br>");
     }
-    function Ke() {
+    function Le() {
         document.getElementById("variables").classList.remove("mobile-open");
     }
-    const Ie = 'button:not([disabled]),[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+    const xe = 'button:not([disabled]),[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
     function Ze(t, e) {
-        const n = Array.from(e.querySelectorAll(Ie));
+        const n = Array.from(e.querySelectorAll(xe));
         if (n.length === 0) return;
-        const o = n[0], s = n[n.length - 1];
-        t.shiftKey ? document.activeElement === o && (t.preventDefault(), s.focus()) : document.activeElement === s && (t.preventDefault(), o.focus());
+        const s = n[0], o = n[n.length - 1];
+        t.shiftKey ? document.activeElement === s && (t.preventDefault(), o.focus()) : document.activeElement === o && (t.preventDefault(), s.focus());
     }
-    function ae(t, e) {
+    function Q(t, e) {
         t.setAttribute("role", "button"), t.tabIndex = 0, t.addEventListener("click", e), t.addEventListener("keydown", (n)=>{
             (n.key === "Enter" || n.key === " ") && (n.preventDefault(), e());
         });
     }
-    function R(t) {
-        const e = d.value.length, n = document.activeElement === d, o = n ? d.selectionStart ?? e : e, s = n ? d.selectionEnd ?? e : e;
-        d.setRangeText(t, o, s, "end"), d.focus();
+    function I(t) {
+        const e = p.value.length, n = document.activeElement === p, s = n ? p.selectionStart ?? e : e, o = n ? p.selectionEnd ?? e : e;
+        p.setRangeText(t, s, o, "end"), p.focus();
     }
     function K() {
-        y = -1, F = "";
+        y = -1, U = "";
     }
-    function Ce(t, e, n) {
-        const o = document.createElement("div");
-        o.className = "entry" + (n ? " error" : "");
+    function Ie(t, e, n) {
         const s = document.createElement("div");
-        s.className = "query", s.textContent = t, s.title = "Re-use this expression", ae(s, ()=>R(t));
-        const a = document.createElement("div");
-        a.className = "result", a.innerHTML = e, o.appendChild(s), o.appendChild(a), E.appendChild(o), E.scrollTop = E.scrollHeight;
+        s.className = "entry" + (n ? " error" : "");
+        const o = document.createElement("div");
+        o.className = "query", o.textContent = t, o.title = "Re-use this expression", Q(o, ()=>I(t));
+        const r = document.createElement("div");
+        r.className = "result", r.innerHTML = e, s.appendChild(o), s.appendChild(r), E.appendChild(s), E.scrollTop = E.scrollHeight;
     }
     function $() {
-        if (L.size === 0) {
-            ee.innerHTML = '<p class="no-vars">No variables yet</p>';
+        if (C.size === 0) {
+            te.innerHTML = '<p class="no-vars">No variables yet</p>';
             return;
         }
-        ee.innerHTML = "";
-        for (const t of L)try {
-            const e = B.interpret(t);
+        te.innerHTML = "";
+        for (const t of C)try {
+            const e = x.interpret(t);
             if (!e.is_error) {
                 const n = document.createElement("div");
-                n.className = "var-item", n.title = `Insert "${t}"`, ae(n, ()=>{
-                    R(t), Ke();
+                n.className = "var-item", n.title = `Insert "${t}"`, Q(n, ()=>{
+                    I(t), Le();
                 });
-                const o = document.createElement("span");
-                o.className = "var-name", o.textContent = t;
                 const s = document.createElement("span");
-                s.className = "var-value", s.innerHTML = e.output, n.appendChild(o), n.appendChild(s), ee.appendChild(n);
+                s.className = "var-name", s.textContent = t;
+                const o = document.createElement("span");
+                o.className = "var-value", o.innerHTML = e.output, n.appendChild(s), n.appendChild(o), te.appendChild(n);
             }
         } catch  {}
     }
     function j() {
         const t = document.getElementById("functions-list");
-        if (I.size === 0) {
+        if (L.size === 0) {
             t.innerHTML = '<p class="no-vars">No functions yet</p>';
             return;
         }
         t.innerHTML = "";
-        for (const [e, n] of I){
-            const o = document.createElement("div");
-            o.className = "fn-item", o.title = `Insert "${e}("`, ae(o, ()=>{
-                R(e + "("), f("functions-popup");
+        for (const [e, n] of L){
+            const s = document.createElement("div");
+            s.className = "fn-item", s.title = `Insert "${e}("`, Q(s, ()=>{
+                I(e + "("), g("functions-popup");
             });
-            const s = document.createElement("span");
-            s.className = "fn-name", s.textContent = e;
-            const a = document.createElement("span");
-            a.className = "fn-params", a.textContent = n, o.appendChild(s), o.appendChild(a), t.appendChild(o);
+            const o = document.createElement("span");
+            o.className = "fn-name", o.textContent = e;
+            const r = document.createElement("span");
+            r.className = "fn-params", r.textContent = n, s.appendChild(o), s.appendChild(r), t.appendChild(s);
         }
     }
-    function Y(t, e, n, o) {
-        const s = document.getElementById("scripts-list"), a = s.querySelector(".no-vars");
-        a && s.removeChild(a);
-        const i = document.createElement("div");
-        i.className = "script-item" + (o ? " error" : "");
-        const r = document.createElement("span");
-        r.className = "script-name", r.textContent = t;
+    function Y(t, e, n, s) {
+        const o = document.getElementById("scripts-list"), r = o.querySelector(".no-vars");
+        r && o.removeChild(r);
+        const a = document.createElement("div");
+        a.className = "script-item" + (s ? " error" : "");
+        const i = document.createElement("span");
+        i.className = "script-name", i.textContent = t;
         const l = document.createElement("span");
-        if (l.className = "script-meta", o) l.textContent = "failed to load";
+        if (l.className = "script-meta", s) l.textContent = "failed to load";
         else {
             const m = [];
             e > 0 && m.push(`${e} function${e !== 1 ? "s" : ""}`), n > 0 && m.push(`${n} variable${n !== 1 ? "s" : ""}`), l.textContent = m.length > 0 ? m.join(", ") : "loaded";
         }
-        i.appendChild(r), i.appendChild(l), s.appendChild(i);
+        a.appendChild(i), a.appendChild(l), o.appendChild(a);
     }
     function S() {
         try {
@@ -523,93 +523,93 @@
         };
     }
     function k() {
-        const t = S(), e = t.findIndex((s)=>s.id === u.id);
-        e >= 0 ? t[e] = u : t.unshift(u);
+        const t = S(), e = t.findIndex((o)=>o.id === f.id);
+        e >= 0 ? t[e] = f : t.unshift(f);
         let n = 0;
-        const o = t.filter((s)=>s.named ? !0 : (n++, n <= $e));
-        Z(o);
+        const s = t.filter((o)=>o.named ? !0 : (n++, n <= je));
+        Z(s);
     }
     function D() {
         const e = [
             ...S()
         ].reverse();
-        P.innerHTML = "", P.setAttribute("role", "tablist"), P.setAttribute("aria-label", "Sessions");
-        for (const i of e){
-            const r = i.id === u.id, l = document.createElement("div");
-            l.className = "tab" + (r ? " active" : "") + (i.named ? " named" : ""), l.setAttribute("role", "tab"), l.setAttribute("aria-selected", r ? "true" : "false"), l.setAttribute("aria-controls", "output");
+        O.innerHTML = "", O.setAttribute("role", "tablist"), O.setAttribute("aria-label", "Sessions");
+        for (const a of e){
+            const i = a.id === f.id, l = document.createElement("div");
+            l.className = "tab" + (i ? " active" : "") + (a.named ? " named" : ""), l.setAttribute("role", "tab"), l.setAttribute("aria-selected", i ? "true" : "false"), l.setAttribute("aria-controls", "output");
             const m = document.createElement("span");
-            m.className = "tab-label", m.textContent = i.label, r || (m.tabIndex = 0, m.addEventListener("click", ()=>V(i.id)), m.addEventListener("keydown", (g)=>{
-                (g.key === "Enter" || g.key === " ") && (g.preventDefault(), V(i.id));
-            })), m.addEventListener("dblclick", (g)=>{
-                g.stopPropagation(), Ge(i, m);
+            m.className = "tab-label", m.textContent = a.label, i || (m.tabIndex = 0, m.addEventListener("click", ()=>V(a.id)), m.addEventListener("keydown", (b)=>{
+                (b.key === "Enter" || b.key === " ") && (b.preventDefault(), V(a.id));
+            })), m.addEventListener("dblclick", (b)=>{
+                b.stopPropagation(), Ge(a, m);
             }), l.appendChild(m);
-            const b = document.createElement("button");
-            b.className = "tab-close", b.textContent = "×", b.title = "Close session", b.addEventListener("click", (g)=>{
-                g.stopPropagation();
-                const h = S().filter((w)=>w.id !== i.id);
-                Z(h), r ? (u.inputs = [], h.length > 0 ? V(h[0].id) : Be()) : D();
-            }), l.appendChild(b), P.appendChild(l);
+            const d = document.createElement("button");
+            d.className = "tab-close", d.textContent = "×", d.title = "Close session", d.addEventListener("click", (b)=>{
+                b.stopPropagation();
+                const h = S().filter((w)=>w.id !== a.id);
+                Z(h), i ? (f.inputs = [], h.length > 0 ? V(h[0].id) : Be()) : D();
+            }), l.appendChild(d), O.appendChild(l);
         }
-        const n = P.querySelector(".tab.active");
+        const n = O.querySelector(".tab.active");
         n && n.scrollIntoView({
             block: "nearest",
             inline: "nearest"
         }), M.innerHTML = "";
-        const o = e.filter((i)=>i.named), s = e.filter((i)=>!i.named);
-        function a(i, r) {
+        const s = e.filter((a)=>a.named), o = e.filter((a)=>!a.named);
+        function r(a, i) {
             const l = document.createElement("option");
-            l.value = String(i.id), l.textContent = i.label, l.selected = i.id === u.id, r.appendChild(l);
+            l.value = String(a.id), l.textContent = a.label, l.selected = a.id === f.id, i.appendChild(l);
         }
-        if (o.length > 0 && s.length > 0) {
+        if (s.length > 0 && o.length > 0) {
+            const a = document.createElement("optgroup");
+            a.label = "Saved", s.forEach((l)=>r(l, a)), M.appendChild(a);
             const i = document.createElement("optgroup");
-            i.label = "Saved", o.forEach((l)=>a(l, i)), M.appendChild(i);
-            const r = document.createElement("optgroup");
-            r.label = "Recent", s.forEach((l)=>a(l, r)), M.appendChild(r);
-        } else e.forEach((i)=>a(i, M));
+            i.label = "Recent", o.forEach((l)=>r(l, i)), M.appendChild(i);
+        } else e.forEach((a)=>r(a, M));
     }
     function Ge(t, e) {
         const n = document.createElement("input");
         n.type = "text", n.className = "tab-rename-input", n.value = t.label, e.replaceWith(n), n.focus(), n.select();
-        function o() {
-            const s = n.value.trim();
-            if (s && s !== t.label) {
-                t.label = s, t.named = !0, t.id === u.id && (u = t);
-                const a = S(), i = a.findIndex((r)=>r.id === t.id);
-                i >= 0 && (a[i] = t, Z(a));
+        function s() {
+            const o = n.value.trim();
+            if (o && o !== t.label) {
+                t.label = o, t.named = !0, t.id === f.id && (f = t);
+                const r = S(), a = r.findIndex((i)=>i.id === t.id);
+                a >= 0 && (r[a] = t, Z(r));
             }
             D();
         }
-        n.addEventListener("blur", o), n.addEventListener("keydown", (s)=>{
-            s.key === "Enter" && (s.preventDefault(), n.blur()), s.key === "Escape" && (n.value = t.label, n.blur());
+        n.addEventListener("blur", s), n.addEventListener("keydown", (o)=>{
+            o.key === "Enter" && (o.preventDefault(), n.blur()), o.key === "Escape" && (n.value = t.label, n.blur());
         });
     }
     function Be() {
-        u && (u.inputs.length === 0 ? Z(S().filter((t)=>t.id !== u.id)) : k()), Q(), L.clear(), I.clear(), E.innerHTML = "", document.getElementById("scripts-list").innerHTML = '<p class="no-vars">No scripts loaded</p>', $(), j(), u = ce(), k(), D(), K(), d.value = "", d.focus();
+        f && (f.inputs.length === 0 ? Z(S().filter((t)=>t.id !== f.id)) : k()), ee(), C.clear(), L.clear(), E.innerHTML = "", document.getElementById("scripts-list").innerHTML = '<p class="no-vars">No scripts loaded</p>', $(), j(), f = ce(), k(), D(), K(), p.value = "", p.focus();
     }
     async function V(t) {
-        const n = S().find((o)=>o.id === t);
+        const n = S().find((s)=>s.id === t);
         if (n) {
-            u && (u.inputs.length === 0 ? Z(S().filter((o)=>o.id !== u.id)) : k()), Q(), L.clear(), I.clear(), E.innerHTML = "", document.getElementById("scripts-list").innerHTML = '<p class="no-vars">No scripts loaded</p>', u = n, K(), D();
-            for (const o of n.inputs){
-                let s = "", a = !1;
+            f && (f.inputs.length === 0 ? Z(S().filter((s)=>s.id !== f.id)) : k()), ee(), C.clear(), L.clear(), E.innerHTML = "", document.getElementById("scripts-list").innerHTML = '<p class="no-vars">No scripts loaded</p>', f = n, K(), D();
+            for (const s of n.inputs){
+                let o = "", r = !1;
                 try {
-                    const i = B.try_run_command(o);
-                    if (i.is_command) i.should_reset ? (E.innerHTML = "", L.clear(), I.clear()) : i.should_clear ? E.innerHTML = "" : s = Le(i.output ?? "(command executed)");
+                    const a = x.try_run_command(s);
+                    if (a.is_command) a.should_reset ? (E.innerHTML = "", C.clear(), L.clear()) : a.should_clear ? E.innerHTML = "" : o = Ce(a.output ?? "(command executed)");
                     else {
-                        const r = B.interpret(o);
-                        if (s = r.output, a = r.is_error, !a) {
-                            for (const l of o.matchAll(/^let\s+([a-zA-Z_][a-zA-Z0-9_]*)/gm))L.add(l[1]);
-                            for (const l of o.matchAll(/^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/gm))I.set(l[1], l[2]);
+                        const i = x.interpret(s);
+                        if (o = i.output, r = i.is_error, !r) {
+                            for (const l of s.matchAll(/^let\s+([a-zA-Z_][a-zA-Z0-9_]*)/gm))C.add(l[1]);
+                            for (const l of s.matchAll(/^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/gm))L.set(l[1], l[2]);
                         }
                     }
-                } catch (i) {
-                    s = ke(i instanceof Error ? i.message : String(i)), a = !0;
+                } catch (a) {
+                    o = ke(a instanceof Error ? a.message : String(a)), r = !0;
                 }
-                s && Ce(o, s, a);
+                o && Ie(s, o, r);
             }
             $(), j();
-            for (const o of n.scripts ?? [])Y(o.name, o.fnCount, o.letCount, !1);
-            d.focus();
+            for (const s of n.scripts ?? [])Y(s.name, s.fnCount, s.letCount, !1);
+            p.focus();
         }
     }
     const Je = [
@@ -1175,17 +1175,17 @@
         for (const e of Je){
             const n = document.createElement("div");
             n.className = "unit-category";
-            const o = document.createElement("h4");
-            o.textContent = e.name, n.appendChild(o);
-            const s = document.createElement("div");
-            s.className = "unit-chips";
-            for (const a of e.units){
-                const i = document.createElement("button");
-                i.type = "button", i.className = "unit-chip", i.textContent = a.symbol, i.title = a.name, i.addEventListener("click", ()=>{
-                    R(a.symbol), f("units-popup");
-                }), s.appendChild(i);
+            const s = document.createElement("h4");
+            s.textContent = e.name, n.appendChild(s);
+            const o = document.createElement("div");
+            o.className = "unit-chips";
+            for (const r of e.units){
+                const a = document.createElement("button");
+                a.type = "button", a.className = "unit-chip", a.textContent = r.symbol, a.title = r.name, a.addEventListener("click", ()=>{
+                    I(r.symbol), g("units-popup");
+                }), o.appendChild(a);
             }
-            n.appendChild(s), t.appendChild(n);
+            n.appendChild(o), t.appendChild(n);
         }
     }
     const Xe = [
@@ -1294,42 +1294,241 @@
         for (const e of Xe){
             const n = document.createElement("div");
             n.className = "unit-category";
-            const o = document.createElement("h4");
-            o.textContent = e.name, n.appendChild(o);
-            const s = document.createElement("div");
-            s.className = "unit-chips";
-            for (const a of e.dimensions){
-                const i = document.createElement("button");
-                i.type = "button", i.className = "unit-chip", i.textContent = a, i.addEventListener("click", ()=>{
-                    R(a), f("dimensions-popup");
-                }), s.appendChild(i);
+            const s = document.createElement("h4");
+            s.textContent = e.name, n.appendChild(s);
+            const o = document.createElement("div");
+            o.className = "unit-chips";
+            for (const r of e.dimensions){
+                const a = document.createElement("button");
+                a.type = "button", a.className = "unit-chip", a.textContent = r, a.addEventListener("click", ()=>{
+                    I(r), g("dimensions-popup");
+                }), o.appendChild(a);
             }
-            n.appendChild(s), t.appendChild(n);
+            n.appendChild(o), t.appendChild(n);
         }
     }
-    function et() {
-        const e = u.inputs.filter((i)=>!i.includes(`
-`) && (Ee.test(i) || we.test(i))).join(`
+    const et = [
+        {
+            name: "Trigonometry",
+            fns: [
+                {
+                    name: "sin",
+                    params: "(x)"
+                },
+                {
+                    name: "cos",
+                    params: "(x)"
+                },
+                {
+                    name: "tan",
+                    params: "(x)"
+                },
+                {
+                    name: "asin",
+                    params: "(x)"
+                },
+                {
+                    name: "acos",
+                    params: "(x)"
+                },
+                {
+                    name: "atan",
+                    params: "(x)"
+                },
+                {
+                    name: "atan2",
+                    params: "(y, x)"
+                },
+                {
+                    name: "sinh",
+                    params: "(x)"
+                },
+                {
+                    name: "cosh",
+                    params: "(x)"
+                },
+                {
+                    name: "tanh",
+                    params: "(x)"
+                },
+                {
+                    name: "asinh",
+                    params: "(x)"
+                },
+                {
+                    name: "acosh",
+                    params: "(x)"
+                },
+                {
+                    name: "atanh",
+                    params: "(x)"
+                }
+            ]
+        },
+        {
+            name: "Numeric",
+            fns: [
+                {
+                    name: "abs",
+                    params: "(x)"
+                },
+                {
+                    name: "round",
+                    params: "(x)"
+                },
+                {
+                    name: "floor",
+                    params: "(x)"
+                },
+                {
+                    name: "ceil",
+                    params: "(x)"
+                },
+                {
+                    name: "sqrt",
+                    params: "(x)"
+                },
+                {
+                    name: "cbrt",
+                    params: "(x)"
+                },
+                {
+                    name: "sqr",
+                    params: "(x)"
+                },
+                {
+                    name: "mod",
+                    params: "(x, y)"
+                },
+                {
+                    name: "gcd",
+                    params: "(x, y)"
+                },
+                {
+                    name: "lcm",
+                    params: "(x, y)"
+                }
+            ]
+        },
+        {
+            name: "Exponential",
+            fns: [
+                {
+                    name: "exp",
+                    params: "(x)"
+                },
+                {
+                    name: "ln",
+                    params: "(x)"
+                },
+                {
+                    name: "log",
+                    params: "(x)"
+                },
+                {
+                    name: "log2",
+                    params: "(x)"
+                },
+                {
+                    name: "log10",
+                    params: "(x)"
+                },
+                {
+                    name: "pow",
+                    params: "(base, exp)"
+                }
+            ]
+        }
+    ], tt = [
+        "pi",
+        "tau",
+        "e",
+        "c",
+        "g",
+        "G",
+        "k_B",
+        "N_A"
+    ];
+    function nt() {
+        const t = document.getElementById("functions-list"), e = document.createElement("hr");
+        e.className = "builtin-separator", t.appendChild(e);
+        const n = document.createElement("div");
+        n.id = "builtin-functions-section";
+        const s = document.createElement("button");
+        s.type = "button", s.className = "section-header-btn", s.id = "builtin-functions-toggle";
+        const o = document.createElement("span");
+        o.textContent = "Built-in functions";
+        const r = document.createElement("span");
+        r.className = "section-toggle-icon", r.setAttribute("aria-hidden", "true"), r.textContent = "›", s.appendChild(o), s.appendChild(r), s.addEventListener("click", ()=>n.classList.toggle("open"));
+        const a = document.createElement("div");
+        a.id = "builtin-functions-body", a.className = "section-body";
+        for (const i of et){
+            const l = document.createElement("div");
+            l.className = "unit-category";
+            const m = document.createElement("h4");
+            m.textContent = i.name, l.appendChild(m);
+            const d = document.createElement("div");
+            d.className = "unit-chips";
+            for (const b of i.fns){
+                const u = document.createElement("button");
+                u.type = "button", u.className = "unit-chip", u.textContent = b.name, u.title = b.name + b.params, u.addEventListener("click", ()=>{
+                    I(b.name + "("), g("functions-popup");
+                }), d.appendChild(u);
+            }
+            l.appendChild(d), a.appendChild(l);
+        }
+        n.appendChild(s), n.appendChild(a), t.appendChild(n);
+    }
+    function st() {
+        const t = document.querySelector("#variables-section .section-body"), e = document.createElement("hr");
+        e.className = "builtin-separator", t.appendChild(e);
+        const n = document.createElement("div");
+        n.id = "builtin-constants-section";
+        const s = document.createElement("button");
+        s.type = "button", s.className = "section-header-btn", s.id = "builtin-constants-toggle";
+        const o = document.createElement("span");
+        o.textContent = "Built-in constants";
+        const r = document.createElement("span");
+        r.className = "section-toggle-icon", r.setAttribute("aria-hidden", "true"), r.textContent = "›", s.appendChild(o), s.appendChild(r), s.addEventListener("click", ()=>n.classList.toggle("open"));
+        const a = document.createElement("div");
+        a.id = "builtin-constants-body", a.className = "section-body";
+        for (const i of tt)try {
+            const l = x.interpret(i);
+            if (l.is_error) continue;
+            const m = document.createElement("div");
+            m.className = "var-item", m.title = `Insert "${i}"`, Q(m, ()=>{
+                I(i), Le();
+            });
+            const d = document.createElement("span");
+            d.className = "var-name", d.textContent = i;
+            const b = document.createElement("span");
+            b.className = "var-value", b.innerHTML = l.output, m.appendChild(d), m.appendChild(b), a.appendChild(m);
+        } catch  {}
+        n.appendChild(s), n.appendChild(a), t.appendChild(n);
+    }
+    function ot() {
+        const e = f.inputs.filter((a)=>!a.includes(`
+`) && (Ee.test(a) || we.test(a))).join(`
 `), n = new Blob([
             e
         ], {
             type: "text/plain"
-        }), o = URL.createObjectURL(n), s = document.createElement("a");
-        s.href = o;
-        const a = u.label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-        s.download = `${a || "session"}.nbt`, document.body.appendChild(s), s.click(), document.body.removeChild(s), URL.revokeObjectURL(o);
+        }), s = URL.createObjectURL(n), o = document.createElement("a");
+        o.href = s;
+        const r = f.label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+        o.download = `${r || "session"}.nbt`, document.body.appendChild(o), o.click(), document.body.removeChild(o), URL.revokeObjectURL(s);
     }
-    function xe() {
+    function Ne() {
         if (!q) return;
         const t = [
             ...q.matchAll(/currency='([A-Z]{3})'\s+rate='([0-9.]+)'/g)
         ];
-        for (const [, e, n] of t)B.interpret(`unit ${e} : Money = (1 / ${n}) EUR`);
+        for (const [, e, n] of t)x.interpret(`unit ${e} : Money = (1 / ${n}) EUR`);
     }
-    function Q() {
-        B = X.new(!0, !0, De.Html), xe();
+    function ee() {
+        x = X.new(!0, !0, Oe.Html), Ne();
     }
-    const tt = {
+    const at = {
         AUD: "A$",
         BGN: "лв",
         BRL: "R$",
@@ -1362,146 +1561,146 @@
         USD: "$",
         ZAR: "R"
     };
-    function nt(t) {
+    function it(t) {
         const e = document.getElementById("currencies-list");
         e.innerHTML = "";
         const n = [
             "EUR",
             ...new Set([
                 ...t.matchAll(/currency='([A-Z]{3})'/g)
-            ].map((s)=>s[1]))
+            ].map((o)=>o[1]))
         ];
         n.sort();
-        const o = document.createElement("div");
-        o.className = "unit-chips";
-        for (const s of n){
-            const a = document.createElement("button");
-            a.type = "button", a.className = "unit-chip currency-chip", a.addEventListener("click", ()=>{
-                R(s), f("currencies-popup");
+        const s = document.createElement("div");
+        s.className = "unit-chips";
+        for (const o of n){
+            const r = document.createElement("button");
+            r.type = "button", r.className = "unit-chip currency-chip", r.addEventListener("click", ()=>{
+                I(o), g("currencies-popup");
             });
+            const a = document.createElement("span");
+            a.className = "chip-symbol", a.textContent = at[o] ?? o;
             const i = document.createElement("span");
-            i.className = "chip-symbol", i.textContent = tt[s] ?? s;
-            const r = document.createElement("span");
-            r.className = "chip-code", r.textContent = s, a.appendChild(i), a.appendChild(r), o.appendChild(a);
+            i.className = "chip-code", i.textContent = o, r.appendChild(a), r.appendChild(i), s.appendChild(r);
         }
-        e.appendChild(o);
+        e.appendChild(s);
     }
-    async function ot() {
+    async function rt() {
         const t = document.getElementById("currencies-status");
         t.textContent = "Loading…", t.className = "currencies-loading";
         try {
             const e = await fetch("/ecb-rates.xml");
             if (!e.ok) throw new Error(`HTTP ${e.status}`);
-            q = await e.text(), xe();
-            const n = q.match(/time='(\d{4}-\d{2}-\d{2})'/), o = n ? new Date(n[1]).toLocaleDateString("en-GB", {
+            q = await e.text(), Ne();
+            const n = q.match(/time='(\d{4}-\d{2}-\d{2})'/), s = n ? new Date(n[1]).toLocaleDateString("en-GB", {
                 day: "numeric",
                 month: "short",
                 year: "numeric"
             }) : "unknown date";
-            t.textContent = `European Central Bank rates · ${o}`, t.className = "", nt(q);
+            t.textContent = `European Central Bank rates · ${s}`, t.className = "", it(q);
         } catch  {
             t.textContent = "Unavailable", t.className = "currencies-error";
         }
     }
     function ge() {
-        Q(), E.innerHTML = "", L.clear(), I.clear(), $(), j(), document.getElementById("scripts-list").innerHTML = '<p class="no-vars">No scripts loaded</p>', u = ce(), k(), D(), d.value = "", K();
+        ee(), E.innerHTML = "", C.clear(), L.clear(), $(), j(), document.getElementById("scripts-list").innerHTML = '<p class="no-vars">No scripts loaded</p>', f = ce(), k(), D(), p.value = "", K();
     }
     function ye() {
-        E.innerHTML = "", u.inputs = [], k(), d.value = "", K();
+        E.innerHTML = "", f.inputs = [], k(), p.value = "", K();
     }
-    let se = null;
-    const x = [];
+    let ae = null;
+    const N = [];
     function _(t) {
-        x.length === 0 && (se = document.activeElement), x.push(t);
+        N.length === 0 && (ae = document.activeElement), N.push(t);
         const e = document.getElementById(t);
-        e.classList.add("visible"), document.getElementById(t + "-backdrop").classList.add("visible"), e.querySelector(Ie)?.focus();
+        e.classList.add("visible"), document.getElementById(t + "-backdrop").classList.add("visible"), e.querySelector(xe)?.focus();
     }
-    function f(t) {
+    function g(t) {
         document.getElementById(t).classList.remove("visible"), document.getElementById(t + "-backdrop").classList.remove("visible");
-        const e = x.lastIndexOf(t);
-        e >= 0 && x.splice(e, 1), x.length === 0 && (se?.focus(), se = null);
+        const e = N.lastIndexOf(t);
+        e >= 0 && N.splice(e, 1), N.length === 0 && (ae?.focus(), ae = null);
     }
     let le = null;
-    function te(t, e, n, o = "Confirm") {
-        document.getElementById("confirm-popup-title").textContent = t, document.getElementById("confirm-popup-message").textContent = e, document.getElementById("confirm-popup-ok").textContent = o, le = n, _("confirm-popup");
+    function ne(t, e, n, s = "Confirm") {
+        document.getElementById("confirm-popup-title").textContent = t, document.getElementById("confirm-popup-message").textContent = e, document.getElementById("confirm-popup-ok").textContent = s, le = n, _("confirm-popup");
     }
     function H() {
-        f("confirm-popup"), le = null;
+        g("confirm-popup"), le = null;
     }
-    function N(t, e, n) {
+    function A(t, e, n) {
         document.getElementById("info-popup-title").textContent = t, document.getElementById("info-popup-message").textContent = e;
-        const o = document.getElementById("info-popup-link");
-        n ? (o.href = n, o.hidden = !1) : o.hidden = !0, _("info-popup");
+        const s = document.getElementById("info-popup-link");
+        n ? (s.href = n, s.hidden = !1) : s.hidden = !0, _("info-popup");
     }
-    function ne() {
-        f("info-popup");
+    function se() {
+        g("info-popup");
     }
-    async function st() {
+    async function ct() {
         const t = document.createElement("div");
         t.className = "entry init-msg", t.textContent = "Loading…", E.appendChild(t);
         try {
             await he();
-        } catch (i) {
-            t.textContent = "Failed to load: " + (i instanceof Error ? i.message : String(i)), t.classList.add("error");
+        } catch (a) {
+            t.textContent = "Failed to load: " + (a instanceof Error ? a.message : String(a)), t.classList.add("error");
             return;
         }
-        Q(), E.removeChild(t), await ot();
+        ee(), E.removeChild(t), nt(), st(), await rt();
         const e = S();
-        e.length > 0 ? await V(e[0].id) : (u = ce(), k(), D()), Ye(), document.getElementById("units-panel-btn").addEventListener("click", ()=>_("units-popup")), document.getElementById("units-popup-close").addEventListener("click", ()=>f("units-popup")), document.getElementById("units-popup-backdrop").addEventListener("click", ()=>f("units-popup")), Qe(), document.getElementById("dimensions-panel-btn").addEventListener("click", ()=>_("dimensions-popup")), document.getElementById("dimensions-popup-close").addEventListener("click", ()=>f("dimensions-popup")), document.getElementById("dimensions-popup-backdrop").addEventListener("click", ()=>f("dimensions-popup")), document.getElementById("functions-panel-btn").addEventListener("click", ()=>_("functions-popup")), document.getElementById("functions-popup-close").addEventListener("click", ()=>f("functions-popup")), document.getElementById("functions-popup-backdrop").addEventListener("click", ()=>f("functions-popup")), document.getElementById("scripts-panel-btn").addEventListener("click", ()=>_("scripts-popup")), document.getElementById("scripts-popup-close").addEventListener("click", ()=>f("scripts-popup")), document.getElementById("scripts-popup-backdrop").addEventListener("click", ()=>f("scripts-popup")), document.getElementById("scripts-upload-btn").addEventListener("click", ()=>G.click()), document.getElementById("scripts-download-btn").addEventListener("click", et), G.addEventListener("change", async ()=>{
-            const i = G.files?.[0];
-            if (i) {
+        e.length > 0 ? await V(e[0].id) : (f = ce(), k(), D()), Ye(), document.getElementById("units-panel-btn").addEventListener("click", ()=>_("units-popup")), document.getElementById("units-popup-close").addEventListener("click", ()=>g("units-popup")), document.getElementById("units-popup-backdrop").addEventListener("click", ()=>g("units-popup")), Qe(), document.getElementById("dimensions-panel-btn").addEventListener("click", ()=>_("dimensions-popup")), document.getElementById("dimensions-popup-close").addEventListener("click", ()=>g("dimensions-popup")), document.getElementById("dimensions-popup-backdrop").addEventListener("click", ()=>g("dimensions-popup")), document.getElementById("functions-panel-btn").addEventListener("click", ()=>_("functions-popup")), document.getElementById("functions-popup-close").addEventListener("click", ()=>g("functions-popup")), document.getElementById("functions-popup-backdrop").addEventListener("click", ()=>g("functions-popup")), document.getElementById("scripts-panel-btn").addEventListener("click", ()=>_("scripts-popup")), document.getElementById("scripts-popup-close").addEventListener("click", ()=>g("scripts-popup")), document.getElementById("scripts-popup-backdrop").addEventListener("click", ()=>g("scripts-popup")), document.getElementById("scripts-upload-btn").addEventListener("click", ()=>G.click()), document.getElementById("scripts-download-btn").addEventListener("click", ot), G.addEventListener("change", async ()=>{
+            const a = G.files?.[0];
+            if (a) {
                 try {
-                    const r = await i.text();
-                    if (B.interpret(r).is_error) Y(i.name, 0, 0, !0);
+                    const i = await a.text();
+                    if (x.interpret(i).is_error) Y(a.name, 0, 0, !0);
                     else {
                         const m = [
-                            ...r.matchAll(/^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/gm)
-                        ], b = [
-                            ...r.matchAll(/^let\s+([a-zA-Z_][a-zA-Z0-9_]*)/gm)
+                            ...i.matchAll(/^fn\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*(\([^)]*\))/gm)
+                        ], d = [
+                            ...i.matchAll(/^let\s+([a-zA-Z_][a-zA-Z0-9_]*)/gm)
                         ];
-                        for (const g of m)I.set(g[1], g[2]);
-                        for (const g of b)L.add(g[1]);
-                        u.inputs.push(r), u.scripts.push({
-                            name: i.name,
+                        for (const b of m)L.set(b[1], b[2]);
+                        for (const b of d)C.add(b[1]);
+                        f.inputs.push(i), f.scripts.push({
+                            name: a.name,
                             fnCount: m.length,
-                            letCount: b.length
-                        }), k(), $(), j(), Y(i.name, m.length, b.length, !1);
+                            letCount: d.length
+                        }), k(), $(), j(), Y(a.name, m.length, d.length, !1);
                     }
                 } catch  {
-                    Y(i.name, 0, 0, !0);
+                    Y(a.name, 0, 0, !0);
                 }
                 G.value = "";
             }
-        }), document.getElementById("currencies-panel-btn").addEventListener("click", ()=>_("currencies-popup")), document.getElementById("currencies-popup-close").addEventListener("click", ()=>f("currencies-popup")), document.getElementById("currencies-popup-backdrop").addEventListener("click", ()=>f("currencies-popup")), document.getElementById("info-popup-close").addEventListener("click", ne), document.getElementById("info-popup-backdrop").addEventListener("click", ne), document.getElementById("vars-help-btn").addEventListener("click", ()=>{
-            N("Variables", "Define variables with let name = expression to store a value for reuse. Tap a variable to insert it into your expression.", "https://numbat.dev/docs/basics/variables/");
+        }), document.getElementById("currencies-panel-btn").addEventListener("click", ()=>_("currencies-popup")), document.getElementById("currencies-popup-close").addEventListener("click", ()=>g("currencies-popup")), document.getElementById("currencies-popup-backdrop").addEventListener("click", ()=>g("currencies-popup")), document.getElementById("info-popup-close").addEventListener("click", se), document.getElementById("info-popup-backdrop").addEventListener("click", se), document.getElementById("vars-help-btn").addEventListener("click", ()=>{
+            A("Variables", "Define variables with let name = expression to store a value for reuse. Tap a variable to insert it into your expression.", "https://numbat.dev/docs/basics/variables/");
         }), document.getElementById("functions-help-btn").addEventListener("click", ()=>{
-            N("Functions", "Define functions with fn name(params) = expression. Tap a function to insert it at the cursor.", "https://numbat.dev/docs/basics/functions/");
+            A("Functions", "Define functions with fn name(params) = expression. Tap a function to insert it at the cursor.", "https://numbat.dev/docs/basics/functions/");
         }), document.getElementById("currencies-help-btn").addEventListener("click", ()=>{
-            N("Currencies", 'Exchange rates are loaded from the European Central Bank (updated daily). Use currency codes in expressions — for example "100 USD to EUR" or "50 GBP + 30 CHF to EUR".');
+            A("Currencies", 'Exchange rates are loaded from the European Central Bank (updated daily). Use currency codes in expressions — for example "100 USD to EUR" or "50 GBP + 30 CHF to EUR".');
         }), document.getElementById("units-help-btn").addEventListener("click", ()=>{
-            N("Units", 'Units can be used in expressions and conversions — for example "1 km to mi" or "9.81 m/s^2 * 80 kg to N". Tap any unit to insert it at the cursor.', "https://numbat.dev/docs/prelude/list-units/");
+            A("Units", 'Units can be used in expressions and conversions — for example "1 km to mi" or "9.81 m/s^2 * 80 kg to N". Tap any unit to insert it at the cursor.', "https://numbat.dev/docs/prelude/list-units/");
         }), document.getElementById("dimensions-help-btn").addEventListener("click", ()=>{
-            N("Dimensions", 'Dimensions are physical quantity types used in type annotations — for example "let x: Length = 5 m" or "fn speed(d: Length, t: Time) -> Velocity = d / t". Tap a dimension to insert it at the cursor.', "https://numbat.dev/docs/advanced/dimension-definitions/");
+            A("Dimensions", 'Dimensions are physical quantity types used in type annotations — for example "let x: Length = 5 m" or "fn speed(d: Length, t: Time) -> Velocity = d / t". Tap a dimension to insert it at the cursor.', "https://numbat.dev/docs/advanced/dimension-definitions/");
         }), document.getElementById("scripts-help-btn").addEventListener("click", ()=>{
-            N("Scripts", "Upload Numbat script files (.nbt) to load function and variable definitions into the current session. Uploaded scripts appear here; their functions appear in the Functions panel.", "https://numbat.dev/docs/examples/example-numbat_syntax/");
+            A("Scripts", "Upload Numbat script files (.nbt) to load function and variable definitions into the current session. Uploaded scripts appear here; their functions appear in the Functions panel.", "https://numbat.dev/docs/examples/example-numbat_syntax/");
         }), document.getElementById("confirm-popup-close").addEventListener("click", H), document.getElementById("confirm-popup-backdrop").addEventListener("click", H), document.getElementById("confirm-popup-cancel").addEventListener("click", H), document.getElementById("confirm-popup-ok").addEventListener("click", ()=>{
-            const i = le;
-            H(), i && i();
-        }), document.getElementById("about-btn").addEventListener("click", ()=>_("about-popup")), document.getElementById("about-popup-close").addEventListener("click", ()=>f("about-popup")), document.getElementById("about-popup-backdrop").addEventListener("click", ()=>f("about-popup")), document.getElementById("about-reset-btn").addEventListener("click", ()=>{
-            te("Reset app data", "This will erase all sessions, variables, and cached data. The app will reload.", rt, "Reset");
+            const a = le;
+            H(), a && a();
+        }), document.getElementById("about-btn").addEventListener("click", ()=>_("about-popup")), document.getElementById("about-popup-close").addEventListener("click", ()=>g("about-popup")), document.getElementById("about-popup-backdrop").addEventListener("click", ()=>g("about-popup")), document.getElementById("about-reset-btn").addEventListener("click", ()=>{
+            ne("Reset app data", "This will erase all sessions, variables, and cached data. The app will reload.", mt, "Reset");
         }), document.getElementById("clear-btn").addEventListener("click", ()=>{
-            te("Clear session", "Clear all output and history for this session?", ye, "Clear");
+            ne("Clear session", "Clear all output and history for this session?", ye, "Clear");
         }), document.getElementById("reset-btn").addEventListener("click", ()=>{
-            te("Reset", "Clear all output, variables, and functions, and start fresh?", ge, "Reset");
-        }), document.addEventListener("keydown", (i)=>{
-            if (i.key === "Escape" && (H(), ne(), f("about-popup"), f("units-popup"), f("dimensions-popup"), f("functions-popup"), f("currencies-popup"), f("scripts-popup")), i.key === "Tab" && x.length > 0) {
-                const r = x[x.length - 1];
-                Ze(i, document.getElementById(r));
+            ne("Reset", "Clear all output, variables, and functions, and start fresh?", ge, "Reset");
+        }), document.addEventListener("keydown", (a)=>{
+            if (a.key === "Escape" && (H(), se(), g("about-popup"), g("units-popup"), g("dimensions-popup"), g("functions-popup"), g("currencies-popup"), g("scripts-popup")), a.key === "Tab" && N.length > 0) {
+                const i = N[N.length - 1];
+                Ze(a, document.getElementById(i));
             }
         });
         const n = document.getElementById("variables");
         document.getElementById("mobile-vars-btn").addEventListener("click", ()=>{
-            n.classList.add("mobile-open"), Ve.scrollTop = 0;
+            n.classList.add("mobile-open"), $e.scrollTop = 0;
         }), document.getElementById("mobile-units-btn").addEventListener("click", ()=>{
             _("units-popup");
         }), document.getElementById("mobile-dimensions-btn").addEventListener("click", ()=>{
@@ -1515,81 +1714,81 @@
         }), document.getElementById("mobile-sidebar-close").addEventListener("click", ()=>{
             n.classList.remove("mobile-open");
         });
-        const o = document.getElementById("app"), s = document.getElementById("sidebar-collapse-btn");
-        s.addEventListener("click", ()=>{
-            n.classList.toggle("collapsed"), o.classList.toggle("sidebar-collapsed");
-            const i = n.classList.contains("collapsed");
-            s.textContent = i ? "‹" : "›", s.title = i ? "Expand sidebar" : "Collapse sidebar", s.setAttribute("aria-label", i ? "Expand sidebar" : "Collapse sidebar");
+        const s = document.getElementById("app"), o = document.getElementById("sidebar-collapse-btn");
+        o.addEventListener("click", ()=>{
+            n.classList.toggle("collapsed"), s.classList.toggle("sidebar-collapsed");
+            const a = n.classList.contains("collapsed");
+            o.textContent = a ? "‹" : "›", o.title = a ? "Expand sidebar" : "Collapse sidebar", o.setAttribute("aria-label", a ? "Expand sidebar" : "Collapse sidebar");
         });
-        function a(i) {
-            const r = i.target.closest(".shortcut");
-            r && R(r.dataset.insert ?? "");
+        function r(a) {
+            const i = a.target.closest(".shortcut");
+            i && I(i.dataset.insert ?? "");
         }
-        document.getElementById("numpad").addEventListener("click", a), document.getElementById("shortcuts").addEventListener("click", a), document.getElementById("new-session-btn").addEventListener("click", ()=>Be()), M.addEventListener("change", ()=>{
+        document.getElementById("numpad").addEventListener("click", r), document.getElementById("shortcuts").addEventListener("click", r), document.getElementById("new-session-btn").addEventListener("click", ()=>Be()), M.addEventListener("change", ()=>{
             V(parseInt(M.value));
-        }), d.addEventListener("keydown", (i)=>{
-            const r = u.inputs;
-            if (i.key === "ArrowUp") {
-                if (r.length === 0) return;
-                i.preventDefault(), y === -1 && (F = d.value), y = Math.min(y + 1, r.length - 1), d.value = r[r.length - 1 - y], d.setSelectionRange(d.value.length, d.value.length);
-            } else if (i.key === "ArrowDown") {
+        }), p.addEventListener("keydown", (a)=>{
+            const i = f.inputs;
+            if (a.key === "ArrowUp") {
+                if (i.length === 0) return;
+                a.preventDefault(), y === -1 && (U = p.value), y = Math.min(y + 1, i.length - 1), p.value = i[i.length - 1 - y], p.setSelectionRange(p.value.length, p.value.length);
+            } else if (a.key === "ArrowDown") {
                 if (y === -1) return;
-                i.preventDefault(), y--, d.value = y === -1 ? F : r[r.length - 1 - y], d.setSelectionRange(d.value.length, d.value.length);
+                a.preventDefault(), y--, p.value = y === -1 ? U : i[i.length - 1 - y], p.setSelectionRange(p.value.length, p.value.length);
             } else y = -1;
         }), document.getElementById("history-prev").addEventListener("click", ()=>{
-            const i = u.inputs;
-            i.length !== 0 && (y === -1 && (F = d.value), y = Math.min(y + 1, i.length - 1), d.value = i[i.length - 1 - y], d.focus(), d.setSelectionRange(d.value.length, d.value.length));
+            const a = f.inputs;
+            a.length !== 0 && (y === -1 && (U = p.value), y = Math.min(y + 1, a.length - 1), p.value = a[a.length - 1 - y], p.focus(), p.setSelectionRange(p.value.length, p.value.length));
         }), document.getElementById("history-next").addEventListener("click", ()=>{
-            y !== -1 && (y--, d.value = y === -1 ? F : u.inputs[u.inputs.length - 1 - y], d.focus(), d.setSelectionRange(d.value.length, d.value.length));
-        }), qe.addEventListener("submit", (i)=>{
-            i.preventDefault();
-            const r = d.value.trim();
-            if (!r) return;
+            y !== -1 && (y--, p.value = y === -1 ? U : f.inputs[f.inputs.length - 1 - y], p.focus(), p.setSelectionRange(p.value.length, p.value.length));
+        }), Ve.addEventListener("submit", (a)=>{
+            a.preventDefault();
+            const i = p.value.trim();
+            if (!i) return;
             K();
             let l = "", m = !1;
             try {
-                const b = B.try_run_command(r);
-                if (b.is_command) {
-                    if (b.should_reset) {
+                const d = x.try_run_command(i);
+                if (d.is_command) {
+                    if (d.should_reset) {
                         ge();
                         return;
                     }
-                    if (b.should_clear) {
+                    if (d.should_clear) {
                         ye();
                         return;
                     }
-                    l = Le(b.output ?? "(command executed)"), u.inputs.push(r), k();
+                    l = Ce(d.output ?? "(command executed)"), f.inputs.push(i), k();
                 } else {
-                    u.inputs.push(r), k();
-                    const g = B.interpret(r);
-                    if (l = g.output, m = g.is_error, !m) {
-                        const p = r.match(Ee);
-                        p && (L.add(p[1]), $());
-                        const h = r.match(we);
-                        h && (I.set(h[1], h[2]), j());
+                    f.inputs.push(i), k();
+                    const b = x.interpret(i);
+                    if (l = b.output, m = b.is_error, !m) {
+                        const u = i.match(Ee);
+                        u && (C.add(u[1]), $());
+                        const h = i.match(we);
+                        h && (L.set(h[1], h[2]), j());
                     }
                 }
-            } catch (b) {
-                l = ke(b instanceof Error ? b.message : String(b)), m = !0;
+            } catch (d) {
+                l = ke(d instanceof Error ? d.message : String(d)), m = !0;
             }
-            Ce(r, l, m), d.value = "";
-        }), d.focus();
+            Ie(i, l, m), p.value = "";
+        }), p.focus();
     }
-    const A = document.getElementById("about-check-btn"), Se = document.getElementById("about-update-btn");
+    const R = document.getElementById("about-check-btn"), Se = document.getElementById("about-update-btn");
     document.getElementById("about-version").textContent = "0.3.4";
     let Te = !1;
-    const it = We({
+    const lt = qe({
         onNeedRefresh () {
-            Te = !0, A.hidden = !0, Se.hidden = !1;
+            Te = !0, R.hidden = !0, Se.hidden = !1;
         }
     });
-    A.addEventListener("click", async ()=>{
-        A.textContent = "Checking…", A.disabled = !0, await (await navigator.serviceWorker.getRegistration())?.update(), Te || (A.textContent = "Check for update", A.disabled = !1);
+    R.addEventListener("click", async ()=>{
+        R.textContent = "Checking…", R.disabled = !0, await (await navigator.serviceWorker.getRegistration())?.update(), Te || (R.textContent = "Check for update", R.disabled = !1);
     });
     Se.addEventListener("click", ()=>{
-        it(!0);
+        lt(!0);
     });
-    function rt() {
+    function mt() {
         (async ()=>{
             localStorage.clear();
             const t = await navigator.serviceWorker.getRegistrations();
@@ -1598,5 +1797,5 @@
             await Promise.all(e.map((n)=>caches.delete(n))), location.reload();
         })();
     }
-    st();
+    ct();
 })();
