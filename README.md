@@ -25,3 +25,18 @@ npm run test
 # Deploy build to GitHub Pages
 npm run clean && npm run build && npm run deploy
 ```
+
+## Project structure
+
+```
+index.html          Web entry point
+vite.config.ts      Vite configuration
+src/
+  main.ts           TypeScript source
+  style.css         Stylesheet
+  env.d.ts          Environment type declarations
+```
+
+## Rules
+
+- Read `.impeccable.md` for design context before any design work.
